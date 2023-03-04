@@ -1,15 +1,20 @@
+import { User } from '@/types/user';
+
 export interface SignInRequestData {
   email: string;
   password: string;
   remember?: boolean;
 }
 
+export interface RequestData {
+  token: string;
+  role_id: number;
+  user: User;
+}
+
 interface SignInResponseData {
   status: number;
-  data: {
-    token: string;
-    role_id: number;
-  };
+  data: RequestData;
 }
 
 export async function signInRequest(

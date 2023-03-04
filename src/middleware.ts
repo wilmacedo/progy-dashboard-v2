@@ -1,33 +1,52 @@
-import cookieLib from 'cookie';
+import { AUTH_DATA_KEY } from '@/constants';
+import { RequestData } from '@/services/auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { STORAGE_PATH } from './constants';
 
-export default function middleware(request: NextRequest) {
-  const path = `${STORAGE_PATH}/token`;
+const authValidate = (cookie: string | undefined) => {
+  if (!cookie) return false;
 
-  const cookie = request.cookies.get(path)?.value;
-  if (!cookie) {
-    const token = request.nextUrl.searchParams.get('token');
-    if (token) {
-      const remember = request.nextUrl.searchParams.get('remember');
-      const response = NextResponse.redirect(new URL('/', request.url));
+  try {
+    const data = JSON.parse(cookie);
+    if (!data.token) return false;
 
-      let options = {};
-      if (remember === 'true') {
-        options = {
-          maxAge: 60 * 30,
-        };
-      }
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 
-      response.headers.set(
-        'Set-Cookie',
-        cookieLib.serialize(path, token, options),
-      );
+export default function middleware({ cookies, nextUrl, url }: NextRequest) {
+  const response = NextResponse.redirect(new URL('/auth/login', url));
 
-      return response;
+  const cookie = cookies.get(AUTH_DATA_KEY)?.value;
+  if (authValidate(cookie)) return NextResponse.next();
+
+  const urlParams = nextUrl.searchParams.get('data');
+  if (!urlParams) return response;
+
+  try {
+    const data: RequestData = JSON.parse(urlParams);
+    if (!data.token) return response;
+
+    let options = {};
+    const remember = nextUrl.searchParams.get('remember');
+    if (remember === 'true') {
+      options = {
+        maxAge: 60 * 30, // 30 minutes
+      };
     }
 
-    return NextResponse.redirect(new URL('/auth/login', request.url));
+    const redirect = NextResponse.redirect(new URL('/', url));
+
+    redirect.cookies.set({
+      name: AUTH_DATA_KEY,
+      value: JSON.stringify(data),
+      ...options,
+    });
+
+    return redirect;
+  } catch (e) {
+    return NextResponse.redirect(new URL('/auth/login', url));
   }
 }
 

@@ -67,20 +67,25 @@ export default function Dashboard() {
 
     setLoading(true);
 
-    const status = await signIn({ ...credentials, remember });
-    if (status) {
-      let message = '';
+    try {
+      const status = await signIn({ ...credentials, remember });
+      if (status) {
+        let message = '';
 
-      switch (status) {
-        case 401:
-        case 404:
-          message = 'E-mail ou senha incorretos.';
-          break;
-        default:
-          message = 'Houve um erro em processar sua solicitação.';
+        switch (status) {
+          case 401:
+          case 404:
+            message = 'E-mail ou senha incorretos.';
+            break;
+          default:
+            message = 'Houve um erro em processar sua solicitação.';
+        }
+
+        toast.error(message);
+        setLoading(false);
       }
-
-      toast.error(message);
+    } catch (e) {
+      toast.error('Houve um erro em processar sua solicitação.');
       setLoading(false);
     }
   };

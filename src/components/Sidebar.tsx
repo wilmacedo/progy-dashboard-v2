@@ -26,7 +26,7 @@ const fakeUser = {
 
 export default function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const [expanded, setExpanded] = useState(
     getLocalStorageItem('sidebar', 'expanded'),
   );
@@ -99,16 +99,16 @@ export default function Sidebar({ children }: SidebarProps) {
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 flex items-center justify-center bg-[#6f6f7c] rounded-full">
                         <span className="text-sm text-[#d0d1d7]">
-                          {getFirstsLetters(fakeUser.name)}
+                          {getFirstsLetters(user?.name || 'N/A')}
                         </span>
                       </div>
 
                       <div className="flex flex-col">
                         <span className="text-sm truncate max-w-[7rem]">
-                          {fakeUser.name}
+                          {user?.name || 'N/A'}
                         </span>
                         <span className="text-xs opacity-70 truncate max-w-[8rem]">
-                          {fakeUser.email}
+                          {user?.email || 'N/A'}
                         </span>
                       </div>
                     </div>
