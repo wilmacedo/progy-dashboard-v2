@@ -1,9 +1,9 @@
+import roles from '@/constants/roles';
 import { BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
 import { IoIosList } from 'react-icons/io';
 import { IoCreateOutline, IoSettingsOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 import { VscNewFile } from 'react-icons/vsc';
-import roles from './roles';
 
 interface RouteConfig {
   basePath: string;

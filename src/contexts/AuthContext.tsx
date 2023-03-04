@@ -1,7 +1,8 @@
 'use client';
 
 import { AUTH_DATA_KEY } from '@/constants';
-import { signInRequest, SignInRequestData } from '@/services/auth';
+import roles from '@/constants/roles';
+import { RequestData, signInRequest, SignInRequestData } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { destroyCookie, parseCookies } from 'nookies';
 import {
@@ -26,6 +27,7 @@ interface AuthContextType {
   user?: UserData;
   signIn: (data: SignInRequestData) => Promise<number | undefined>;
   signOut: () => void;
+  retrieveUserRole: () => number;
 }
 
 const AuthContext = createContext({} as AuthContextType);
@@ -72,8 +74,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
     router.push('/auth/login');
   }
 
+  function retrieveUserRole() {
+    const defaultRole = roles.low[roles.low.length - 1];
+
+    const cookies = parseCookies();
+    if (!cookies) return defaultRole;
+
+    const authData = cookies[AUTH_DATA_KEY];
+    if (!authData) return defaultRole;
+
+    try {
+      const { role_id: roleId }: RequestData = JSON.parse(authData);
+
+      return roleId;
+    } catch (e) {
+      return defaultRole;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, user, retrieveUserRole }}>
       {children}
     </AuthContext.Provider>
   );
