@@ -1,6 +1,7 @@
 'use client';
 
 import sidebarRoutes from '@/constants/routes';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   getFirstsLetters,
   getLocalStorageItem,
@@ -20,15 +21,17 @@ interface SidebarProps {
 const fakeUser = {
   name: 'José Wilson Wariss Macedo Sá',
   email: 'wil.macedo.sa@gmail.com',
+  roleId: 2,
 };
 
 export default function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
+  const { signOut } = useAuth();
   const [expanded, setExpanded] = useState(
     getLocalStorageItem('sidebar', 'expanded'),
   );
   const imageSize = 30;
-  const routes = sidebarRoutes(2);
+  const routes = sidebarRoutes(fakeUser.roleId);
   const splittedRoutes = [
     routes.filter(route => !route.bottom),
     routes.filter(route => route.bottom),
@@ -44,7 +47,7 @@ export default function Sidebar({ children }: SidebarProps) {
   };
 
   const handleLogout = () => {
-    // TODO: Add logout logic
+    signOut();
   };
 
   return (
