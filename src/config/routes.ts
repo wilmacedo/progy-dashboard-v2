@@ -14,6 +14,12 @@ interface RouteConfig {
   bottom?: boolean;
 }
 
+export function isCurrentRoute(route: RouteConfig, pathname: string) {
+  if (!route.relativePaths) return route.basePath === pathname;
+
+  return route.relativePaths.includes(pathname);
+}
+
 export default function sidebarRoutes(roleId: number) {
   const defaults: RouteConfig[] = [
     {

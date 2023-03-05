@@ -1,6 +1,6 @@
 'use client';
 
-import sidebarRoutes from '@/config/routes';
+import sidebarRoutes, { isCurrentRoute } from '@/config/routes';
 import { mockedUser } from '@/constants';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -33,7 +33,6 @@ export default function Sidebar({ children }: SidebarProps) {
     routes.filter(route => !route.bottom),
     routes.filter(route => route.bottom),
   ];
-  const isCurrentRoute = (routeName: string) => pathname === routeName;
 
   const handleExpand = () => {
     setExpanded(prev => {
@@ -75,13 +74,13 @@ export default function Sidebar({ children }: SidebarProps) {
               {sideRoute.map((route, index) => (
                 <Link href={route.basePath} key={index}>
                   <li
-                    data-current={isCurrentRoute(route.basePath)}
+                    data-current={isCurrentRoute(route, pathname)}
                     className="group m-2 p-2.5 flex flex-row items-center gap-3 rounded-md cursor-pointer duration-200 hover:bg-[#E7E9ED] data-[current=true]:bg-[#E7E9ED]"
                   >
-                    <span className="text-[#4D4C5F] text-2xl group-data-[current=true]:text-[#3E6BF7]">
+                    <span className="text-[#4D4C5F] text-2xl group-data-[current=true]:text-blue-300">
                       <route.Icon />
                     </span>
-                    <span className=" flex-1 text-[#4D4C5F] text-sm truncate group-data-[current=true]:text-[#3E6BF7] group-data-[expanded=true]:hidden">
+                    <span className=" flex-1 text-[#4D4C5F] text-sm truncate group-data-[current=true]:text-blue-300 group-data-[expanded=true]:hidden">
                       {route.name}
                     </span>
                   </li>

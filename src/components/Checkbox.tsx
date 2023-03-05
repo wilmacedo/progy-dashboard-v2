@@ -19,7 +19,7 @@ export function Checkbox({ onChange }: CheckboxProps) {
     <div
       data-checked={checked}
       onClick={handleCheck}
-      className="group w-[1.15rem] h-[1.15rem] flex items-center justify-center border border-gray-100 rounded-[.2rem] duration-100 cursor-pointer data-[checked=true]:bg-[#3E6BF7]"
+      className="group w-[1.15rem] h-[1.15rem] flex items-center justify-center border border-gray-100 rounded-[.2rem] duration-100 cursor-pointer data-[checked=true]:bg-blue-300"
     >
       <FiCheck className="text-sm text-gray-100 group-data-[checked=false]:opacity-0" />
     </div>
