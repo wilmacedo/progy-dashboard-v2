@@ -18,7 +18,7 @@ export default function SectionLayout({ children }: SectionProps) {
     <div>
       <h1 className="mb-6 font-semibold text-3xl">Configurações</h1>
 
-      <div className="mb-8 font-medium text-center text-[#7b7a88] border-b border-gray-100">
+      <div className="mb-8 font-medium text-center text-gray-500 border-b border-gray-100">
         <ul className="flex flex-wrap -mb-px">
           {tabs.map((tab, index) => (
             <Link href={tab.path} key={index}>
@@ -30,7 +30,7 @@ export default function SectionLayout({ children }: SectionProps) {
                 <span
                   className={ct(
                     'inline-block px-4 py-2 border-b-2 border-transparent rounded-t-lg cursor-pointer',
-                    'hover:text-[#4D4C5F] hover:border-[#4D4C5F]',
+                    'hover:text-600 hover:border-gray-600',
                     'group-data-[current=true]:text-blue-300 group-data-[current=true]:border-blue-300',
                   )}
                 >
@@ -45,7 +45,7 @@ export default function SectionLayout({ children }: SectionProps) {
       <div>
         <div className="pb-4 border-b border-gray-100">
           <h2 className="mb-1 text-xl font-semibold">{currentTab.title}</h2>
-          <span className=" text-sm text-[#7b7a88]">
+          <span className=" text-sm text-gray-500">
             {currentTab.description}
           </span>
         </div>

@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/Checkbox';
 import Spinner from '@/components/Spinner';
 import { useAuth } from '@/contexts/AuthContext';
 import { ct } from '@/utils/style';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
@@ -69,24 +70,20 @@ export default function Dashboard() {
     setLoading(true);
 
     try {
-      const status = await signIn({ ...credentials, remember });
-      if (status) {
-        let message = '';
-
+      await signIn({ ...credentials, remember });
+    } catch (error) {
+      let message = 'Houve um erro em processar sua solicitação.';
+      if (error instanceof AxiosError) {
+        const status = error.response?.status;
         switch (status) {
           case 401:
           case 404:
             message = 'E-mail ou senha incorretos.';
             break;
-          default:
-            message = 'Houve um erro em processar sua solicitação.';
         }
-
-        toast.error(message);
-        setLoading(false);
       }
-    } catch (e) {
-      toast.error('Houve um erro em processar sua solicitação.');
+
+      toast.error(message);
       setLoading(false);
     }
   };

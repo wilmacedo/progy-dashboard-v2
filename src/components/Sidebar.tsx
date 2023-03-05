@@ -99,7 +99,7 @@ export default function Sidebar({ children }: SidebarProps) {
                   >
                     <span
                       className={ct(
-                        'text-[#4D4C5F] text-2xl',
+                        'text-gray-600 text-2xl',
                         'group-data-[current=true]:text-blue-300',
                       )}
                     >
@@ -107,7 +107,7 @@ export default function Sidebar({ children }: SidebarProps) {
                     </span>
                     <span
                       className={ct(
-                        'flex-1 text-[#4D4C5F] text-sm truncate',
+                        'flex-1 text-gray-600 text-sm truncate',
                         'group-data-[current=true]:text-blue-300',
                         'group-data-[expanded=true]:hidden',
                       )}
@@ -143,7 +143,7 @@ export default function Sidebar({ children }: SidebarProps) {
                       </div>
                     </div>
                   </div>
-                  <span className="text-[#4D4C5F] text-2xl">
+                  <span className="text-gray-600 text-2xl">
                     <FiLogOut />
                   </span>
                 </li>

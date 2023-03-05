@@ -1,14 +1,20 @@
 import { ct } from '@/utils/style';
 
-export default function Input() {
+interface InputProps {
+  className?: string;
+  placeholder?: string;
+  type?: 'text' | 'email' | 'password';
+}
+
+export default function Input({ className, ...rest }: InputProps) {
   return (
-    <div
+    <input
       className={ct(
-        'py-1 px-3 bg-gray-200 border-gray-100 rounded-md text-sm',
-        'focus:outline-blue-300',
+        'px-2.5 py-2.5 border border-gray-100 rounded outline-blue-300 duration-200 text-sm',
+        'hover:bg-[#E7E9ED]',
+        className || '',
       )}
-    >
-      <input className="bg-transparent border-none" />
-    </div>
+      {...rest}
+    />
   );
 }

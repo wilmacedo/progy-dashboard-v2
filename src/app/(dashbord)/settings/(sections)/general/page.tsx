@@ -28,12 +28,25 @@ export default function Detail() {
   //   })();
   // }, []);
 
+  const fields = [
+    {
+      label: 'Nome',
+      description: 'Altere seu nome',
+      key: 'name',
+    },
+  ];
+
   return (
-    <div className="w-[70%]">
-      <div className="flex items-center justify-between">
-        <span>Nome</span>
-        <Input />
-      </div>
+    <div>
+      {fields.map((field, index) => (
+        <div className="pt-4 pb-8 flex border-b border-gray-100" key={index}>
+          <div className="w-[30rem]">
+            <span>{field.label}</span>
+            <p className="text-sm text-gray-500">{field.description}</p>
+          </div>
+          <Input className="w-full max-w-lg" placeholder="Digite seu nome" />
+        </div>
+      ))}
     </div>
   );
 }
