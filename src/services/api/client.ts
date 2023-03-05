@@ -1,31 +1,24 @@
 import { AUTH_DATA_KEY } from '@/constants';
 import { parseCookies } from 'nookies';
 import { RequestData } from '../auth';
-import { baseConfig } from './base';
-import { APIProps, APIResponse, ResponseData } from './types';
+import { BaseAPI } from './base';
+import { APIProps, APIResponse } from './types';
 
-export async function api<T>({
-  route,
-  method,
-  body,
-}: APIProps): Promise<APIResponse<T>> {
-  const base = baseConfig;
-  const { [AUTH_DATA_KEY]: data } = parseCookies();
+export async function api<T>(props: APIProps): Promise<APIResponse<T>> {
+  const baseApi = new BaseAPI(props);
+  baseApi.getBearerToken = () => {
+    const { [AUTH_DATA_KEY]: authData } = parseCookies();
+    if (!authData) return '';
 
-  try {
-    const { token }: RequestData = JSON.parse(data);
-    if (token) {
-      base.headers.Authorization = `Bearer ${token}`;
+    try {
+      const { token }: RequestData = JSON.parse(authData);
+      if (!token) return '';
+
+      return token;
+    } catch (e) {
+      return '';
     }
-  } catch (e) {}
+  };
 
-  const request = await fetch(base.baseURL + route, {
-    method,
-    ...(body && { body: JSON.stringify(body) }),
-    ...base,
-  });
-
-  const response: ResponseData<T> = await request.json();
-
-  return { ...response, status: request.status };
+  return baseApi.request<T>();
 }

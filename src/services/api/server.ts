@@ -1,28 +1,18 @@
 import { getAuthCookieData } from '@/utils/auth';
-import { baseConfig } from './base';
-import { APIProps, APIResponse, ResponseData } from './types';
+import { BaseAPI } from './base';
+import { APIProps, APIResponse } from './types';
 
-export async function api<T>({
-  route,
-  method,
-  body,
-}: APIProps): Promise<APIResponse<T>> {
-  const base = baseConfig;
-  const data = getAuthCookieData();
-  if (data) {
+export async function api<T>(props: APIProps): Promise<APIResponse<T>> {
+  const baseApi = new BaseAPI(props);
+  baseApi.getBearerToken = () => {
+    const data = getAuthCookieData();
+    if (!data) return '';
+
     const { token } = data;
-    if (token) {
-      base.headers.Authorization = `Bearer ${token}`;
-    }
-  }
+    if (!token) return '';
 
-  const request = await fetch(base.baseURL + route, {
-    method,
-    ...(body && { body: JSON.stringify(body) }),
-    ...base,
-  });
+    return token;
+  };
 
-  const response: ResponseData<T> = await request.json();
-
-  return { ...response, status: request.status };
+  return baseApi.request<T>();
 }
