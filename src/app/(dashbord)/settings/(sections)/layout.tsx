@@ -11,6 +11,7 @@ interface SectionProps {
 
 export default function SectionLayout({ children }: SectionProps) {
   const pathname = usePathname();
+  const currentTab = tabs[getCurrentTab(pathname)];
 
   return (
     <div>
@@ -34,7 +35,16 @@ export default function SectionLayout({ children }: SectionProps) {
         </ul>
       </div>
 
-      {children}
+      <div>
+        <div className="pb-4 border-b border-gray-100">
+          <h2 className="mb-1 text-xl font-semibold">{currentTab.title}</h2>
+          <span className=" text-sm text-[#7b7a88]">
+            {currentTab.description}
+          </span>
+        </div>
+
+        <div className="mt-4">{children}</div>
+      </div>
     </div>
   );
 }

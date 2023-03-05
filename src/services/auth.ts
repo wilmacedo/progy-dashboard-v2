@@ -1,4 +1,5 @@
-import { User } from '@/types/user';
+import { AuthUser } from '@/types/user';
+import { api } from './api';
 
 export interface SignInRequestData {
   email: string;
@@ -9,7 +10,7 @@ export interface SignInRequestData {
 export interface RequestData {
   token: string;
   role_id: number;
-  user: User;
+  user: AuthUser;
 }
 
 interface SignInResponseData {
@@ -20,14 +21,7 @@ interface SignInResponseData {
 export async function signInRequest(
   data: SignInRequestData,
 ): Promise<SignInResponseData> {
-  const request = await fetch(`${process.env.API_URL}/users/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  const { status, data: response } = await api.post('/users/login', data);
 
-  const response = await request.json();
-  return { status: request.status, data: response };
+  return { status, data: response.data };
 }

@@ -6,7 +6,7 @@ const authValidate = (cookie: string | undefined) => {
   if (!cookie) return false;
 
   try {
-    const data = JSON.parse(cookie);
+    const data: RequestData = JSON.parse(cookie);
     if (!data.token) return false;
 
     return true;
