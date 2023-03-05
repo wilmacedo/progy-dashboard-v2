@@ -5,6 +5,10 @@ export function getCurrentTab(pathname: string) {
   return index;
 }
 
+export function allPaths() {
+  return tabs.map(tab => tab.path);
+}
+
 export const tabs = [
   {
     name: 'Geral',
