@@ -1,19 +1,21 @@
 import Input from '@/components/Input';
 import { mockedUser } from '@/constants';
 import { api } from '@/services/api/server';
-import { ResponseData } from '@/services/api/types';
 import { User } from '@/types/user';
 import { toast } from 'react-toastify';
 import { fields } from './config';
 
 async function getUserData(): Promise<User | undefined> {
-  const { data: response } = await api.get<ResponseData<User>>('/users/me');
-  if (response.error) {
+  const { data, error } = await api<User>({
+    method: 'GET',
+    route: '/users/me',
+  });
+  if (error) {
     toast.error('Não foi possível carregar os seus dados pessoais');
     return mockedUser;
   }
 
-  return response.data;
+  return data;
 }
 
 export default async function Detail() {

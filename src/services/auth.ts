@@ -15,13 +15,17 @@ export interface RequestData {
 
 interface SignInResponseData {
   status: number;
-  data: RequestData;
+  data?: RequestData;
 }
 
 export async function signInRequest(
   data: SignInRequestData,
 ): Promise<SignInResponseData> {
-  const { status, data: response } = await api.post('/users/login', data);
+  const { status, data: response } = await api<RequestData>({
+    route: '/users/login',
+    method: 'POST',
+    body: data,
+  });
 
   return { status, data: response };
 }

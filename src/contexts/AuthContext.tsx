@@ -73,7 +73,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     params.append('data', JSON.stringify(data));
     if (remember) params.append('remember', remember.toString());
 
-    setUser(data.user);
+    if (data) setUser(data.user);
     router.push(`/?${params.toString()}`);
   }
 

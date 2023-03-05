@@ -1,16 +1,28 @@
 import { getAuthCookieData } from '@/utils/auth';
-import { base } from './base';
+import { baseConfig } from './base';
+import { APIProps, APIResponse, ResponseData } from './types';
 
-export const api = base;
-
-base.interceptors.request.use(config => {
+export async function api<T>({
+  route,
+  method,
+  body,
+}: APIProps): Promise<APIResponse<T>> {
+  const base = baseConfig;
   const data = getAuthCookieData();
-  if (!data) return config;
+  if (data) {
+    const { token } = data;
+    if (token) {
+      base.headers.Authorization = `Bearer ${token}`;
+    }
+  }
 
-  const { token } = data;
-  if (!token) return config;
+  const request = await fetch(base.baseURL + route, {
+    method,
+    ...(body && { body: JSON.stringify(body) }),
+    ...base,
+  });
 
-  config.headers.Authorization = `Bearer ${token}`;
+  const response: ResponseData<T> = await request.json();
 
-  return config;
-});
+  return { ...response, status: request.status };
+}

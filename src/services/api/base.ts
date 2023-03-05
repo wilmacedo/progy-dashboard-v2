@@ -1,9 +1,8 @@
-import axios from 'axios';
+import { APIConfig } from './types';
 
-export const base = axios.create({
-  baseURL: process.env.API_URL,
-  timeout: 5 * 1000,
+export const baseConfig: APIConfig = {
+  baseURL: process.env.API_URL || 'http://localhost:3333',
   headers: {
     'Content-Type': 'application/json',
   },
-});
+};

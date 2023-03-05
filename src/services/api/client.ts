@@ -1,22 +1,31 @@
 import { AUTH_DATA_KEY } from '@/constants';
 import { parseCookies } from 'nookies';
 import { RequestData } from '../auth';
-import { base } from './base';
+import { baseConfig } from './base';
+import { APIProps, APIResponse, ResponseData } from './types';
 
-export const api = base;
-
-base.interceptors.request.use(config => {
+export async function api<T>({
+  route,
+  method,
+  body,
+}: APIProps): Promise<APIResponse<T>> {
+  const base = baseConfig;
   const { [AUTH_DATA_KEY]: data } = parseCookies();
-  if (!data) return config;
 
   try {
     const { token }: RequestData = JSON.parse(data);
-    if (!token) return config;
+    if (token) {
+      base.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch (e) {}
 
-    config.headers.Authorization = `Bearer ${token}`;
+  const request = await fetch(base.baseURL + route, {
+    method,
+    ...(body && { body: JSON.stringify(body) }),
+    ...base,
+  });
 
-    return config;
-  } catch (e) {
-    return config;
-  }
-});
+  const response: ResponseData<T> = await request.json();
+
+  return { ...response, status: request.status };
+}
