@@ -3,6 +3,7 @@
 import { Checkbox } from '@/components/Checkbox';
 import Spinner from '@/components/Spinner';
 import { useAuth } from '@/contexts/AuthContext';
+import { ct } from '@/utils/style';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
@@ -116,10 +117,16 @@ export default function Dashboard() {
 
         <div className="w-[25rem] p-7 flex flex-col bg-[#fff] rounded-lg shadow-md">
           {fields.map((field, index) => (
-            <div className="flex flex-col gap-1 first:mb-6" key={index}>
+            <div
+              className={ct('flex flex-col gap-1', 'first:mb-6')}
+              key={index}
+            >
               <span className="text-sm">{field.label}</span>
               <input
-                className="px-2.5 py-2.5 border border-gray-100 rounded outline-blue-300 duration-200 text-sm hover:bg-[#E7E9ED]"
+                className={ct(
+                  'px-2.5 py-2.5 border border-gray-100 rounded outline-blue-300 duration-200 text-sm',
+                  'hover:bg-[#E7E9ED]',
+                )}
                 placeholder={field.placeholder}
                 type={field.type}
                 onChange={event => handleInput(event, field.field)}
@@ -133,7 +140,12 @@ export default function Dashboard() {
               <span className="text-xs font-normal">Relembrar por 30 dias</span>
             </div>
 
-            <span className="text-xs font-bold text-blue-300 duration-100 cursor-pointer hover:brightness-125">
+            <span
+              className={ct(
+                'text-xs font-bold text-blue-300 duration-100 cursor-pointer',
+                'hover:brightness-125',
+              )}
+            >
               Esqueceu sua senha?
             </span>
           </div>
@@ -142,9 +154,15 @@ export default function Dashboard() {
             data-loading={loading}
             onClick={handleLogin}
             disabled={canAccess()}
-            className="group py-2.5 flex items-center justify-center bg-blue-300 rounded-md text-sm text-[#fff] disabled:opacity-30 disabled:cursor-not-allowed"
+            className={ct(
+              'group',
+              'py-2.5 flex items-center justify-center bg-blue-300 rounded-md text-sm text-[#fff]',
+              'disabled:opacity-30 disabled:cursor-not-allowed',
+            )}
           >
-            <Spinner className="invisible group-data-[loading=true]:visible" />
+            <Spinner
+              className={ct('hidden', 'group-data-[loading=true]:block')}
+            />
             <span className="group-data-[loading=true]:hidden">Acessar</span>
           </button>
         </div>

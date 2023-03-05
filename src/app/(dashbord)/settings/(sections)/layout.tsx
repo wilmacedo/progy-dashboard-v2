@@ -1,6 +1,7 @@
 'use client';
 
 import { getCurrentTab, tabs } from '@/config/tabs';
+import { ct } from '@/utils/style';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -26,7 +27,13 @@ export default function SectionLayout({ children }: SectionProps) {
                 data-current={getCurrentTab(pathname) === index}
                 className="group mr-2"
               >
-                <span className="inline-block px-4 py-2 border-b-2 border-transparent rounded-t-lg cursor-pointer hover:text-[#4D4C5F] hover:border-[#4D4C5F] group-data-[current=true]:text-blue-300 group-data-[current=true]:border-blue-300">
+                <span
+                  className={ct(
+                    'inline-block px-4 py-2 border-b-2 border-transparent rounded-t-lg cursor-pointer',
+                    'hover:text-[#4D4C5F] hover:border-[#4D4C5F]',
+                    'group-data-[current=true]:text-blue-300 group-data-[current=true]:border-blue-300',
+                  )}
+                >
                   {tab.name}
                 </span>
               </li>

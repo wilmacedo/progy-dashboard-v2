@@ -32,7 +32,7 @@ export default function middleware({ cookies, nextUrl, url }: NextRequest) {
     const remember = nextUrl.searchParams.get('remember');
     if (remember === 'true') {
       options = {
-        maxAge: 60 * 30, // 30 minutes
+        maxAge: 60 * 60 * 24 * 30, // 30 days
       };
     }
 

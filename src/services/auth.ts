@@ -23,5 +23,5 @@ export async function signInRequest(
 ): Promise<SignInResponseData> {
   const { status, data: response } = await api.post('/users/login', data);
 
-  return { status, data: response.data };
+  return { status, data: response };
 }

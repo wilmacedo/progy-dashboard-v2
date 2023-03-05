@@ -5,6 +5,6 @@ export interface AuthUser {
 }
 
 export interface User extends AuthUser {
-  role_id: string;
-  institution_id: string;
+  role_id: number;
+  institution_id: number;
 }

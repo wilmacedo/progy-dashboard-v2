@@ -8,6 +8,7 @@ import {
   getLocalStorageItem,
   saveLocalStorageItem,
 } from '@/utils';
+import { ct } from '@/utils/style';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -48,10 +49,19 @@ export default function Sidebar({ children }: SidebarProps) {
 
   return (
     <div data-expanded={expanded} className="group">
-      <div className="fixed p-2 flex flex-col w-64 h-screen bg-gray-200 border-r border-gray-100 duration-200 group-data-[expanded=true]:w-20">
+      <div
+        className={ct(
+          'fixed p-2 flex flex-col w-64 h-screen bg-gray-200 border-r border-gray-100 duration-200',
+          'group-data-[expanded=true]:w-20',
+        )}
+      >
         <BsArrowLeftShort
           onClick={handleExpand}
-          className="absolute top-16 -right-3 bg-white text-black text-2xl border border-gray-100 rounded-full duration-200 cursor-pointer hover:bg-gray-200 group-data-[expanded=true]:rotate-180"
+          className={ct(
+            'absolute top-16 -right-3 bg-white text-black text-2xl border border-gray-100 rounded-full duration-200 cursor-pointer',
+            'hover:bg-gray-200',
+            'group-data-[expanded=true]:rotate-180',
+          )}
         />
 
         <Link href="/" className="h-fit">
@@ -62,7 +72,12 @@ export default function Sidebar({ children }: SidebarProps) {
               width={imageSize}
               height={imageSize}
             />
-            <h1 className="font-bold tracking-widest whitespace-nowrap group-data-[expanded=true]:hidden">
+            <h1
+              className={ct(
+                'font-bold tracking-widest whitespace-nowrap',
+                'group-data-[expanded=true]:hidden',
+              )}
+            >
               PROGY
             </h1>
           </div>
@@ -75,12 +90,28 @@ export default function Sidebar({ children }: SidebarProps) {
                 <Link href={route.basePath} key={index}>
                   <li
                     data-current={isCurrentRoute(route, pathname)}
-                    className="group m-2 p-2.5 flex flex-row items-center gap-3 rounded-md cursor-pointer duration-200 hover:bg-[#E7E9ED] data-[current=true]:bg-[#E7E9ED]"
+                    className={ct(
+                      'group',
+                      'm-2 p-2.5 flex flex-row items-center gap-3 rounded-md cursor-pointer duration-200',
+                      'hover:bg-[#E7E9ED]',
+                      'data-[current=true]:bg-[#E7E9ED]',
+                    )}
                   >
-                    <span className="text-[#4D4C5F] text-2xl group-data-[current=true]:text-blue-300">
+                    <span
+                      className={ct(
+                        'text-[#4D4C5F] text-2xl',
+                        'group-data-[current=true]:text-blue-300',
+                      )}
+                    >
                       <route.Icon />
                     </span>
-                    <span className=" flex-1 text-[#4D4C5F] text-sm truncate group-data-[current=true]:text-blue-300 group-data-[expanded=true]:hidden">
+                    <span
+                      className={ct(
+                        'flex-1 text-[#4D4C5F] text-sm truncate',
+                        'group-data-[current=true]:text-blue-300',
+                        'group-data-[expanded=true]:hidden',
+                      )}
+                    >
                       {route.name}
                     </span>
                   </li>
@@ -89,7 +120,10 @@ export default function Sidebar({ children }: SidebarProps) {
               {sideIndex === splittedRoutes.length - 1 && (
                 <li
                   onClick={handleLogout}
-                  className="m-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200 hover:bg-[#E7E9ED]"
+                  className={ct(
+                    'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
+                    'hover:bg-[#E7E9ED]',
+                  )}
                 >
                   <div className="group-data-[expanded=true]:hidden">
                     <div className="flex items-center gap-2">
@@ -118,7 +152,12 @@ export default function Sidebar({ children }: SidebarProps) {
           ))}
         </div>
       </div>
-      <div className="ml-72 pt-8 pr-12 duration-200 group-data-[expanded=true]:ml-28">
+      <div
+        className={ct(
+          'ml-72 pt-8 pr-12 duration-200',
+          'group-data-[expanded=true]:ml-28',
+        )}
+      >
         {children}
       </div>
     </div>

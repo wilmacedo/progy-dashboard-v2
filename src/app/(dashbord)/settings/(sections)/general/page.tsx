@@ -1,22 +1,39 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
-import { api } from '@/services/api';
-import { User } from '@/types/user';
-import { useEffect, useState } from 'react';
+import Input from '@/components/Input';
+
+// const mockedUser: User = {
+//   id: 2,
+//   name: 'Wil Macedo',
+//   email: 'wil@gmail.com',
+//   role_id: 4,
+//   institution_id: 1,
+// };
 
 export default function Detail() {
-  const { user } = useAuth();
-  const [userData, setUserData] = useState<User | undefined>();
+  // const { isAuthenticated } = useAuth();
+  // const [, setUserData] = useState<User | undefined>(mockedUser);
 
-  useEffect(() => {
-    if (!user) return;
+  // useEffect(() => {
+  //   if (!isAuthenticated) return;
 
-    (async () => {
-      const { data: response } = await api.get('/users/me');
-      setUserData(response.data);
-    })();
-  }, [user]);
+  //   (async () => {
+  //     const { data: response } = await api.get('/users/me');
+  //     if (response.error) {
+  //       toast.error('Erro ao carregar as informações do usuário');
+  //       return;
+  //     }
 
-  return <div>{userData?.name}</div>;
+  //     setUserData(response.data);
+  //   })();
+  // }, []);
+
+  return (
+    <div className="w-[70%]">
+      <div className="flex items-center justify-between">
+        <span>Nome</span>
+        <Input />
+      </div>
+    </div>
+  );
 }

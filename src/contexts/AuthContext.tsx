@@ -28,6 +28,7 @@ interface AuthContextType {
   signIn: (data: SignInRequestData) => Promise<number | undefined>;
   signOut: () => void;
   retrieveUserRole: () => number;
+  isAuthenticated: () => boolean;
 }
 
 const AuthContext = createContext({} as AuthContextType);
@@ -92,8 +93,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  function isAuthenticated() {
+    const cookies = parseCookies();
+    if (!cookies) return false;
+
+    const authData = cookies[AUTH_DATA_KEY];
+    if (!authData) return false;
+
+    return true;
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user, retrieveUserRole }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, user, retrieveUserRole, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
