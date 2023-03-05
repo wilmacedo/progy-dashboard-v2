@@ -51,5 +51,5 @@ export default function middleware({ cookies, nextUrl, url }: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard'],
+  matcher: ['/', '/dashboard', '/settings/:path*'],
 };

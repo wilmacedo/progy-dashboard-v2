@@ -11,7 +11,7 @@ import {
 import { ct } from '@/utils/style';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useState } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
@@ -22,7 +22,8 @@ interface SidebarProps {
 
 export default function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
-  const { signOut, user, retrieveUserRole } = useAuth();
+  const router = useRouter();
+  const { user, signOut, retrieveUserRole } = useAuth();
 
   const [expanded, setExpanded] = useState(
     getLocalStorageItem('sidebar', 'expanded'),
@@ -45,6 +46,7 @@ export default function Sidebar({ children }: SidebarProps) {
 
   const handleLogout = () => {
     signOut();
+    router.push('/auth/login');
   };
 
   return (

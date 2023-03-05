@@ -8,6 +8,7 @@ import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { fields, imageSize } from './config';
 
 interface Credentials {
   email: string;
@@ -15,28 +16,13 @@ interface Credentials {
 }
 
 export default function Dashboard() {
+  const { signIn } = useAuth();
+
   const [credentials, setCredentials] = useState<Credentials>(
     {} as Credentials,
   );
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
-
-  const imageSize = 30;
-  const fields = [
-    {
-      label: 'E-mail',
-      type: 'email',
-      field: 'email',
-      placeholder: 'Digite seu e-mail',
-    },
-    {
-      label: 'Senha',
-      type: 'password',
-      field: 'password',
-      placeholder: 'Digite sua senha',
-    },
-  ];
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>, field: string) => {
     const { value } = event.target;

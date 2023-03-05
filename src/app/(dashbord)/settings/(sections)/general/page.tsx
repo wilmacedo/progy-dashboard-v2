@@ -1,40 +1,23 @@
-'use client';
-
 import Input from '@/components/Input';
+import { mockedUser } from '@/constants';
+import { api } from '@/services/api/server';
+import { ResponseData } from '@/services/api/types';
+import { User } from '@/types/user';
+import { toast } from 'react-toastify';
+import { fields } from './config';
 
-// const mockedUser: User = {
-//   id: 2,
-//   name: 'Wil Macedo',
-//   email: 'wil@gmail.com',
-//   role_id: 4,
-//   institution_id: 1,
-// };
+async function getUserData(): Promise<User | undefined> {
+  const { data: response } = await api.get<ResponseData<User>>('/users/me');
+  if (response.error) {
+    toast.error('Não foi possível carregar os seus dados pessoais');
+    return mockedUser;
+  }
 
-export default function Detail() {
-  // const { isAuthenticated } = useAuth();
-  // const [, setUserData] = useState<User | undefined>(mockedUser);
+  return response.data;
+}
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) return;
-
-  //   (async () => {
-  //     const { data: response } = await api.get('/users/me');
-  //     if (response.error) {
-  //       toast.error('Erro ao carregar as informações do usuário');
-  //       return;
-  //     }
-
-  //     setUserData(response.data);
-  //   })();
-  // }, []);
-
-  const fields = [
-    {
-      label: 'Nome',
-      description: 'Altere seu nome',
-      key: 'name',
-    },
-  ];
+export default async function Detail() {
+  const user = await getUserData();
 
   return (
     <div>
@@ -44,7 +27,11 @@ export default function Detail() {
             <span>{field.label}</span>
             <p className="text-sm text-gray-500">{field.description}</p>
           </div>
-          <Input className="w-full max-w-lg" placeholder="Digite seu nome" />
+          <Input
+            className="w-full max-w-lg"
+            placeholder="Digite seu nome"
+            defaultValue={user && user[field.key]}
+          />
         </div>
       ))}
     </div>

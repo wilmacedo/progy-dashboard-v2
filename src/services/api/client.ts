@@ -1,17 +1,11 @@
 import { AUTH_DATA_KEY } from '@/constants';
-import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { RequestData } from './auth';
+import { RequestData } from '../auth';
+import { base } from './base';
 
-export const api = axios.create({
-  baseURL: process.env.API_URL,
-  timeout: 5 * 1000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+export const api = base;
 
-api.interceptors.request.use(config => {
+base.interceptors.request.use(config => {
   const { [AUTH_DATA_KEY]: data } = parseCookies();
   if (!data) return config;
 

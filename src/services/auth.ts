@@ -1,5 +1,5 @@
 import { AuthUser } from '@/types/user';
-import { api } from './api';
+import { api } from './api/client';
 
 export interface SignInRequestData {
   email: string;

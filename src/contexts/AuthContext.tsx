@@ -28,7 +28,6 @@ interface AuthContextType {
   signIn: (data: SignInRequestData) => Promise<number | undefined>;
   signOut: () => void;
   retrieveUserRole: () => number;
-  isAuthenticated: () => boolean;
 }
 
 const AuthContext = createContext({} as AuthContextType);
@@ -37,21 +36,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserData | undefined>();
   const router = useRouter();
 
+  function getAuthCookieData() {
+    const cookies = parseCookies();
+    const authData = cookies[AUTH_DATA_KEY];
+    if (!authData) return;
+
+    try {
+      const data: RequestData = JSON.parse(authData);
+      if (!data) return;
+
+      return data;
+    } catch (e) {}
+  }
+
   useEffect(() => {
     if (user) return;
 
-    try {
-      const cookies = parseCookies();
-      const authData = cookies[AUTH_DATA_KEY];
-      if (!authData) return;
-
-      const { user: userData } = JSON.parse(authData);
-      if (!userData) return;
-
-      setUser(userData);
-    } catch (e) {
+    const data = getAuthCookieData();
+    if (!data) {
       toast.warn('Erro ao carregar as informações do usuário');
+      return;
     }
+
+    setUser(data.user);
   }, [user]);
 
   async function signIn({ email, password, remember }: SignInRequestData) {
@@ -78,35 +85,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function retrieveUserRole() {
     const defaultRole = roles.low[roles.low.length - 1];
 
-    const cookies = parseCookies();
-    if (!cookies) return defaultRole;
+    const data = getAuthCookieData();
+    if (!data) return defaultRole;
 
-    const authData = cookies[AUTH_DATA_KEY];
-    if (!authData) return defaultRole;
-
-    try {
-      const { role_id: roleId }: RequestData = JSON.parse(authData);
-
-      return roleId;
-    } catch (e) {
-      return defaultRole;
-    }
-  }
-
-  function isAuthenticated() {
-    const cookies = parseCookies();
-    if (!cookies) return false;
-
-    const authData = cookies[AUTH_DATA_KEY];
-    if (!authData) return false;
-
-    return true;
+    const { role_id: roleId } = data;
+    return roleId;
   }
 
   return (
-    <AuthContext.Provider
-      value={{ signIn, signOut, user, retrieveUserRole, isAuthenticated }}
-    >
+    <AuthContext.Provider value={{ signIn, signOut, user, retrieveUserRole }}>
       {children}
     </AuthContext.Provider>
   );

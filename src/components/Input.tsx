@@ -1,6 +1,7 @@
 import { ct } from '@/utils/style';
+import { HTMLAttributes } from 'react';
 
-interface InputProps {
+interface InputProps extends HTMLAttributes<HTMLInputElement> {
   className?: string;
   placeholder?: string;
   type?: 'text' | 'email' | 'password';
