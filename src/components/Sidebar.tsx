@@ -119,7 +119,7 @@ export default function Sidebar({ children }: SidebarProps) {
           ))}
         </div>
       </div>
-      <div className="ml-72 duration-200 group-data-[expanded=true]:ml-28">
+      <div className="ml-72 pt-8 pr-12 duration-200 group-data-[expanded=true]:ml-28">
         {children}
       </div>
     </div>

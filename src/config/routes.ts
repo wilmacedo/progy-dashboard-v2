@@ -22,7 +22,8 @@ export default function sidebarRoutes(roleId: number) {
       Icon: IoCreateOutline,
     },
     {
-      basePath: '/settings',
+      basePath: '/settings/general',
+      relativePaths: ['/settings/general'],
       name: 'Configurações',
       Icon: IoSettingsOutline,
       bottom: true,

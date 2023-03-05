@@ -15,6 +15,7 @@ module.exports = {
         200: '#F6F7F9',
       },
       white: '#fff',
+      transparent: '#ffffff00',
     },
     extend: {},
   },
