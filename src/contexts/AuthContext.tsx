@@ -8,6 +8,7 @@ import { destroyCookie, parseCookies } from 'nookies';
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -49,8 +50,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (e) {}
   }
 
+  const isAuthenticaded = useCallback(() => {
+    const data = getAuthCookieData();
+    if (!data) return false;
+
+    const { token } = data;
+    if (!token) return false;
+
+    return true;
+  }, []);
+
   useEffect(() => {
-    if (user) return;
+    if (user || !isAuthenticaded()) return;
 
     const data = getAuthCookieData();
     if (!data) {
@@ -59,7 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     setUser(data.user);
-  }, [user]);
+  }, [user, isAuthenticaded]);
 
   async function signIn({ email, password, remember }: SignInRequestData) {
     const { status, data } = await signInRequest({ email, password });

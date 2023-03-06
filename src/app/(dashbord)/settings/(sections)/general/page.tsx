@@ -1,4 +1,5 @@
 import { mockedUser } from '@/constants';
+import { getRoleByName } from '@/constants/roles';
 import { api } from '@/services/api/server';
 import { User } from '@/types/user';
 import { Form } from './Form';
@@ -13,6 +14,12 @@ async function getUserData(): Promise<GeneralResponse> {
     method: 'GET',
     route: '/users/me',
   });
+
+  if (data && data.role) {
+    const roleId = getRoleByName(data.role);
+    data.role_id = roleId;
+    delete data.role;
+  }
 
   return { user: data || mockedUser, error };
 }

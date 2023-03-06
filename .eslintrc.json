@@ -9,6 +9,7 @@
         "arrowParens": "avoid",
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "no-unused-vars": "warn"
   }
 }
