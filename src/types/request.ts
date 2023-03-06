@@ -11,6 +11,7 @@ export interface Planning {
 }
 
 export interface DashboardInfo {
+  title: string;
   stagesPerInitiative: {
     percentage: number;
     value: 0;
@@ -24,7 +25,7 @@ export interface DashboardInfo {
     id: number;
   }[];
   costIndicator: number[];
-  id: number[];
+  idp: number[];
   totalGoals: number;
   totalDelayed: number;
   totalInitiatives: number;

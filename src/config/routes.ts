@@ -59,6 +59,7 @@ export default function sidebarRoutes(roleId: number) {
   const users: RouteConfig[] = [
     {
       basePath: '/',
+      relativePaths: ['/', '/dashboard'],
       name: 'Dashboard',
       Icon: BsReverseLayoutTextWindowReverse,
     },
@@ -67,6 +68,7 @@ export default function sidebarRoutes(roleId: number) {
   const internals: RouteConfig[] = [
     {
       basePath: '/',
+      relativePaths: ['/', '/dashboard'],
       name: 'Planejamentos',
       Icon: IoIosList,
     },

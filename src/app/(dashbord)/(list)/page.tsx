@@ -1,12 +1,13 @@
 import Button from '@/components/Button';
+import Options from '@/components/Options';
 import { api } from '@/services/api/server';
 import { DashboardInfo, Planning } from '@/types/request';
 import { ct } from '@/utils/style';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import Link from 'next/link';
 
 import { IoRocketOutline } from 'react-icons/io5';
-import { RxDotsVertical } from 'react-icons/rx';
 import { TbAlertCircle } from 'react-icons/tb';
 
 async function getPlannings() {
@@ -74,14 +75,7 @@ export default async function List() {
                 </span>
               </div>
 
-              <div
-                className={ct(
-                  'h-5 w-5 flex items-center justify-center border border-gray-100 rounded-full cursor-pointer duration-200',
-                  'hover:border-gray-500',
-                )}
-              >
-                <RxDotsVertical className="text-[0.75rem]" />
-              </div>
+              <Options />
             </div>
 
             <div className="mt-4 flex flex-col gap-1">
@@ -146,7 +140,9 @@ export default async function List() {
                 </div>
               </div>
 
-              <Button className="py-0 text-xs">Acessar</Button>
+              <Link href={`/dashboard/?id=${planning.id}`}>
+                <Button className="py-0 text-xs">Acessar</Button>
+              </Link>
             </div>
           </div>
         </div>
