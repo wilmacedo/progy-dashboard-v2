@@ -5,7 +5,7 @@ import { getCurrentTab, tabs } from '@/config/tabs';
 import { ct } from '@/utils/style';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { FormEvent, ReactNode } from 'react';
 
 interface SectionLayoutProps {
   children: ReactNode;
@@ -14,6 +14,10 @@ interface SectionLayoutProps {
 export default function SectionLayout({ children }: SectionLayoutProps) {
   const pathname = usePathname();
   const currentTab = tabs[getCurrentTab(pathname)];
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <div>
@@ -43,7 +47,7 @@ export default function SectionLayout({ children }: SectionLayoutProps) {
         </ul>
       </div>
 
-      <form id="form">
+      <form id="form" onSubmit={handleSubmit}>
         <div>
           <div className="pb-4 border-b border-gray-100">
             <div className="flex items-center justify-between">

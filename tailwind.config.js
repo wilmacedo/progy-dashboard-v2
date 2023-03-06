@@ -21,6 +21,13 @@ module.exports = {
       },
       red: {
         500: '#EF4444',
+        100: '#FFE7E7',
+      },
+      orange: {
+        300: '#FDA353',
+      },
+      green: {
+        500: '#79D510',
       },
       white: '#fff',
       transparent: '#ffffff00',

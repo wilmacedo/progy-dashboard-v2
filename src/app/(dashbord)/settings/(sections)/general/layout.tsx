@@ -1,6 +1,6 @@
 import { mockedUser } from '@/constants';
 import { ReactNode, Suspense } from 'react';
-import { Form } from './Form';
+import { Form } from './form';
 
 interface GeneralLayoutProps {
   children: ReactNode;

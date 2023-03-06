@@ -1,4 +1,4 @@
-import roles from '@/constants/roles';
+import roles, { Role } from '@/constants/roles';
 import { BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
 import { IoIosList } from 'react-icons/io';
 import { IoCreateOutline, IoSettingsOutline } from 'react-icons/io5';
@@ -18,6 +18,25 @@ export function isCurrentRoute(route: RouteConfig, pathname: string) {
   if (!route.relativePaths) return route.basePath === pathname;
 
   return route.relativePaths.includes(pathname);
+}
+
+export function getAllRoutes() {
+  const basePaths = sidebarRoutes(Role.ADMINISTRATOR).map(
+    path => path.basePath,
+  );
+  const relativePaths: string[] = [];
+  sidebarRoutes(Role.ADMINISTRATOR)
+    .filter(path => path.relativePaths)
+    .forEach(path => {
+      path.relativePaths?.forEach(relativePath =>
+        relativePaths.push(relativePath),
+      );
+    });
+
+  let paths = [...basePaths, ...relativePaths];
+  paths = paths.filter((path, index) => paths.indexOf(path) === index);
+
+  return paths;
 }
 
 export default function sidebarRoutes(roleId: number) {
