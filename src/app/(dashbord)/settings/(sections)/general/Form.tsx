@@ -2,15 +2,20 @@
 
 import Input from '@/components/Input';
 import { roleAlias } from '@/constants/roles';
+import { api } from '@/services/api/client';
 import { User } from '@/types/user';
 import { ct } from '@/utils/style';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { FieldProp, fields } from './config';
 import { GeneralResponse } from './page';
 
 export interface GeneralProps extends GeneralResponse {
   loading: boolean;
+}
+
+interface SubmitData {
+  [key: string]: string | number;
 }
 
 export function Form({ user, error, loading }: GeneralProps) {
@@ -39,6 +44,46 @@ export function Form({ user, error, loading }: GeneralProps) {
 
     return tempData[key];
   };
+
+  const handleForm = useCallback(
+    async (event: SubmitEvent) => {
+      event.preventDefault();
+
+      if (JSON.stringify(tempData) === JSON.stringify(user)) {
+        toast.info(
+          'É necessário alterar algum dado para atualizar as informações',
+        );
+        return;
+      }
+
+      const body: SubmitData = {};
+      Object.keys(tempData).forEach(key => {
+        if (tempData[key as keyof User] !== user[key as keyof User]) {
+          body[key] = tempData[key as keyof User] as string | number;
+        }
+      });
+
+      const { error, code } = await api({
+        method: 'PUT',
+        route: `/users/${user.id}`,
+        body,
+      });
+      if (error) {
+        toast.error(`(${code}) Houve um erro ao atualizar as informações`);
+        return;
+      }
+
+      toast.success('Informações atualizadas com sucesso!');
+    },
+    [tempData, user],
+  );
+
+  useEffect(() => {
+    const element = document.getElementById('form');
+    if (!element) return;
+
+    element.onsubmit = handleForm;
+  }, [handleForm]);
 
   return (
     <div>

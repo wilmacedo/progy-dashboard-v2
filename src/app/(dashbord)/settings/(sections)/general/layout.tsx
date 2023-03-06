@@ -6,6 +6,10 @@ interface GeneralLayoutProps {
   children: ReactNode;
 }
 
+export const metadata = {
+  title: 'Geral',
+};
+
 export default async function GeneralLayout({ children }: GeneralLayoutProps) {
   return (
     <Suspense fallback={<Form loading={true} user={mockedUser} />}>

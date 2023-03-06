@@ -6,7 +6,7 @@ export interface ResponseData<T> {
 export interface APIProps {
   route: string;
   body?: object;
-  method: 'GET' | 'POST';
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   cache?: 'no-store' | 'force-cache';
   revalidate?: number;
 }
@@ -21,5 +21,6 @@ export interface APIConfig {
 export interface APIResponse<T> {
   data?: T;
   error?: string;
+  code?: string;
   status: number;
 }

@@ -5,7 +5,10 @@ interface SettingsLayoutProps {
 }
 
 export const metadata = {
-  title: 'Configurações | Progy',
+  title: {
+    default: 'Configurações | Progy',
+    template: '%s | Configurações',
+  },
 };
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {

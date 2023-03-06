@@ -137,7 +137,7 @@ export default function Dashboard() {
             disabled={canAccess()}
             className={ct(
               'group',
-              'py-2.5 flex items-center justify-center bg-blue-300 rounded-md text-sm text-[#fff]',
+              'py-2.5 flex items-center justify-center bg-blue-300 rounded-md text-sm text-white',
               'disabled:opacity-30 disabled:cursor-not-allowed',
             )}
           >

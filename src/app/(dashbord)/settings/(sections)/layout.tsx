@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Button';
 import { getCurrentTab, tabs } from '@/config/tabs';
 import { ct } from '@/utils/style';
 import Link from 'next/link';
@@ -42,16 +43,26 @@ export default function SectionLayout({ children }: SectionLayoutProps) {
         </ul>
       </div>
 
-      <div>
-        <div className="pb-4 border-b border-gray-100">
-          <h2 className="mb-1 text-xl font-semibold">{currentTab.title}</h2>
-          <span className=" text-sm text-gray-500">
-            {currentTab.description}
-          </span>
-        </div>
+      <form id="form">
+        <div>
+          <div className="pb-4 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="mb-1 text-xl font-semibold">
+                  {currentTab.title}
+                </h2>
+                <span className=" text-sm text-gray-500">
+                  {currentTab.description}
+                </span>
+              </div>
 
-        <div className="mt-4">{children}</div>
-      </div>
+              <Button type="submit">Salvar</Button>
+            </div>
+          </div>
+
+          <div className="mt-4">{children}</div>
+        </div>
+      </form>
     </div>
   );
 }
