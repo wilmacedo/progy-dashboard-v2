@@ -4,13 +4,13 @@ import { getCurrentTab, tabs } from '@/config/tabs';
 import { ct } from '@/utils/style';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 
-interface SectionProps {
+interface SectionLayoutProps {
   children: ReactNode;
 }
 
-export default function SectionLayout({ children }: SectionProps) {
+export default function SectionLayout({ children }: SectionLayoutProps) {
   const pathname = usePathname();
   const currentTab = tabs[getCurrentTab(pathname)];
 
@@ -50,9 +50,7 @@ export default function SectionLayout({ children }: SectionProps) {
           </span>
         </div>
 
-        <div className="mt-4">
-          <Suspense fallback={<h1>CARREGANDO</h1>}>{children}</Suspense>
-        </div>
+        <div className="mt-4">{children}</div>
       </div>
     </div>
   );

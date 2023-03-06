@@ -12,4 +12,9 @@ export const fields: FieldProp[] = [
     description: 'Altere seu nome',
     key: 'name',
   },
+  {
+    label: 'E-mail',
+    description: 'Altere seu e-mail',
+    key: 'email',
+  },
 ];

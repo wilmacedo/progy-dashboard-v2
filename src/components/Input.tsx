@@ -5,9 +5,18 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
   className?: string;
   placeholder?: string;
   type?: 'text' | 'email' | 'password';
+  loading?: boolean;
 }
 
-export default function Input({ className, ...rest }: InputProps) {
+export default function Input({ className, loading, ...rest }: InputProps) {
+  if (loading) {
+    return (
+      <div className={ct('p-2.5 w-full max-w-lg rounded-md', className || '')}>
+        <div className="h-full w-full bg-gray-100 rounded-md animate-pulse" />
+      </div>
+    );
+  }
+
   return (
     <input
       className={ct(
