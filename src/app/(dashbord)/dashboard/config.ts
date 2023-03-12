@@ -1,9 +1,10 @@
+import { PieChartType } from '@/components/Chart';
 import { DashboardInfo } from '@/types/request';
 import { IconType } from 'react-icons';
 import { AiOutlineFileDone } from 'react-icons/ai';
 import { BiErrorAlt } from 'react-icons/bi';
-import { GiSupersonicArrow } from 'react-icons/gi';
 import { IoIosPaper } from 'react-icons/io';
+import { IoWarningOutline } from 'react-icons/io5';
 
 interface CardConfig {
   title: string;
@@ -14,39 +15,42 @@ interface CardConfig {
   redirect?: string;
 }
 
-export const mockedMetrics: DashboardInfo = {
-  title: 'Desconhecido',
-  costIndicator: [0, 0],
-  idp: [0, 0],
-  stagesPerInitiative: [],
-  statusPerActivity: [],
-  totalDelayed: 0,
-  totalGoals: 0,
-  totalInitiatives: 0,
-  totalInitiativesDone: 0,
-};
+interface ChartConfig {
+  title: string;
+  description: string;
+  key: keyof DashboardInfo;
+  route: string;
+}
+
+interface PieChartConfig {
+  title: string;
+  description: string[];
+  labels: string[];
+  key: keyof DashboardInfo;
+  type: PieChartType;
+}
 
 export const cards: CardConfig[] = [
   {
-    title: 'Objetivos totais',
-    Icon: GiSupersonicArrow,
-    bgColor: '#D6E8F1',
-    textColor: '#34BBFF',
-    key: 'totalGoals',
-  },
-  {
     title: 'Iniciativas totais',
     Icon: IoIosPaper,
-    bgColor: '#c5f2f2',
-    textColor: '#079698',
+    bgColor: '#D6E8F1',
+    textColor: '#34BBFF',
     key: 'totalInitiatives',
   },
   {
-    title: 'Iniciativas Concluídas',
+    title: 'Iniciativas concluídas',
     Icon: AiOutlineFileDone,
     bgColor: '#d4ebdc',
     textColor: '#059669',
     key: 'totalInitiativesDone',
+  },
+  {
+    title: 'Iniciativas para atrasar',
+    Icon: IoWarningOutline,
+    bgColor: '#f9efc7',
+    textColor: '#dc8420',
+    key: 'totalDelayed',
   },
   {
     title: 'Iniciativas em atraso',
@@ -55,5 +59,40 @@ export const cards: CardConfig[] = [
     textColor: '#dc3545',
     key: 'totalDelayed',
     redirect: '/',
+  },
+];
+
+export const charts: ChartConfig[] = [
+  {
+    title: 'Indicador de Iniciativas',
+    description: 'Veja o total de estágios por iniciativa',
+    key: 'stagesPerInitiative',
+    route: '/initiatives',
+  },
+  {
+    title: 'Indicador de Atividades',
+    description: 'Veja o total de status por atividade',
+    key: 'statusPerActivity',
+    route: '/activities',
+  },
+];
+
+export const pieCharts: PieChartConfig[] = [
+  {
+    title: 'Indicador de Custo',
+    description: ['Custo total por executado'],
+    labels: ['Custo Executado', 'Custo Projetado'],
+    key: 'costIndicator',
+    type: PieChartType.CURRENCY,
+  },
+  {
+    title: 'Índice IDP',
+    description: [
+      'Índice de desempenho de planejamento',
+      'Considera ano vigente da data de término',
+    ],
+    labels: ['Atividades concluídas', 'Ativdades pendentes'],
+    key: 'idp',
+    type: PieChartType.VALUE,
   },
 ];

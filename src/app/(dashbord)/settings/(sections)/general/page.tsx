@@ -2,7 +2,7 @@ import { mockedUser } from '@/constants';
 import { getRoleByName } from '@/constants/roles';
 import { api } from '@/services/api/server';
 import { User } from '@/types/user';
-import { Form } from './form';
+import { Form } from './Form';
 
 export interface GeneralResponse {
   user: User;

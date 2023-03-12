@@ -24,16 +24,25 @@ export class BaseAPI {
     const token = this.getBearerToken();
     if (token) base.headers.Authorization = `Bearer ${token}`;
 
-    const request = await fetch(base.baseURL + route, {
-      method,
-      ...(body && { body: JSON.stringify(body) }),
-      ...(cache && { cache }),
-      ...(revalidate && { next: { revalidate } }),
-      ...base,
-    });
+    try {
+      const request = await fetch(base.baseURL + route, {
+        method,
+        ...(body && { body: JSON.stringify(body) }),
+        ...(cache && { cache }),
+        ...(revalidate && { next: { revalidate } }),
+        ...base,
+      });
 
-    const response: ResponseData<T> = await request.json();
+      const response: ResponseData<T> = await request.json();
 
-    return { ...response, status: request.status };
+      return { ...response, status: request.status };
+    } catch (e) {
+      let message = 'Internal Server Error';
+      if (e instanceof TypeError) {
+        message = e.message;
+      }
+
+      return { status: 500, error: message };
+    }
   }
 }

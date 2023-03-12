@@ -19,7 +19,7 @@ interface SubmitData {
 }
 
 export function Form({ user, error, loading }: GeneralProps) {
-  const [tempData, setTempData] = useState(user);
+  const [tempData, setTempData] = useState<User>(user);
 
   useEffect(() => {
     if (!error) return;
@@ -87,7 +87,7 @@ export function Form({ user, error, loading }: GeneralProps) {
 
   return (
     <div>
-      <ToastContainer autoClose={2500} />
+      <ToastContainer autoClose={3500} />
       {fields.map((field, index) => (
         <div
           className={ct(

@@ -10,20 +10,17 @@ export interface Planning {
   created_at: string;
 }
 
+export interface ChartRelation {
+  percentage: number;
+  value: number;
+  title: string;
+  id: number;
+}
+
 export interface DashboardInfo {
   title: string;
-  stagesPerInitiative: {
-    percentage: number;
-    value: 0;
-    title: string;
-    id: number;
-  }[];
-  statusPerActivity: {
-    percentage: number;
-    value: number;
-    title: string;
-    id: number;
-  }[];
+  stagesPerInitiative: ChartRelation[];
+  statusPerActivity: ChartRelation[];
   costIndicator: number[];
   idp: number[];
   totalGoals: number;
