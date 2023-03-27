@@ -3,7 +3,7 @@
 import Input from '@/components/Input';
 import { roleAlias } from '@/constants/roles';
 import { api } from '@/services/api/client';
-import { User } from '@/types/user';
+import { User } from '@/types/request';
 import { ct } from '@/utils/style';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';

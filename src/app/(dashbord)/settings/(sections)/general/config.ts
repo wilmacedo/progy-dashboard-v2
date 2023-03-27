@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { User } from '@/types/request';
 
 export interface FieldProp {
   label: string;

@@ -1,7 +1,7 @@
 import { mockedUser } from '@/constants';
 import { getRoleByName } from '@/constants/roles';
 import { api } from '@/services/api/server';
-import { User } from '@/types/user';
+import { User } from '@/types/request';
 import { Form } from './Form';
 
 export interface GeneralResponse {

@@ -1,4 +1,4 @@
-import { AuthUser } from '@/types/user';
+import { AuthUser } from '@/types/request';
 import { api } from './api/client';
 
 export interface SignInRequestData {
