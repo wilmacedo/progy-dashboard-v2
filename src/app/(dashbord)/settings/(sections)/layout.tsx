@@ -60,7 +60,7 @@ export default function SectionLayout({ children }: SectionLayoutProps) {
                 </span>
               </div>
 
-              <Button type="submit">Salvar</Button>
+              {currentTab.button && <Button type="submit">Salvar</Button>}
             </div>
           </div>
 

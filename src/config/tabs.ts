@@ -3,6 +3,7 @@ interface TabConfig {
   path: string;
   title: string;
   description: string;
+  button?: boolean;
 }
 
 export function getCurrentTab(pathname: string) {
@@ -22,6 +23,7 @@ export const tabs: TabConfig[] = [
     path: '/settings/general',
     title: 'Informação pessoal',
     description: 'Atualize e revise sus informações pessoais aqui',
+    button: true,
   },
   {
     name: 'Membros',

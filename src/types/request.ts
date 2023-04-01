@@ -40,3 +40,14 @@ export interface User extends AuthUser {
   institution_id: number;
   role?: string;
 }
+
+export interface Institution {
+  id: number;
+  name: string;
+  code: string;
+}
+
+export interface Role {
+  id: number;
+  name: string;
+}
