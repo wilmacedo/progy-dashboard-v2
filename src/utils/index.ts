@@ -34,3 +34,10 @@ export const getLocalStorageItem = <T>(
     return false;
   }
 };
+
+export const validateBase64 = (base64: string): boolean => {
+  const regex =
+    /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+
+  return regex.test(base64);
+};
