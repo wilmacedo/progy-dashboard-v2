@@ -26,8 +26,10 @@ const getRoles = async () => {
 };
 
 export default async function Members() {
-  const institutions = await getInstitutions();
-  const roles = await getRoles();
+  const [institutions, roles] = await Promise.all([
+    getInstitutions(),
+    getRoles(),
+  ]);
 
   return <MembersForm institutions={institutions} roles={roles} />;
 }
