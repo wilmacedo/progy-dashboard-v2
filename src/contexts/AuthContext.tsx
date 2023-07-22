@@ -1,5 +1,6 @@
 'use client';
 
+import { useToast } from '@/components/ui/use-toast';
 import { AUTH_DATA_KEY } from '@/constants';
 import roles from '@/constants/roles';
 import { RequestData, signInRequest, SignInRequestData } from '@/services/auth';
@@ -13,7 +14,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { toast } from 'react-toastify';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -36,6 +36,7 @@ const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserData | undefined>();
   const router = useRouter();
+  const { toast } = useToast();
 
   function getAuthCookieData() {
     const cookies = parseCookies();
@@ -65,12 +66,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const data = getAuthCookieData();
     if (!data) {
-      toast.warn('Erro ao carregar as informações do usuário');
+      toast({
+        description: 'Erro ao carregar as informações do usuário',
+      });
       return;
     }
 
     setUser(data.user);
-  }, [user, isAuthenticaded]);
+  }, [user, isAuthenticaded, toast]);
 
   async function signIn({ email, password, remember }: SignInRequestData) {
     const { status, data } = await signInRequest({ email, password });

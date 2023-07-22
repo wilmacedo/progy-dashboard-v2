@@ -1,22 +1,30 @@
-'use client';
-
 import { ct } from '@/utils/style';
+import { ReactNode } from 'react';
 import { RxDotsVertical } from 'react-icons/rx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
-export default function Options() {
-  function onClick() {
-    // TODO: Create options menu
-  }
+interface OptionsProps {
+  children?: ReactNode;
+}
 
+export default function Options({ children }: OptionsProps) {
   return (
-    <div
-      className={ct(
-        'h-5 w-5 flex items-center justify-center border border-gray-100 rounded-full cursor-pointer duration-200',
-        'hover:border-gray-500',
-      )}
-      onClick={onClick}
-    >
-      <RxDotsVertical className="text-[0.75rem]" />
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <div
+          className={ct(
+            'h-5 w-5 flex items-center justify-center border border-gray-100 rounded-full cursor-pointer duration-200',
+            'hover:border-gray-500',
+          )}
+        >
+          <RxDotsVertical className="text-[0.75rem]" />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>{children}</DropdownMenuContent>
+    </DropdownMenu>
   );
 }
