@@ -18,6 +18,10 @@ export class BaseAPI {
     return '';
   }
 
+  getValidStatus() {
+    return [200, 201];
+  }
+
   async request<T>(): Promise<APIResponse<T>> {
     const { route, method, body, cache, revalidate } = this.props;
     const base = this.baseConfig;
@@ -32,6 +36,10 @@ export class BaseAPI {
         ...(revalidate && { next: { revalidate } }),
         ...base,
       });
+
+      if (!this.getValidStatus().includes(request.status)) {
+        return { status: request.status, error: request.statusText };
+      }
 
       const response: ResponseData<T> = await request.json();
 

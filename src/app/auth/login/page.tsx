@@ -2,11 +2,11 @@
 
 import { Checkbox } from '@/components/Checkbox';
 import Spinner from '@/components/Spinner';
+import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { ct } from '@/utils/style';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import { fields, imageSize } from './config';
 
 interface Credentials {
@@ -16,6 +16,7 @@ interface Credentials {
 
 export default function Dashboard() {
   const { signIn } = useAuth();
+  const { toast } = useToast();
 
   const [credentials, setCredentials] = useState<Credentials>(
     {} as Credentials,
@@ -65,13 +66,16 @@ export default function Dashboard() {
         break;
     }
 
-    toast.error(message);
+    toast({
+      variant: 'destructive',
+      title: 'Oops! Algo deu errado.',
+      description: message,
+    });
     setLoading(false);
   };
 
   return (
     <div className="h-screen w-screen flex justify-center bg-gray-200">
-      <ToastContainer autoClose={2500} />
       <div className="mt-20 flex flex-col gap-10">
         <div className="flex items-center gap-2">
           <Image

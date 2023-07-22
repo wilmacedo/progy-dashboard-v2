@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { Inter } from '@next/font/google';
 import { ReactNode } from 'react';
@@ -23,6 +24,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="pt-BR" className={inter.className}>
       <body>
         <AuthProvider>{children}</AuthProvider>
+        <Toaster />
       </body>
     </html>
   );
