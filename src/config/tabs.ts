@@ -31,4 +31,10 @@ export const tabs: TabConfig[] = [
     title: 'Membros',
     description: 'Gerencie os membros de cada institutição e planejamento aqui',
   },
+  {
+    name: 'Notificações',
+    path: '/settings/notifications',
+    title: 'Notificações',
+    description: 'Revise e atualize suas preferências de notificação aqui',
+  },
 ];
