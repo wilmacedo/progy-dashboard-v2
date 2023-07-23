@@ -79,7 +79,7 @@ export default function Planning() {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  className="bg-transparent text-[#000000] font-semibold"
+                  className="bg-transparent text-black font-semibold"
                   disabled={currentStep === 0}
                   onClick={back}
                 >

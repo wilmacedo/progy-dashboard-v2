@@ -1,12 +1,14 @@
 'use client';
 
+import Input from '@/components/Input';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { cn } from '@/lib/utils';
+import { codeMask } from '@/utils/code-mask';
+import { ChangeEvent } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FormSchema } from '..';
 import { companyInputs } from './inputs';
@@ -18,6 +20,15 @@ interface CompanyFormProps {
 export function CompanyForm({
   formController: { register },
 }: CompanyFormProps) {
+  const handleMaskInput = (
+    event: ChangeEvent<HTMLInputElement>,
+    canChange: boolean,
+  ) => {
+    if (!canChange) return;
+
+    event.target.value = codeMask(event.target.value);
+  };
+
   return (
     <Accordion
       type="single"
@@ -45,18 +56,13 @@ export function CompanyForm({
                   <p className="text-sm text-gray-500">{input.description}</p>
                 </div>
 
-                <input
-                  className={cn(
-                    'px-2.5 py-2.5 border border-gray-100 rounded outline-blue-300 duration-200 text-sm',
-                    'hover:bg-[#E7E9ED]',
-                    'disabled:bg-[#E7E9ED] disabled:cursor-not-allowed',
-                    'invalid:border-red-500 invalid:text-red-500',
-                    'focus:invalid:outline-red-500 focus:invalid:text-red-500',
-                    'w-full max-w-lg h-12',
-                  )}
+                <Input
+                  {...register(input.type, {
+                    onChange: event =>
+                      handleMaskInput(event, input.type === 'companyCode'),
+                  })}
                   autoFocus={i === 0}
                   placeholder={input.placeholder}
-                  {...register(input.type)}
                 />
               </div>
             ))}
