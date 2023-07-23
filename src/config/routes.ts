@@ -1,16 +1,16 @@
 import roles, { Role } from '@/constants/roles';
+import { LucideIcon, PackagePlus } from 'lucide-react';
 import { BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
 import { IoIosList } from 'react-icons/io';
 import { IoCreateOutline, IoSettingsOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
-import { VscNewFile } from 'react-icons/vsc';
 import { allPaths } from './tabs';
 
 interface RouteConfig {
   basePath: string;
   relativePaths?: string[];
   name: string;
-  Icon: IconType;
+  Icon: IconType | LucideIcon;
   bottom?: boolean;
 }
 
@@ -73,9 +73,10 @@ export default function sidebarRoutes(roleId: number) {
       Icon: IoIosList,
     },
     {
-      basePath: '/parametrization',
-      name: 'Nova Parametrização',
-      Icon: VscNewFile,
+      basePath: '/module',
+      relativePaths: ['/module', '/module/planning'],
+      name: 'Novo Módulo',
+      Icon: PackagePlus,
     },
   ];
 
