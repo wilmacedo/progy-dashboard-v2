@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { ct } from '@/utils/style';
 import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 import Spinner from './Spinner';
@@ -21,7 +22,7 @@ export default function Button({
   return (
     <button
       data-loading={loading}
-      className={ct(
+      className={cn(
         'group',
         'py-2.5 px-3 flex items-center justify-center bg-blue-300 rounded-md text-sm text-white duration-200',
         'hover:brightness-125',

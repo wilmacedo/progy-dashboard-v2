@@ -105,7 +105,11 @@ export default function Sidebar({ children }: SidebarProps) {
                         'group-data-[current=true]:text-blue-300',
                       )}
                     >
-                      <route.Icon />
+                      {route.basePath === '/module' ? (
+                        <route.Icon strokeWidth={1.25} />
+                      ) : (
+                        <route.Icon />
+                      )}
                     </span>
                     <span
                       className={ct(

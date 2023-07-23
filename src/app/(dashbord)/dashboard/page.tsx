@@ -1,7 +1,6 @@
 import Button from '@/components/Button';
 import BarChart from '@/components/Chart/Bar';
 import PieChart from '@/components/Chart/Pie';
-import Options from '@/components/Options';
 import { mockedMetrics } from '@/constants';
 import roles from '@/constants/roles';
 import { api } from '@/services/api/server';
@@ -100,8 +99,6 @@ export default async function Dashboard(props: DashboardProps) {
                     </div>
                     <span>{card.title}</span>
                   </div>
-
-                  <Options />
                 </div>
 
                 <div className="flex items-end justify-between">

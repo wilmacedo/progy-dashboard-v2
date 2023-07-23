@@ -51,6 +51,7 @@ export const cards: CardConfig[] = [
     bgColor: '#f9efc7',
     textColor: '#dc8420',
     key: 'totalDelayed',
+    redirect: '/',
   },
   {
     title: 'Iniciativas em atraso',

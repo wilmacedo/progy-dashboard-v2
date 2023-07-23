@@ -17,6 +17,8 @@ module.exports = {
       },
       blue: {
         300: '#3E6BF7',
+        500: '#5657A1',
+        800: '#3C3E71',
         900: '#062256',
       },
       red: {
@@ -30,6 +32,7 @@ module.exports = {
         500: '#79D510',
       },
       white: '#fff',
+      black: '#000',
       transparent: '#ffffff00',
     },
 
