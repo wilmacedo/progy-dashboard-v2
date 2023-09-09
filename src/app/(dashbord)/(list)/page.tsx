@@ -16,7 +16,7 @@ async function getPlannings() {
     method: 'GET',
   });
 
-  return data || [];
+  return data ?? [];
 }
 
 async function getMetrics(id: number) {
@@ -69,15 +69,13 @@ export default async function List() {
     } else return 'red';
   };
 
-  if (plannings.length === 0) {
+  if (plannings.length) {
     return (
-      <div className="absolute top-[50%] left-[25%] translate-x-[50%] translate-y-[50%]">
-        <div className="mx-auto">
-          <div className="flex gap-2 text-muted-foreground">
-            <BookTemplate />
-            <span>Você ainda não possui nenhum planejamento</span>
-          </div>
-        </div>
+      <div className="absolute w-full flex items-center justify-center gap-2">
+        <BookTemplate className="text-muted-foreground" />
+        <span className="text-muted-foreground">
+          Você ainda não possui nenhum planejamento.
+        </span>
       </div>
     );
   }
