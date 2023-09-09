@@ -7,13 +7,15 @@ import { useTheme } from '@/contexts/theme/theme-context';
 import { getFirstsLetters } from '@/utils';
 import { ct } from '@/utils/style';
 import { getCookie, setCookie } from 'cookies-next';
-import { Palette } from 'lucide-react';
+import { Menu, Palette } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useState } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
+import { twMerge } from 'tailwind-merge';
 import { Logo } from './logo';
+import { Button } from './ui/button';
 
 interface SidebarProps {
   children: ReactNode;
@@ -39,8 +41,8 @@ export default function Sidebar({ children }: SidebarProps) {
   const { toggleTheme } = useTheme();
 
   const [expanded, setExpanded] = useState(getExpandedValue());
+  const [expandedMobile, setExpandedMobile] = useState(false);
 
-  const imageSize = 30;
   const routes = sidebarRoutes(role_id);
   const splittedRoutes = [
     routes.filter(route => !route.bottom),
@@ -55,6 +57,10 @@ export default function Sidebar({ children }: SidebarProps) {
     });
   };
 
+  function handleExpandMobile() {
+    setExpandedMobile(prev => !prev);
+  }
+
   const handleLogout = () => {
     signOut();
     router.push(redirectUrl);
@@ -64,7 +70,7 @@ export default function Sidebar({ children }: SidebarProps) {
     <div data-expanded={expanded} className="group">
       <div
         className={ct(
-          'fixed p-2 flex flex-col w-64 h-screen bg-accent dark:bg-background border-r border-border duration-200',
+          'fixed p-2 hidden md:flex flex-col w-64 h-screen bg-accent dark:bg-background border-r border-border duration-200',
           'group-data-[expanded=true]:w-20',
         )}
       >
@@ -111,11 +117,9 @@ export default function Sidebar({ children }: SidebarProps) {
                         'group-data-[current=true]:text-primary',
                       )}
                     >
-                      {route.basePath === '/module' ? (
-                        <route.Icon strokeWidth={1.25} />
-                      ) : (
-                        <route.Icon />
-                      )}
+                      <route.Icon
+                        strokeWidth={route.basePath === '/module' ? 1.25 : 1}
+                      />
                     </span>
                     <span
                       className={ct(
@@ -176,9 +180,85 @@ export default function Sidebar({ children }: SidebarProps) {
         </div>
       </div>
       <div
+        className={twMerge(
+          'group p-4 py-4 fixed z-30 w-full flex items-center justify-between',
+          'md:hidden',
+        )}
+      >
+        <Button
+          variant="ghost"
+          className="px-0 h-8 inline-flex items-center gap-2"
+          asChild
+        >
+          <Link href="/">
+            <Logo className="w-8 h-8" />
+            <h1 className="font-bold tracking-widest text-lg">PROGY</h1>
+          </Link>
+        </Button>
+        <Button
+          className="px-0 h-8"
+          variant="ghost"
+          onClick={handleExpandMobile}
+        >
+          <Menu />
+        </Button>
+      </div>
+      <div
+        className="fixed md:hidden group z-20 h-16 w-full bg-accent dark:bg-background border-b border-border transition-all duration-500 data-[expanded=true]:h-[20.5rem] data-[expanded=true]:sahdow-md"
+        data-expanded={expandedMobile}
+      >
+        <div
+          className="opacity-0 invisible transition-all duration-500 data-[expanded=true]:visible data-[expanded=true]:opacity-100"
+          data-expanded={expandedMobile}
+        >
+          <nav className="mt-16 mx-4 space-y-2">
+            {routes.map((route, index) => (
+              <Link
+                key={index}
+                data-current={isCurrentRoute(route, pathname)}
+                className={twMerge(
+                  'flex items-center gap-2 px-2 py-1.5 rounded-md',
+                  'hover:bg-muted-foreground/10',
+                  'data-[current=true]:text-primary data-[current=true]:bg-muted-foreground/10',
+                )}
+                href={route.basePath}
+                onClick={handleExpandMobile}
+              >
+                <route.Icon
+                  size={20}
+                  strokeWidth={route.basePath === '/module' ? 1.25 : 1}
+                />
+                <p>{route.name}</p>
+              </Link>
+            ))}
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-base h-9 px-2 font-normal hover:bg-muted-foreground/10"
+              onClick={signOut}
+            >
+              <FiLogOut size={18} />
+              <p className="ml-2">Sair</p>
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-base h-9 px-2 font-normal hover:bg-muted-foreground/10"
+              onClick={() => {
+                handleExpandMobile();
+                toggleTheme();
+              }}
+            >
+              <Palette size={18} />
+              <p className="ml-2">Alterar tema</p>
+            </Button>
+          </nav>
+        </div>
+      </div>
+      <div
         className={ct(
-          'ml-72 pt-8 pr-12 duration-200',
-          'group-data-[expanded=true]:ml-28',
+          'pt-20 px-4 duration-200',
+          'md:mt-0 md:ml-72 md:pt-8 md:pr-12',
+          'md:group-data-[expanded=true]:ml-28',
         )}
       >
         {children}
