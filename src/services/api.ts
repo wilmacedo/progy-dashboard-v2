@@ -35,7 +35,7 @@ async function getHeaders(params?: RequestInit): Promise<HeadersInit> {
   }
 
   const token = getToken();
-  if (token) {
+  if (token !== null) {
     headers = { ...headers, Authorization: `Bearer ${token.token}` };
   }
 
