@@ -1,9 +1,7 @@
-import { Toaster } from '@/components/ui/toaster';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { Inter } from '@next/font/google';
+import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,10 +19,9 @@ export const metadata = {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-BR" className={inter.className}>
-      <body>
-        <AuthProvider>{children}</AuthProvider>
-        <Toaster />
+    <html lang="pt-BR" className="light">
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

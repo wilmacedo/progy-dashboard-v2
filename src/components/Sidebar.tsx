@@ -1,5 +1,6 @@
 'use client';
 
+import { redirectUrl } from '@/config/auth';
 import sidebarRoutes, { isCurrentRoute } from '@/config/routes';
 import { mockedUser } from '@/constants';
 import { useAuth } from '@/contexts/AuthContext';
@@ -46,7 +47,7 @@ export default function Sidebar({ children }: SidebarProps) {
 
   const handleLogout = () => {
     signOut();
-    router.push('/auth/login');
+    router.push(redirectUrl);
   };
 
   return (

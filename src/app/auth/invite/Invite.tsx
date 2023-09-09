@@ -3,14 +3,14 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Spinner from '@/components/Spinner';
+import { Logo } from '@/components/logo';
+import { redirectUrl } from '@/config/auth';
 import { api } from '@/services/api/client';
 import { ct } from '@/utils/style';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import { imageSize } from '../login/config';
-import { errorMessages, ErrorType } from './config';
+import { ToastContainer, toast } from 'react-toastify';
+import { ErrorType, errorMessages } from './config';
 import { InviteData } from './page';
 
 interface ResultData extends InviteData {
@@ -99,7 +99,7 @@ export default function InvitePage({ data, names }: InviteProps) {
       return;
     }
 
-    router.push('/auth/login');
+    router.push(redirectUrl);
   };
 
   return (
@@ -108,12 +108,7 @@ export default function InvitePage({ data, names }: InviteProps) {
 
       <div className="mt-20 flex flex-col gap-10">
         <div className="flex items-center gap-2">
-          <Image
-            src="/assets/logo.svg"
-            alt="Logo"
-            width={imageSize}
-            height={imageSize}
-          />
+          <Logo className="w-8 h-8" />
 
           <span className="font-bold text-md tracking-widest whitespace-nowrap">
             PROGY

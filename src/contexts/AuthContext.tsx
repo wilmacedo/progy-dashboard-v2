@@ -1,6 +1,7 @@
 'use client';
 
 import { useToast } from '@/components/ui/use-toast';
+import { redirectUrl } from '@/config/auth';
 import { AUTH_DATA_KEY } from '@/constants';
 import roles from '@/constants/roles';
 import { RequestData, signInRequest, SignInRequestData } from '@/services/auth';
@@ -93,7 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function signOut() {
     destroyCookie(undefined, AUTH_DATA_KEY);
-    router.push('/auth/login');
+    router.push(redirectUrl);
   }
 
   function retrieveUserRole() {
