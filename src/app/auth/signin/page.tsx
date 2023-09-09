@@ -3,7 +3,7 @@ import { SigninForm } from './signin-form';
 
 export default function Page() {
   return (
-    <div className="px-4 w-screen h-screen flex flex-col md:px-0 md:items-center justify-center bg-background">
+    <div className="px-4 bg-accent dark:bg-background w-screen h-screen flex flex-col md:px-0 md:items-center justify-center">
       <div className="space-y-8">
         <div className="flex items-center gap-2">
           <Logo className="w-8 h-8" />
