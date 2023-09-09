@@ -17,8 +17,8 @@ export default function Options({ children }: OptionsProps) {
       <DropdownMenuTrigger>
         <div
           className={ct(
-            'h-5 w-5 flex items-center justify-center border border-gray-100 rounded-full cursor-pointer duration-200',
-            'hover:border-gray-500',
+            'h-5 w-5 flex items-center justify-center border border-border rounded-full cursor-pointer duration-200',
+            'hover:border-muted-foreground',
           )}
         >
           <RxDotsVertical className="text-[0.75rem]" />

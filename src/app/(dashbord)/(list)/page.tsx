@@ -73,7 +73,7 @@ export default async function List() {
     return (
       <div className="absolute top-[50%] left-[25%] translate-x-[50%] translate-y-[50%]">
         <div className="mx-auto">
-          <div className="flex gap-2 text-gray-500">
+          <div className="flex gap-2 text-muted-foreground">
             <BookTemplate />
             <span>Você ainda não possui nenhum planejamento</span>
           </div>
@@ -86,7 +86,7 @@ export default async function List() {
     return plannings.map((planning, index) => (
       <div
         key={index}
-        className="min-w-[16.5rem] border border-gray-100 rounded-md gap-8"
+        className="min-w-[16.5rem] border border-border rounded-md gap-8"
       >
         <div className="p-4">
           <div className="flex items-start justify-between">
@@ -94,7 +94,7 @@ export default async function List() {
               <span className="block max-w-[10rem] font-semibold text-sm truncate">
                 {planning.name}
               </span>
-              <span className="mt-0.5 max-w-[8rem] block text-xs truncate text-gray-500">
+              <span className="mt-0.5 max-w-[8rem] block text-xs truncate text-muted-foreground">
                 {planning.institution.name}
               </span>
             </div>
@@ -105,8 +105,8 @@ export default async function List() {
           <div className="mt-4 flex flex-col gap-1">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <IoRocketOutline className="text-sm text-gray-500" />
-                <span className="text-xs text-gray-500">Progresso</span>
+                <IoRocketOutline className="text-sm text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Progresso</span>
               </div>
 
               <span className="text-xs font-semibold">
@@ -115,7 +115,7 @@ export default async function List() {
               </span>
             </div>
 
-            <div className="relative h-2 bg-gray-100 rounded-md">
+            <div className="relative h-2 bg-border rounded-md">
               <div
                 style={{ width: `${getPercent(planning)}%` }}
                 data-percent={getPercentColor(planning)}
@@ -128,11 +128,11 @@ export default async function List() {
           </div>
         </div>
 
-        <div className="border-t border-gray-100">
+        <div className="border-t border-border">
           <div className="py-2 px-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="px-2 py-0.5 bg-gray-100 rounded-md">
-                <span className="text-xs text-gray-500">
+              <div className="px-2 py-0.5 bg-border rounded-md">
+                <span className="text-xs text-muted-foreground">
                   {format(new Date(planning.created_at), 'dd MMM yyyy', {
                     locale: ptBR,
                   })}
@@ -143,19 +143,19 @@ export default async function List() {
                 data-count={findMetricByName(planning.name).totalDelayed > 0}
                 className={ct(
                   'group',
-                  'p-1.5 flex items-center justify-center gap-1 bg-gray-100 rounded-full',
+                  'p-1.5 flex items-center justify-center gap-1 bg-border rounded-full',
                   'data-[count=true]:bg-red-100',
                 )}
               >
                 <TbAlertCircle
                   className={ct(
-                    'text-gray-500',
+                    'text-muted-foreground',
                     'group-data-[count=true]:text-red-500',
                   )}
                 />
                 <span
                   className={ct(
-                    'text-xs text-gray-500',
+                    'text-xs text-muted-foreground',
                     'group-data-[count=true]:text-red-500',
                   )}
                 >
@@ -175,7 +175,7 @@ export default async function List() {
 
   return (
     <div className="absolute top-[50%] left-[25%] translate-x-[50%] translate-y-[50%]">
-      <div className="flex gap-2 text-gray-500">
+      <div className="flex gap-2 text-muted-foreground">
         <ServerOff />
         <span>Oops! Parece que houve um erro ao carregar essa página.</span>
       </div>

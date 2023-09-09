@@ -9,9 +9,9 @@ interface ListLayoutProps {
 export default async function ListLayout({ children }: ListLayoutProps) {
   return (
     <div>
-      <div className="pb-4 border-b border-gray-100">
+      <div className="pb-4 border-b border-border">
         <h1 className="mb-6 font-semibold text-3xl">Planejamentos</h1>
-        <span className="text-md text-gray-500">
+        <span className="text-md text-muted-foreground">
           Veja todos os planejamentos disponíveis aqui
         </span>
       </div>
