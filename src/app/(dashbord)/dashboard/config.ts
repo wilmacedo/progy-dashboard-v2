@@ -86,14 +86,14 @@ export const pieCharts: PieChartConfig[] = [
     key: 'costIndicator',
     type: PieChartType.CURRENCY,
   },
-  {
-    title: 'Índice IDP',
-    description: [
-      'Índice de desempenho de planejamento',
-      'Considera ano vigente da data de término',
-    ],
-    labels: ['Atividades concluídas', 'Ativdades pendentes'],
-    key: 'idp',
-    type: PieChartType.VALUE,
-  },
+  // {
+  //   title: 'Índice IDP',
+  //   description: [
+  //     'Índice de desempenho de planejamento',
+  //     'Considera ano vigente da data de término',
+  //   ],
+  //   labels: ['Atividades concluídas', 'Ativdades pendentes'],
+  //   key: 'idp',
+  //   type: PieChartType.VALUE,
+  // },
 ];

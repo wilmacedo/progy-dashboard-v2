@@ -1,12 +1,20 @@
 'use client';
 
 import { Chart, registerables, TooltipItem } from 'chart.js';
+import { ComponentProps } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { PieChartProps, PieChartType } from '.';
 
 Chart.register(...registerables);
 
-export default function PieChart({ labels, values, type }: PieChartProps) {
+type PieChartComponentProps = PieChartProps & ComponentProps<'div'>;
+
+export default function PieChart({
+  labels,
+  values,
+  type,
+  ...rest
+}: PieChartComponentProps) {
   const labelCallback = (item: TooltipItem<'pie'>) => {
     if (type === PieChartType.VALUE) return `Quantidade: ${item.parsed}`;
 
@@ -25,7 +33,7 @@ export default function PieChart({ labels, values, type }: PieChartProps) {
   };
 
   return (
-    <div className="max-h-[10rem]">
+    <div {...rest}>
       <Pie
         data={{
           labels,
@@ -53,7 +61,7 @@ export default function PieChart({ labels, values, type }: PieChartProps) {
                 size: 14,
                 weight: '500',
               },
-              bodyColor: '#FFF',
+              bodyColor: '#fff',
               displayColors: false,
               padding: 10,
             },

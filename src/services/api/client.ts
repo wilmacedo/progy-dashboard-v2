@@ -1,5 +1,5 @@
 import { AUTH_DATA_KEY } from '@/constants';
-import { parseCookies } from 'nookies';
+import { getCookie } from 'cookies-next';
 import { RequestData } from '../auth';
 import { BaseAPI } from './base';
 import { APIProps, APIResponse } from './types';
@@ -7,7 +7,7 @@ import { APIProps, APIResponse } from './types';
 export async function api<T>(props: APIProps): Promise<APIResponse<T>> {
   const baseApi = new BaseAPI(props);
   baseApi.getBearerToken = () => {
-    const { [AUTH_DATA_KEY]: authData } = parseCookies();
+    const authData = getCookie(AUTH_DATA_KEY);
     if (!authData) return '';
 
     try {

@@ -1,3 +1,5 @@
+import BarChart from '@/components/Chart/Bar';
+import PieChart from '@/components/Chart/Pie';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -6,13 +8,13 @@ import { mockedMetrics } from '@/constants';
 import roles from '@/constants/roles';
 import { getServerAuth } from '@/contexts/auth/get-server-auth';
 import { api } from '@/services/api/server';
-import { DashboardInfo } from '@/types/request';
+import { ChartRelation, DashboardInfo } from '@/types/request';
 import { addDays } from 'date-fns';
-import { ChevronLeft } from 'lucide-react';
+import { BarChart3, ChevronLeft, PieChart as PieChartIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
-import { cards } from './config';
+import { cards, charts, pieCharts } from './config';
 
 interface DashboardProps {
   searchParams?: {
@@ -90,7 +92,7 @@ export default async function Dashboard(props: DashboardProps) {
               Indicadores
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="overview">
+          <TabsContent value="overview" className="space-y-4">
             <div className="grid grid-flow-row gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
               {cards.map((card, index) => (
                 <div
@@ -124,79 +126,78 @@ export default async function Dashboard(props: DashboardProps) {
                 </div>
               ))}
             </div>
+
+            <div className="w-full grid gap-4 lg:grid-cols-[2fr_1fr]">
+              <div className="flex flex-col md:flex-row items-center justify-between space-x-4 p-4 border border-input rounded-md shadow-sm">
+                <div className="w-full grid grid-cols-1 lg:grid-cols-2">
+                  {charts.map((chart, index) => (
+                    <div key={index} className="w-full space-y-2">
+                      <div className="inline-flex items-center space-x-2">
+                        <BarChart3 size={26} className="text-foreground" />
+                        <div className="">
+                          <h3 className="font-medium text-foreground">
+                            {chart.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {chart.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      <BarChart
+                        labels={(metrics[chart.key] as ChartRelation[]).map(
+                          item => item.title,
+                        )}
+                        values={(metrics[chart.key] as ChartRelation[]).map(
+                          item => ({
+                            id: item.id,
+                            value: item.value,
+                          }),
+                        )}
+                        route={chart.route}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col space-x-4 p-4 border border-input rounded-md shadow-sm">
+                <div className="w-full grid grid-cols-1 gap-2">
+                  {pieCharts.map((chart, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="inline-flex items-center space-x-2">
+                        <PieChartIcon size={26} className="text-foreground" />
+                        <div className="">
+                          <h3 className="font-medium text-foreground">
+                            {chart.title}
+                          </h3>
+                          {chart.description.map((description, index) => (
+                            <p
+                              key={index}
+                              className="text-sm text-muted-foreground odd:text-xs"
+                            >
+                              {description}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="w-full flex items-center justify-center">
+                        <PieChart
+                          className="max-h-56"
+                          labels={chart.labels}
+                          values={metrics[chart.key] as number[]}
+                          type={chart.type}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
     </div>
-    //   <div className={ct('flex', 'sm:flex-col md:flex-col lg:flex-row')}>
-    //     <div className="flex-col w-full">
-    //       <div
-    //         className={ct(
-    //           'mt-4 grid grid-flow-row gap-6',
-    //           'sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-4',
-    //         )}
-    //       >
-    //         {cards.map((card, index) => (
-    //           <div
-    //             className="p-4 border border-gray-100 rounded-md shadow-sm"
-    //             key={index}
-    //           >
-
-    //             <div className="flex items-end justify-between">
-    //               <span className="text-2xl font-semibold">
-    //                 {String(metrics[card.key])}
-    //               </span>
-
-    //               {card.redirect && (
-    //                 <Link href={card.redirect}>
-    //                   <span
-    //                     className={ct(
-    //                       'text-xs font-bold text-blue-300 duration-100 cursor-pointer text-end',
-    //                       'hover:brightness-125',
-    //                     )}
-    //                   >
-    //                     Visualizar
-    //                   </span>
-    //                 </Link>
-    //               )}
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
-
-    //       <div
-    //         className={ct(
-    //           'mt-5 p-4 flex justify-between border border-gray-100 rounded-md shadow-sm',
-    //           'sm:flex-col',
-    //           'lg:flex-row',
-    //         )}
-    //       >
-    //         {charts.map((chart, index) => (
-    //           <div className="flex-col" key={index}>
-    //             <div className="mb-4 flex items-center gap-2">
-    //               <AiOutlineBarChart className="text-3xl" />
-    //               <div>
-    //                 <h1 className="text-xl">{chart.title}</h1>
-    //                 <span className="text-gray-500 text-sm">
-    //                   {chart.description}
-    //                 </span>
-    //               </div>
-    //             </div>
-
-    //             <BarChart
-    //               labels={(metrics[chart.key] as ChartRelation[]).map(
-    //                 item => item.title,
-    //               )}
-    //               values={(metrics[chart.key] as ChartRelation[]).map(item => ({
-    //                 id: item.id,
-    //                 value: item.value,
-    //               }))}
-    //               route={chart.route}
-    //             />
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
 
     //     <div
     //       className={ct(

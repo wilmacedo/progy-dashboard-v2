@@ -2,12 +2,20 @@
 
 import { Chart, registerables, TooltipItem } from 'chart.js';
 import { useRouter } from 'next/navigation';
+import { ComponentProps } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { BarChartProps } from '.';
 
 Chart.register(...registerables);
 
-export default function BarChart({ labels, values, route }: BarChartProps) {
+type BarChartComponentProps = BarChartProps & ComponentProps<'div'>;
+
+export default function BarChart({
+  labels,
+  values,
+  route,
+  ...rest
+}: BarChartComponentProps) {
   const router = useRouter();
 
   let config = {};
@@ -21,7 +29,7 @@ export default function BarChart({ labels, values, route }: BarChartProps) {
   }
 
   return (
-    <div className="w-[30rem] h-[auto]">
+    <div {...rest}>
       <Bar
         data={{
           labels,
