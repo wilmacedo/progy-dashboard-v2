@@ -1,7 +1,6 @@
-import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 
-const Sidebar = dynamic(() => import('@/components/Sidebar'), { ssr: false });
+import { Sidebar } from '@/components/sidebar';
 
 interface DashboardLayoutProps {
   children: ReactNode;

@@ -1,5 +1,5 @@
 import { Toaster } from '@/components/ui/toaster';
-import { AuthProvider } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/auth/auth-context';
 import { Fragment, ReactNode } from 'react';
 
 interface ProvidersProps {

@@ -2,8 +2,7 @@
 
 import { redirectUrl } from '@/config/auth';
 import sidebarRoutes, { isCurrentRoute } from '@/config/routes';
-import { mockedUser } from '@/constants';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth/auth-context';
 import {
   getFirstsLetters,
   getLocalStorageItem,
@@ -21,17 +20,17 @@ interface SidebarProps {
   children: ReactNode;
 }
 
-export default function Sidebar({ children }: SidebarProps) {
+export function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, signOut, retrieveUserRole } = useAuth();
+  const { role_id, signOut, user } = useAuth();
 
   const [expanded, setExpanded] = useState(
     getLocalStorageItem('sidebar', 'expanded'),
   );
 
   const imageSize = 30;
-  const routes = sidebarRoutes(retrieveUserRole());
+  const routes = sidebarRoutes(role_id);
   const splittedRoutes = [
     routes.filter(route => !route.bottom),
     routes.filter(route => route.bottom),
@@ -136,16 +135,16 @@ export default function Sidebar({ children }: SidebarProps) {
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 flex items-center justify-center bg-[#6f6f7c] rounded-full">
                         <span className="text-sm text-[#d0d1d7]">
-                          {getFirstsLetters(user?.name || mockedUser.name)}
+                          {getFirstsLetters(user.name)}
                         </span>
                       </div>
 
                       <div className="flex flex-col">
                         <span className="text-sm truncate max-w-[7rem]">
-                          {user?.name || mockedUser.name}
+                          {user.name}
                         </span>
                         <span className="text-xs opacity-70 truncate max-w-[8rem]">
-                          {user?.email || mockedUser.email}
+                          {user.email}
                         </span>
                       </div>
                     </div>
