@@ -1,3 +1,4 @@
-export const STORAGE_PATH = '@progy';
+import { STORAGE_PATH } from './index';
+
 export const AUTH_DATA_KEY = `${STORAGE_PATH}/auth`;
 export const redirectUrl = '/auth/signin';

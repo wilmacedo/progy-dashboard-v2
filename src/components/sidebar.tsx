@@ -3,12 +3,11 @@
 import { redirectUrl } from '@/config/auth';
 import sidebarRoutes, { isCurrentRoute } from '@/config/routes';
 import { useAuth } from '@/contexts/auth/auth-context';
-import {
-  getFirstsLetters,
-  getLocalStorageItem,
-  saveLocalStorageItem,
-} from '@/utils';
+import { useTheme } from '@/contexts/theme/theme-context';
+import { getFirstsLetters } from '@/utils';
 import { ct } from '@/utils/style';
+import { getCookie, setCookie } from 'cookies-next';
+import { Palette } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -20,14 +19,26 @@ interface SidebarProps {
   children: ReactNode;
 }
 
-export function Sidebar({ children }: SidebarProps) {
+function getExpandedValue(): boolean {
+  const cookie = getCookie('@progy/sidebar');
+  if (!cookie) return false;
+
+  try {
+    const data = JSON.parse(cookie);
+
+    return data.expanded ?? false;
+  } catch (error) {
+    return false;
+  }
+}
+
+export default function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { role_id, signOut, user } = useAuth();
+  const { toggleTheme } = useTheme();
 
-  const [expanded, setExpanded] = useState(
-    getLocalStorageItem('sidebar', 'expanded'),
-  );
+  const [expanded, setExpanded] = useState(getExpandedValue());
 
   const imageSize = 30;
   const routes = sidebarRoutes(role_id);
@@ -38,7 +49,7 @@ export function Sidebar({ children }: SidebarProps) {
 
   const handleExpand = () => {
     setExpanded(prev => {
-      saveLocalStorageItem('sidebar', { expanded: !prev });
+      setCookie('@progy/sidebar', JSON.stringify({ expanded: !prev }));
 
       return !prev;
     });
@@ -152,6 +163,17 @@ export function Sidebar({ children }: SidebarProps) {
                   <span className="text-gray-600 text-2xl">
                     <FiLogOut />
                   </span>
+                </li>
+              )}
+              {sideIndex === splittedRoutes.length - 1 && (
+                <li
+                  onClick={toggleTheme}
+                  className={ct(
+                    'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
+                    'hover:bg-[#E7E9ED]',
+                  )}
+                >
+                  <Palette color="#6f6f7c" />
                 </li>
               )}
             </ul>

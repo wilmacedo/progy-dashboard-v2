@@ -1,4 +1,4 @@
-import { STORAGE_PATH } from '@/constants';
+import { STORAGE_PATH } from '@/config';
 
 export const getFirstsLetters = (name: string): string => {
   const names = name.split(' ');

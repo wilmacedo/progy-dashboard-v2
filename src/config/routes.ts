@@ -4,6 +4,7 @@ import { BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
 import { IoIosList } from 'react-icons/io';
 import { IoCreateOutline, IoSettingsOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
+import { STORAGE_PATH } from './index';
 import { allPaths } from './tabs';
 
 interface RouteConfig {
@@ -88,3 +89,5 @@ export default function sidebarRoutes(roleId: number) {
 
   return routes;
 }
+
+export const SIDEBAR_DATA_KEY = `${STORAGE_PATH}/sidebar`;

@@ -1,3 +1,4 @@
+import { getTheme } from '@/contexts/theme/get-theme';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import '../styles/global.css';
@@ -19,7 +20,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-BR" className="light">
+    <html lang="pt-BR" className={getTheme()}>
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
