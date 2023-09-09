@@ -3,7 +3,6 @@ import PieChart from '@/components/Chart/Pie';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { toast } from '@/components/ui/use-toast';
 import { mockedMetrics } from '@/constants';
 import roles from '@/constants/roles';
 import { getServerAuth } from '@/contexts/auth/get-server-auth';
@@ -39,11 +38,7 @@ async function getMetrics({
     method: 'GET',
   });
   if (error) {
-    toast({
-      variant: 'destructive',
-      title: `(${code}) Houve um erro ao carregar as métricas do dashboard`,
-    });
-    return mockedMetrics;
+    notFound();
   }
 
   if (!data) data = mockedMetrics;
@@ -97,7 +92,7 @@ export default async function Dashboard(props: DashboardProps) {
               {cards.map((card, index) => (
                 <div
                   key={index}
-                  className="p-4 border border-input rounded-md shadow-sm space-y-2"
+                  className="p-4 bg-card border border-border rounded-md shadow-sm space-y-2"
                 >
                   <div className="inline-flex items-center gap-2 text-sm font-semibold">
                     <div
@@ -128,7 +123,7 @@ export default async function Dashboard(props: DashboardProps) {
             </div>
 
             <div className="w-full grid gap-4 lg:grid-cols-[2fr_1fr]">
-              <div className="flex flex-col md:flex-row items-center justify-between space-x-4 p-4 border border-input rounded-md shadow-sm">
+              <div className="flex bg-card flex-col md:flex-row items-center justify-between space-x-4 p-4 border border-border rounded-md shadow-sm">
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2">
                   {charts.map((chart, index) => (
                     <div key={index} className="w-full space-y-2">
@@ -160,7 +155,7 @@ export default async function Dashboard(props: DashboardProps) {
                   ))}
                 </div>
               </div>
-              <div className="flex flex-col space-x-4 p-4 border border-input rounded-md shadow-sm">
+              <div className="flex bg-card flex-col space-x-4 p-4 border border-border rounded-md shadow-sm">
                 <div className="w-full grid grid-cols-1 gap-2">
                   {pieCharts.map((chart, index) => (
                     <div key={index} className="space-y-2">
@@ -198,36 +193,5 @@ export default async function Dashboard(props: DashboardProps) {
         </Tabs>
       </div>
     </div>
-
-    //     <div
-    //       className={ct(
-    //         'ml-4 p-4 flex w-[20rem]',
-    //         'sm:ml-0 sm:my-4 sm:flex-row sm:items-center sm:justify-around sm:w-full sm:border sm:border-gray-100 sm:shadow-sm sm:rounded-md',
-    //         'lg:ml-4 lg:my-0 lg:flex-col lg:items-baseline lg:w-[20rem] lg:border-l lg:border-r-0 lg:border-t-0 lg:border-b-0 lg:border-gray-100 lg:shadow-none lg:rounded-none',
-    //       )}
-    //     >
-    //       {pieCharts.map((chartDetail, index) => (
-    //         <div className="last:mt-4" key={index}>
-    //           <h1 className="text-md">{chartDetail.title}</h1>
-    //           <div className="flex flex-col">
-    //             {chartDetail.description.map((description, index) => (
-    //               <span className="text-gray-500 text-xs" key={index}>
-    //                 {description}
-    //               </span>
-    //             ))}
-    //           </div>
-
-    //           <div className="mt-4 ml-4">
-    //             <PieChart
-    //               labels={chartDetail.labels}
-    //               values={metrics[chartDetail.key] as number[]}
-    //               type={chartDetail.type}
-    //             />
-    //           </div>
-    //         </div>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
   );
 }

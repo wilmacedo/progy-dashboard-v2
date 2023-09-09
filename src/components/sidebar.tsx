@@ -8,12 +8,12 @@ import { getFirstsLetters } from '@/utils';
 import { ct } from '@/utils/style';
 import { getCookie, setCookie } from 'cookies-next';
 import { Palette } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useState } from 'react';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
+import { Logo } from './logo';
 
 interface SidebarProps {
   children: ReactNode;
@@ -64,27 +64,22 @@ export default function Sidebar({ children }: SidebarProps) {
     <div data-expanded={expanded} className="group">
       <div
         className={ct(
-          'fixed p-2 flex flex-col w-64 h-screen bg-gray-200 border-r border-gray-100 duration-200',
+          'fixed p-2 flex flex-col w-64 h-screen bg-accent dark:bg-background border-r border-border duration-200',
           'group-data-[expanded=true]:w-20',
         )}
       >
         <BsArrowLeftShort
           onClick={handleExpand}
           className={ct(
-            'absolute top-16 -right-3 bg-white text-black text-2xl border border-gray-100 rounded-full duration-200 cursor-pointer',
-            'hover:bg-gray-200',
+            'absolute top-16 -right-3 bg-background text-foreground text-2xl border border-border rounded-full duration-200 cursor-pointer',
+            'hover:bg-accent',
             'group-data-[expanded=true]:rotate-180',
           )}
         />
 
         <Link href="/" className="h-fit">
-          <div className="flex gap-2 h-fit w-full py-6 px-4 items-center duration-300">
-            <Image
-              src="/assets/logo.svg"
-              alt="Logo"
-              width={imageSize}
-              height={imageSize}
-            />
+          <div className="flex gap-2 h-fit w-fit py-6 px-4 items-center duration-300">
+            <Logo className="w-8 h-8" />
             <h1
               className={ct(
                 'font-bold tracking-widest whitespace-nowrap',
@@ -106,14 +101,14 @@ export default function Sidebar({ children }: SidebarProps) {
                     className={ct(
                       'group',
                       'm-2 p-2.5 flex flex-row items-center gap-3 rounded-md cursor-pointer duration-200',
-                      'hover:bg-[#E7E9ED]',
-                      'data-[current=true]:bg-[#E7E9ED]',
+                      'hover:bg-foreground/10',
+                      'data-[current=true]:bg-foreground/10',
                     )}
                   >
                     <span
                       className={ct(
-                        'text-gray-600 text-2xl',
-                        'group-data-[current=true]:text-blue-300',
+                        'text-foreground/80 text-2xl',
+                        'group-data-[current=true]:text-primary',
                       )}
                     >
                       {route.basePath === '/module' ? (
@@ -124,8 +119,8 @@ export default function Sidebar({ children }: SidebarProps) {
                     </span>
                     <span
                       className={ct(
-                        'flex-1 text-gray-600 text-sm truncate',
-                        'group-data-[current=true]:text-blue-300',
+                        'flex-1 text-foreground/80 text-sm truncate',
+                        'group-data-[current=true]:text-primary',
                         'group-data-[expanded=true]:hidden',
                       )}
                     >
@@ -139,13 +134,13 @@ export default function Sidebar({ children }: SidebarProps) {
                   onClick={handleLogout}
                   className={ct(
                     'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
-                    'hover:bg-[#E7E9ED]',
+                    'hover:bg-foreground/10',
                   )}
                 >
                   <div className="group-data-[expanded=true]:hidden">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 flex items-center justify-center bg-[#6f6f7c] rounded-full">
-                        <span className="text-sm text-[#d0d1d7]">
+                        <span className="text-sm text-white">
                           {getFirstsLetters(user.name)}
                         </span>
                       </div>
@@ -160,7 +155,7 @@ export default function Sidebar({ children }: SidebarProps) {
                       </div>
                     </div>
                   </div>
-                  <span className="text-gray-600 text-2xl">
+                  <span className="text-foreground/80 text-2xl">
                     <FiLogOut />
                   </span>
                 </li>
@@ -170,10 +165,10 @@ export default function Sidebar({ children }: SidebarProps) {
                   onClick={toggleTheme}
                   className={ct(
                     'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
-                    'hover:bg-[#E7E9ED]',
+                    'hover:bg-foreground/10',
                   )}
                 >
-                  <Palette color="#6f6f7c" />
+                  <Palette className="text-foreground/80" />
                 </li>
               )}
             </ul>
