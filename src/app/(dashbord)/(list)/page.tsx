@@ -69,7 +69,7 @@ export default async function List() {
     } else return 'red';
   };
 
-  if (plannings.length) {
+  if (plannings.length === 0) {
     return (
       <div className="absolute w-full flex items-center justify-center gap-2">
         <BookTemplate className="text-muted-foreground" />
@@ -172,11 +172,11 @@ export default async function List() {
   }
 
   return (
-    <div className="absolute top-[50%] left-[25%] translate-x-[50%] translate-y-[50%]">
-      <div className="flex gap-2 text-muted-foreground">
-        <ServerOff />
-        <span>Oops! Parece que houve um erro ao carregar essa página.</span>
-      </div>
+    <div className="absolute w-full flex items-center justify-center gap-2">
+      <ServerOff className="text-muted-foreground" />
+      <span className="text-muted-foreground">
+        Oops! Parece que houve um erro ao carregar essa página.
+      </span>
     </div>
   );
 }
