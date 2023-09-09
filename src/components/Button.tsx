@@ -27,7 +27,7 @@ export default function Button({
         'py-2.5 px-3 flex items-center justify-center bg-blue-300 rounded-md text-sm text-white duration-200',
         'hover:brightness-125',
         'disabled:opacity-30 disabled:cursor-not-allowed',
-        className || '',
+        className,
       )}
       {...rest}
     >

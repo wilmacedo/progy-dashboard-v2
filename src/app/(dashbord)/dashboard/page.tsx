@@ -1,6 +1,7 @@
 import Button from '@/components/Button';
 import BarChart from '@/components/Chart/Bar';
 import PieChart from '@/components/Chart/Pie';
+import { toast } from '@/components/ui/use-toast';
 import { mockedMetrics } from '@/constants';
 import roles from '@/constants/roles';
 import { api } from '@/services/api/server';
@@ -11,7 +12,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AiOutlineBarChart } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
-import { toast } from 'react-toastify';
 import { cards, charts, pieCharts } from './config';
 
 interface DashboardProps {
@@ -37,7 +37,10 @@ async function getMetrics({
     method: 'GET',
   });
   if (error) {
-    toast.error(`(${code}) Houve um erro ao carregar as métricas do dashboard`);
+    toast({
+      variant: 'destructive',
+      title: `(${code}) Houve um erro ao carregar as métricas do dashboard`,
+    });
     return mockedMetrics;
   }
 

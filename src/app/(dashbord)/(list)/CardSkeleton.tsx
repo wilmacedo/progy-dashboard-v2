@@ -74,7 +74,7 @@ export function CardSkeleton() {
             </div>
           </div>
 
-          <Button disabled className="py-0 text-xs">
+          <Button disabled className="text-xs">
             Acessar
           </Button>
         </div>

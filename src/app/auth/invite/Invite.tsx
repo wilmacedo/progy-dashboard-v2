@@ -4,12 +4,12 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Spinner from '@/components/Spinner';
 import { Logo } from '@/components/logo';
+import { toast } from '@/components/ui/use-toast';
 import { redirectUrl } from '@/config/auth';
 import { api } from '@/services/api/client';
 import { ct } from '@/utils/style';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import { ErrorType, errorMessages } from './config';
 import { InviteData } from './page';
 
@@ -94,7 +94,8 @@ export default function InvitePage({ data, names }: InviteProps) {
           message = 'Houve um erro em processar sua solicitação.';
       }
 
-      toast.error(message);
+      toast({ variant: 'destructive', title: message });
+
       setLoading(false);
       return;
     }
@@ -104,8 +105,6 @@ export default function InvitePage({ data, names }: InviteProps) {
 
   return (
     <div className="h-screen w-screen flex justify-center bg-gray-200">
-      <ToastContainer autoClose={2500} />
-
       <div className="mt-20 flex flex-col gap-10">
         <div className="flex items-center gap-2">
           <Logo className="w-8 h-8" />

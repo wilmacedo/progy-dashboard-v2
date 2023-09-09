@@ -72,9 +72,11 @@ export default async function List() {
   if (plannings.length === 0) {
     return (
       <div className="absolute top-[50%] left-[25%] translate-x-[50%] translate-y-[50%]">
-        <div className="flex gap-2 text-gray-500">
-          <BookTemplate />
-          <span>Você ainda não possui nenhum planejamento</span>
+        <div className="mx-auto">
+          <div className="flex gap-2 text-gray-500">
+            <BookTemplate />
+            <span>Você ainda não possui nenhum planejamento</span>
+          </div>
         </div>
       </div>
     );
@@ -163,7 +165,7 @@ export default async function List() {
             </div>
 
             <Link href={`/dashboard/?id=${planning.id}`}>
-              <Button className="py-0 text-xs">Acessar</Button>
+              <Button className="text-xs">Acessar</Button>
             </Link>
           </div>
         </div>

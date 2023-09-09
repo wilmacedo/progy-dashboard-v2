@@ -34,6 +34,7 @@ export default function Planning() {
 
   function createPlanning(data: any) {
     if (currentStep + 1 >= forms.length) {
+      console.log(data);
       // TODO: Create planning
       return;
     }
@@ -51,6 +52,7 @@ export default function Planning() {
                 'w-24 h-1 rounded-md transition-all duration-300',
                 index <= currentStep ? 'bg-blue-300' : 'bg-gray-100',
               )}
+              onClick={() => setCurrentStep(index)}
             />
           </div>
         ))}
@@ -65,9 +67,9 @@ export default function Planning() {
               <div className="flex gap-2 items-center opacity-80">
                 <span className="text-sm">Salvo agora</span>
                 <TooltipProvider>
-                  <Tooltip>
+                  <Tooltip delayDuration={150}>
                     <TooltipTrigger>
-                      <Info className="cursor-pointer" size={12} />
+                      <Info className="cursor-help" size={12} />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p className="max-w-[15rem]">

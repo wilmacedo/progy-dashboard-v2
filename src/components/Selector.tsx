@@ -17,7 +17,7 @@ export function Selector({
   onClick,
 }: SelectorProps) {
   return (
-    <div className="group" data-selected={isSelected}>
+    <div className="group select-none" data-selected={isSelected}>
       <div
         className={cn(
           'p-4 relative flex items-center gap-4 border border-gray-100 rounded-md cursor-pointer transition-all',

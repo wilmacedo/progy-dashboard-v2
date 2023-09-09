@@ -3,12 +3,12 @@
 import Button from '@/components/Button';
 import Dropdown, { DropdownData } from '@/components/Dropdown';
 import Input from '@/components/Input';
+import { toast } from '@/components/ui/use-toast';
 import { api } from '@/services/api/client';
 import { Institution, Role } from '@/types/request';
 import { ct } from '@/utils/style';
 import { ChangeEvent, useState } from 'react';
 import { SingleValue } from 'react-select';
-import { toast, ToastContainer } from 'react-toastify';
 
 interface MembersFormProps {
   institutions: Institution[];
@@ -87,17 +87,16 @@ export default function MembersForm({ institutions, roles }: MembersFormProps) {
           message = code;
       }
 
-      toast.error(message);
+      toast({ variant: 'destructive', title: message });
       return;
     }
 
-    toast.success('Convite enviado com sucesso!');
+    toast({ title: 'Convite enviado com sucesso!' });
     // TODO: Clear all inputs after success
   };
 
   return (
     <div>
-      <ToastContainer autoClose={2500} />
       <div
         className={ct(
           'pt-8 pb-8 flex items-center border-b border-gray-100',

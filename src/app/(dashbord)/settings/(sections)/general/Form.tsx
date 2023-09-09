@@ -1,12 +1,12 @@
 'use client';
 
 import Input from '@/components/Input';
+import { toast } from '@/components/ui/use-toast';
 import { roleAlias } from '@/constants/roles';
 import { api } from '@/services/api/client';
 import { User } from '@/types/request';
 import { ct } from '@/utils/style';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import { FieldProp, fields } from './config';
 import { GeneralResponse } from './page';
 
@@ -24,7 +24,7 @@ export function Form({ user, error, loading }: GeneralProps) {
   useEffect(() => {
     if (!error) return;
 
-    toast.error(error);
+    toast({ variant: 'destructive', title: error });
   }, [error]);
 
   const handleChange = (
@@ -50,9 +50,10 @@ export function Form({ user, error, loading }: GeneralProps) {
       event.preventDefault();
 
       if (JSON.stringify(tempData) === JSON.stringify(user)) {
-        toast.info(
-          'É necessário alterar algum dado para atualizar as informações',
-        );
+        toast({
+          title:
+            'É necessário alterar algum dado para atualizar as informações',
+        });
         return;
       }
 
@@ -69,11 +70,16 @@ export function Form({ user, error, loading }: GeneralProps) {
         body,
       });
       if (error) {
-        toast.error(`(${code}) Houve um erro ao atualizar as informações`);
+        toast({
+          variant: 'destructive',
+          title: `(${code}) Houve um erro ao atualizar as informações`,
+        });
         return;
       }
 
-      toast.success('Informações atualizadas com sucesso!');
+      toast({
+        title: 'Informações atualizadas com sucesso!',
+      });
     },
     [tempData, user],
   );
@@ -87,7 +93,6 @@ export function Form({ user, error, loading }: GeneralProps) {
 
   return (
     <div>
-      <ToastContainer autoClose={3500} />
       {fields.map((field, index) => (
         <div
           className={ct(
