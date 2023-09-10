@@ -39,7 +39,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(authenticateData);
     if (authenticateData.role_id !== -1) return;
 
     const cookie = getCookie(AUTH_DATA_KEY);

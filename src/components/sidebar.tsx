@@ -258,7 +258,7 @@ export default function Sidebar({ children }: SidebarProps) {
         className={ct(
           'pt-20 px-4 duration-200',
           'md:mt-0 md:ml-72 md:pt-8 md:pr-12',
-          'md:group-data-[expanded=true]:ml-28',
+          'md:group-data-[expanded=true]:ml-24',
         )}
       >
         {children}
