@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Accordion,
   AccordionContent,
@@ -21,58 +19,50 @@ import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
 import { FormSchema } from './page';
 
-export const goalsFormSchema = z.object({
-  perspectives: z.array(
-    z.object({
-      name: z.string().min(3).max(30),
-    }),
-  ),
-  goals: z.array(
-    z.object({
-      name: z.string().min(3).max(30),
-    }),
-  ),
+export const stageFormSchema = z.object({
+  stages: z.array(z.object({ name: z.string().min(3).max(30) })),
+  status: z.array(z.object({ name: z.string().min(3).max(30) })),
 });
 
-export type GoalsFormValues = z.infer<typeof goalsFormSchema>;
+export type StageFormValues = z.infer<typeof stageFormSchema>;
 
-interface GoalFormProps {
+interface StageFormProps {
   control: Control<FormSchema>;
 }
 
-export function GoalForm({ control }: GoalFormProps) {
+export function StageForm({ control }: StageFormProps) {
   const {
-    fields: perspectiveFields,
-    remove: perspectiveRemove,
-    append: perspectiveAppend,
-  } = useFieldArray<FormSchema>({ control, name: 'perspectives' });
+    fields: stageFields,
+    remove: stageRemove,
+    append: stageAppend,
+  } = useFieldArray<FormSchema>({ control, name: 'stages' });
 
   const {
-    fields: goalsFields,
-    remove: goalsRemove,
-    append: goalsAppend,
-  } = useFieldArray<FormSchema>({ control, name: 'goals' });
+    fields: statusFields,
+    remove: statusRemove,
+    append: statusAppend,
+  } = useFieldArray<FormSchema>({ control, name: 'status' });
 
   useEffect(() => {
-    if (perspectiveFields.length === 0) perspectiveAppend({ name: '' });
-    if (goalsFields.length === 0) goalsAppend({ name: '' });
-  }, [perspectiveFields, perspectiveAppend, goalsFields, goalsAppend]);
+    if (stageFields.length === 0) stageAppend({ name: '' });
+    if (statusFields.length === 0) statusAppend({ name: '' });
+  }, [stageFields, stageAppend, statusFields, statusAppend]);
 
   return (
     <Accordion
       type="single"
       collapsible
       className="w-full"
-      defaultValue="perspectives"
+      defaultValue="stages"
     >
-      <AccordionItem value="perspectives">
-        <AccordionTrigger>Informar Perspectivas</AccordionTrigger>
+      <AccordionItem value="stages">
+        <AccordionTrigger>Informar Estágios de Execução</AccordionTrigger>
         <AccordionContent>
-          {perspectiveFields.map((field, index) => (
+          {stageFields.map((field, index) => (
             <FormField
               control={control}
               key={field.id}
-              name={`perspectives.${index}.name`}
+              name={`stages.${index}.name`}
               render={({ field }) => (
                 <FormItem className="px-2 flex items-center last:border-b last:border-border">
                   <FormLabel
@@ -83,13 +73,13 @@ export function GoalForm({ control }: GoalFormProps) {
                   >
                     <span className="font-semibold">Nome</span>
                     <p className="text-sm font-normal text-muted-foreground">
-                      Defina o nome de cada perspectiva
+                      Defina o nome de cada estágio
                     </p>
                   </FormLabel>
                   <FormControl className={twMerge(index !== 0 && 'ml-auto')}>
                     <Input
                       className="max-w-sm"
-                      placeholder="Perspectiva A"
+                      placeholder="Estágio A"
                       minLength={3}
                       maxLength={30}
                       {...field}
@@ -99,7 +89,7 @@ export function GoalForm({ control }: GoalFormProps) {
                     disabled={index === 0}
                     variant="ghost"
                     className="ml-2 text-primary"
-                    onClick={() => perspectiveRemove(index)}
+                    onClick={() => stageRemove(index)}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -112,21 +102,21 @@ export function GoalForm({ control }: GoalFormProps) {
               className="text-xs"
               variant="outline"
               size="sm"
-              onClick={() => perspectiveAppend({ name: '' })}
+              onClick={() => stageAppend({ name: '' })}
             >
               Adicionar
             </Button>
           </div>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="goals">
-        <AccordionTrigger>Informar Objetivos</AccordionTrigger>
+      <AccordionItem value="status">
+        <AccordionTrigger>Informar Status</AccordionTrigger>
         <AccordionContent>
-          {goalsFields.map((field, index) => (
+          {statusFields.map((field, index) => (
             <FormField
               control={control}
               key={field.id}
-              name={`goals.${index}.name`}
+              name={`status.${index}.name`}
               render={({ field }) => (
                 <FormItem className="px-2 flex items-center last:border-b last:border-border">
                   <FormLabel
@@ -143,7 +133,7 @@ export function GoalForm({ control }: GoalFormProps) {
                   <FormControl className={twMerge(index !== 0 && 'ml-auto')}>
                     <Input
                       className="max-w-sm"
-                      placeholder="Objetivo A"
+                      placeholder="Status A"
                       minLength={3}
                       maxLength={30}
                       {...field}
@@ -153,7 +143,7 @@ export function GoalForm({ control }: GoalFormProps) {
                     disabled={index === 0}
                     variant="ghost"
                     className="ml-2 text-primary"
-                    onClick={() => goalsRemove(index)}
+                    onClick={() => statusRemove(index)}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -166,7 +156,7 @@ export function GoalForm({ control }: GoalFormProps) {
               className="text-xs"
               variant="outline"
               size="sm"
-              onClick={() => goalsAppend({ name: '' })}
+              onClick={() => statusAppend({ name: '' })}
             >
               Adicionar
             </Button>

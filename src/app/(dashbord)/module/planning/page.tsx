@@ -19,10 +19,13 @@ import {
   companyFormSchema,
 } from './company-form';
 import { GoalForm, GoalsFormValues, goalsFormSchema } from './goal-form';
+import { StageForm, StageFormValues, stageFormSchema } from './stage-form';
 
-const formSchemas = [companyFormSchema, goalsFormSchema];
-export type FormSchema = Partial<CompanyFormValues & GoalsFormValues>;
-const forms = [CompanyForm, GoalForm];
+const formSchemas = [companyFormSchema, goalsFormSchema, stageFormSchema];
+export type FormSchema = Partial<
+  CompanyFormValues & GoalsFormValues & StageFormValues
+>;
+const forms = [CompanyForm, GoalForm, StageForm];
 
 export default function Planning() {
   const [currentStep, setCurrentStep] = useState(0);
