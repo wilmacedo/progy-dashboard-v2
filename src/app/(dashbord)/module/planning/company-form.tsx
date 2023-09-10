@@ -43,14 +43,9 @@ export function CompanyForm({ control }: CompanyFormProps) {
       className="w-full"
       defaultValue="company"
     >
-      <AccordionItem
-        value="company"
-        className="mt-2 border border-border rounded-md text-sm"
-      >
-        <AccordionTrigger className="px-2 rounded-t-md bg-accent">
-          Informar Organização
-        </AccordionTrigger>
-        <AccordionContent className="px-4 pt-2">
+      <AccordionItem value="company">
+        <AccordionTrigger>Informar Organização</AccordionTrigger>
+        <AccordionContent>
           <FormField
             control={control}
             name="companyName"
@@ -58,7 +53,7 @@ export function CompanyForm({ control }: CompanyFormProps) {
               <FormItem className="pt-7 pb-8 flex items-center border-b border-border last:border-b-0">
                 <FormLabel className="mr-auto min-w-[20rem]">
                   <span className="font-semibold">Nome</span>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm font-normal text-muted-foreground">
                     Defina o nome da sua organização
                   </p>
                 </FormLabel>
@@ -82,7 +77,7 @@ export function CompanyForm({ control }: CompanyFormProps) {
               <FormItem className="pt-7 pb-8 flex items-center border-b border-border last:border-b-0">
                 <FormLabel className="mr-auto min-w-[20rem]">
                   <span className="font-semibold">CNPJ</span>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm font-normal text-muted-foreground">
                     Defina o CNPJ da sua organização
                   </p>
                 </FormLabel>
@@ -102,14 +97,9 @@ export function CompanyForm({ control }: CompanyFormProps) {
           />
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem
-        value="planning"
-        className="mt-2 border border-border rounded-md text-sm"
-      >
-        <AccordionTrigger className="px-2 rounded-t-md bg-accent">
-          Informar Planejamento Estratégico
-        </AccordionTrigger>
-        <AccordionContent className="px-4 pt-2">
+      <AccordionItem value="planning">
+        <AccordionTrigger>Informar Planejamento Estratégico</AccordionTrigger>
+        <AccordionContent>
           <FormField
             control={control}
             name="planningName"
@@ -117,7 +107,7 @@ export function CompanyForm({ control }: CompanyFormProps) {
               <FormItem className="pt-7 pb-8 flex items-center border-b border-border last:border-b-0">
                 <FormLabel className="mr-auto min-w-[20rem]">
                   <span className="font-semibold">Nome</span>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm font-normal text-muted-foreground">
                     Defina o nome do seu planejamento
                   </p>
                 </FormLabel>

@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import {
   Tooltip,
@@ -18,10 +18,11 @@ import {
   CompanyFormValues,
   companyFormSchema,
 } from './company-form';
+import { GoalForm, GoalsFormValues, goalsFormSchema } from './goal-form';
 
-const formSchemas = [companyFormSchema];
-export type FormSchema = Partial<CompanyFormValues>;
-const forms = [CompanyForm];
+const formSchemas = [companyFormSchema, goalsFormSchema];
+export type FormSchema = Partial<CompanyFormValues & GoalsFormValues>;
+const forms = [CompanyForm, GoalForm];
 
 export default function Planning() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -41,7 +42,7 @@ export default function Planning() {
   function createPlanning(data: any) {
     if (currentStep + 1 >= forms.length) {
       console.log(data);
-      // TODO: Create planning
+      // TODO: Save current step data
       return;
     }
 
@@ -69,14 +70,19 @@ export default function Planning() {
           <form onSubmit={form.handleSubmit(createPlanning)}>
             <FormComponent control={form.control} />
 
-            <div className="absolute left-[-2rem] bottom-0 w-[calc(100%+5rem)]">
-              <div className="py-4 px-24 flex justify-between border-t border-t-gray-100 bg-gray-200">
+            <div className="absolute left-[-3rem] bottom-0 w-[calc(100%+6rem)]">
+              <div className="py-4 px-24 flex justify-between border-t border-t-border bg-accent">
                 <div className="flex gap-2 items-center opacity-80">
-                  <span className="text-sm">Salvo agora</span>
+                  <span className="text-sm text-muted-foreground">
+                    Salvo agora
+                  </span>
                   <TooltipProvider>
                     <Tooltip delayDuration={150}>
                       <TooltipTrigger>
-                        <Info className="cursor-help" size={12} />
+                        <Info
+                          className="cursor-help text-muted-foreground"
+                          size={12}
+                        />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="max-w-[15rem]">
@@ -88,7 +94,8 @@ export default function Planning() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Button
-                    className="bg-transparent text-black font-semibold"
+                    variant="ghost"
+                    size="sm"
                     disabled={currentStep === 0}
                     onClick={back}
                   >
@@ -96,6 +103,7 @@ export default function Planning() {
                   </Button>
                   <Button
                     className="py-1.5"
+                    size="sm"
                     disabled={!form.formState.isValid}
                     type="submit"
                   >
