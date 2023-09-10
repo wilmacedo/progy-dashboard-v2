@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
+import { useAuth } from '@/contexts/auth/auth-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
@@ -30,6 +31,7 @@ export type SignInValues = z.infer<typeof signInSchema>;
 
 export function SigninForm() {
   const [loading, setLoading] = useState(false);
+  const { updateAuthenticateData } = useAuth();
   const router = useRouter();
 
   const form = useForm<SignInValues>({
@@ -39,7 +41,7 @@ export function SigninForm() {
   async function onSubmit(data: SignInValues) {
     setLoading(true);
 
-    const { error } = await signInAction(data);
+    const { data: response, error } = await signInAction(data);
     if (error) {
       toast({
         variant: 'destructive',
@@ -51,6 +53,7 @@ export function SigninForm() {
       return;
     }
 
+    updateAuthenticateData(response!);
     router.push('/');
   }
 

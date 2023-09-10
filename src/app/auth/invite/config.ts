@@ -60,6 +60,6 @@ export const errorMessages = [
     type: ErrorType.MISSING_DATA,
     title: 'Oops, algo deu errado!',
     message:
-      'Parece que a URL está incompleta ou errada. Entre em contato com o gerente do planejamento.',
+      'O link do convite está inválido. Entre em contato com o gerente do planejamento.',
   },
 ];

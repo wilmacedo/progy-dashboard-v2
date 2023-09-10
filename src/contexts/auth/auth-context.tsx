@@ -2,7 +2,7 @@
 
 import { AUTH_DATA_KEY, redirectUrl } from '@/config/auth';
 import { AuthenticateUser } from '@/types/requests';
-import { deleteCookie, getCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import {
   ReactNode,
@@ -14,6 +14,7 @@ import {
 
 interface AuthContextData extends AuthenticateUser {
   signOut: () => void;
+  updateAuthenticateData: (data: AuthenticateUser) => void;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -38,6 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(authenticateData);
     if (authenticateData.role_id !== -1) return;
 
     const cookie = getCookie(AUTH_DATA_KEY);
@@ -51,6 +53,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [authenticateData]);
 
+  function updateAuthenticateData(data: AuthenticateUser) {
+    setAuthenticateData(data);
+    setCookie(AUTH_DATA_KEY, JSON.stringify(data));
+  }
+
   function signOut() {
     deleteCookie(AUTH_DATA_KEY);
     router.push(redirectUrl);
@@ -58,6 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const value = {
     ...authenticateData,
+    updateAuthenticateData,
     signOut,
   };
 

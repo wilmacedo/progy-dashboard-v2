@@ -104,8 +104,8 @@ export default function InvitePage({ data, names }: InviteProps) {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center bg-gray-200">
-      <div className="mt-20 flex flex-col gap-10">
+    <div className="min-h-[100vh] flex justify-center bg-accent">
+      <div className="mt-12 flex flex-col gap-10">
         <div className="flex items-center gap-2">
           <Logo className="w-8 h-8" />
 
@@ -116,7 +116,9 @@ export default function InvitePage({ data, names }: InviteProps) {
 
         <div className="flex flex-col">
           <h1 className="font-medium text-2xl">Cadastro via convite</h1>
-          <span className="text-sm text-[#8e8e94]">Finalize seu cadastro</span>
+          <span className="text-sm text-muted-foreground">
+            Finalize seu cadastro
+          </span>
         </div>
 
         <div className="w-[25rem] p-7 flex flex-col bg-[#fff] rounded-lg shadow-md">
@@ -195,10 +197,10 @@ export default function InvitePage({ data, names }: InviteProps) {
         </div>
 
         {hasError() === -1 && (
-          <div className="max-w-[25rem] text-center">
-            <span className="text-sm text-gray-500">
-              Caso veja alguma informação errada, não prossiga com o cadastro e
-              entre em contato com o gerente do planejamento.
+          <div className="mb-4 max-w-[25rem] text-center">
+            <span className="text-sm text-muted-foreground">
+              Caso note alguma inconsistencia nas informações, entre em contato
+              com o gerente do planejamento.
             </span>
           </div>
         )}
