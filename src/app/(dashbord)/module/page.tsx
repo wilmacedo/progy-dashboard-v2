@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/Button';
-import { Selector } from '@/components/Selector';
+import { Selector } from '@/components/selector';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { modules } from './config';
@@ -20,9 +20,9 @@ export default function Module() {
 
   return (
     <div>
-      <div className="pb-4 border-b border-gray-100">
+      <div className="pb-4 border-b border-border">
         <h1 className="mb-6 font-semibold text-3xl">Criar novo módulo</h1>
-        <span className="text-md text-gray-500">
+        <span className="text-md text-muted-foreground">
           De o passo inicial para a criação de um novo módulo
         </span>
       </div>
@@ -30,7 +30,7 @@ export default function Module() {
       <div className="mt-8 w-ful flex flex-col items-center">
         <div className="mb-8 flex flex-col items-center">
           <h1 className="text-xl font-semibold">Crie um novo módulo</h1>
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-muted-foreground">
             Selecione um tipo de módulo para começar
           </span>
         </div>
