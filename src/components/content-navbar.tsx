@@ -1,13 +1,23 @@
 'use client';
 
-import { tabs } from '@/config/tabs';
 import { Role, roleAlias } from '@/constants/roles';
 import { useAuth } from '@/contexts/auth/auth-context';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
 
-export function Navbar() {
+export interface TabConfig {
+  name: string;
+  path: string;
+  excludeRoles: Role[];
+}
+
+interface ContentNavbar {
+  tabs: TabConfig[];
+  disabled?: boolean;
+}
+
+export function ContentNavbar({ tabs, disabled }: ContentNavbar) {
   const pathname = usePathname();
   const { role_id } = useAuth();
 

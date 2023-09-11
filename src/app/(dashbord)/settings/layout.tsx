@@ -1,6 +1,7 @@
+import { ContentNavbar } from '@/components/content-navbar';
+import { tabs } from '@/config/tabs';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
-import { Navbar } from './navbar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
         </p>
       </div>
 
-      <Navbar />
+      <ContentNavbar tabs={tabs} />
 
       <div className="pt-2">{children}</div>
     </div>
