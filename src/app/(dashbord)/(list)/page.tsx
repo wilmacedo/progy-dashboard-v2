@@ -162,7 +162,7 @@ export default async function List() {
               </div>
             </div>
 
-            <Link href={`/dashboard/?id=${planning.id}`}>
+            <Link href={`/project/${planning.id}`}>
               <Button className="text-xs">Acessar</Button>
             </Link>
           </div>

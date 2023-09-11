@@ -19,7 +19,7 @@ export function OptionsMenu({ planning }: OptionsMenuProps) {
   const handleCopy = () => {
     if (typeof planning.id === 'undefined') return;
 
-    const url = `${window.location.origin}/dashboard?id=${planning.id}`;
+    const url = `${window.location.origin}/project/${planning.id}`;
 
     navigator.clipboard.writeText(url);
     toast({
