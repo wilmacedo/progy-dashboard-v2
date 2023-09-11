@@ -13,7 +13,7 @@ interface RootLayoutProps {
 export const metadata = {
   title: {
     default: 'Progy',
-    template: '%s | Progy',
+    template: '%s – Progy',
   },
   description: 'Dashboard to manage planning',
 };

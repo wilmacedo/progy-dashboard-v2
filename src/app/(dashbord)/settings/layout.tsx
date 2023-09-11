@@ -1,9 +1,17 @@
+import { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { Navbar } from './navbar';
 
 interface LayoutProps {
   children: ReactNode;
 }
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Configurações – Progy',
+    template: '%s – Configurações – Progy',
+  },
+};
 
 export default function Layout({ children }: LayoutProps) {
   return (
