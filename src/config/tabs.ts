@@ -19,8 +19,8 @@ export function allPaths() {
 
 export const tabs: TabConfig[] = [
   {
-    name: 'Geral',
-    path: '/settings/general',
+    name: 'Perfil',
+    path: '/settings',
     title: 'Informação pessoal',
     description: 'Atualize e revise sus informações pessoais aqui',
     button: true,

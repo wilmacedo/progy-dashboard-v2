@@ -49,7 +49,7 @@ export default function sidebarRoutes(roleId: number) {
       Icon: IoCreateOutline,
     },
     {
-      basePath: '/settings/general',
+      basePath: '/settings',
       relativePaths: allPaths(),
       name: 'Configurações',
       Icon: IoSettingsOutline,
