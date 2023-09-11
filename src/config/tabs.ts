@@ -1,16 +1,9 @@
+import { Role } from '@/constants/roles';
+
 interface TabConfig {
   name: string;
   path: string;
-  title: string;
-  description: string;
-  button?: boolean;
-}
-
-export function getCurrentTab(pathname: string) {
-  const index = tabs.findIndex(tab => tab.path === pathname);
-  if (index === -1) return 0;
-
-  return index;
+  excludeRoles: Role[];
 }
 
 export function allPaths() {
@@ -21,20 +14,16 @@ export const tabs: TabConfig[] = [
   {
     name: 'Perfil',
     path: '/settings',
-    title: 'Informação pessoal',
-    description: 'Atualize e revise sus informações pessoais aqui',
-    button: true,
+    excludeRoles: [],
   },
   {
     name: 'Membros',
     path: '/settings/members',
-    title: 'Membros',
-    description: 'Gerencie os membros de cada institutição e planejamento aqui',
+    excludeRoles: [Role.USER],
   },
   {
     name: 'Notificações',
     path: '/settings/notifications',
-    title: 'Notificações',
-    description: 'Revise e atualize suas preferências de notificação aqui',
+    excludeRoles: [],
   },
 ];
