@@ -1,17 +1,24 @@
 'use client';
 
+import { DataTableViewOptions } from '@/components/table/table-view-options';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Institution, Role } from '@/types/request';
 import { Table } from '@tanstack/react-table';
 import { X } from 'lucide-react';
-import { DataTableViewOptions } from '../table/table-view-options';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { MemberDialogForm } from './member-dialog-form';
 
 interface MemberTableToolbarProps<Data> {
   table: Table<Data>;
+  lists: {
+    institutions: Institution[];
+    roles: Role[];
+  };
 }
 
 export function MemberTableToolbar<Data>({
   table,
+  lists,
 }: MemberTableToolbarProps<Data>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -38,6 +45,7 @@ export function MemberTableToolbar<Data>({
         )}
       </div>
       <DataTableViewOptions table={table} />
+      <MemberDialogForm lists={lists} />
     </div>
   );
 }

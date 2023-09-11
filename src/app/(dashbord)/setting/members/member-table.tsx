@@ -1,5 +1,15 @@
 'use client';
 
+import { TablePagination } from '@/components/table/table-pagination';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Institution, Role } from '@/types/request';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,25 +25,21 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useState } from 'react';
-import { TablePagination } from '../table/table-pagination';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../ui/table';
 import { MemberTableToolbar } from './member-table-toolbar';
 
 interface MemberTableProps<Data, Value> {
   columns: ColumnDef<Data, Value>[];
   data: Data[];
+  lists: {
+    institutions: Institution[];
+    roles: Role[];
+  };
 }
 
 export function MemberTable<Data, Value>({
   columns,
   data,
+  lists,
 }: MemberTableProps<Data, Value>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -69,7 +75,7 @@ export function MemberTable<Data, Value>({
 
   return (
     <div className="space-y-4">
-      <MemberTableToolbar table={table} />
+      <MemberTableToolbar table={table} lists={lists} />
       <div className="rounded-lg border border-border">
         <Table>
           <TableHeader>
@@ -109,9 +115,11 @@ export function MemberTable<Data, Value>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-16 text-center"
                 >
-                  Nenhum membro encontrado
+                  <span className="text-muted-foreground">
+                    Nenhum membro encontrado
+                  </span>
                 </TableCell>
               </TableRow>
             )}
