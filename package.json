@@ -20,9 +20,9 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.4",
     "@radix-ui/react-tooltip": "^1.0.6",
+    "@tanstack/react-table": "^8.9.8",
     "@types/cookie": "^0.5.1",
     "@types/node": "18.14.4",
-    "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
@@ -51,6 +51,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@rocketseat/eslint-config": "^1.2.0"
+    "@rocketseat/eslint-config": "^1.2.0",
+    "@types/react": "^18.2.21"
   }
 }
