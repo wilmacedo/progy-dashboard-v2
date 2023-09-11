@@ -27,6 +27,7 @@ const mockedUser: AuthenticateUser = {
   role_id: -1,
   token: '1',
   user: {
+    role: 'user',
     email: 'desconhecido@progy.com.br',
     id: -1,
     name: 'Desconhecido',
