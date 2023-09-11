@@ -1,10 +1,31 @@
 import { PieChartType } from '@/components/Chart';
+import { TabConfig } from '@/components/content-navbar';
+import { Role } from '@/constants/roles';
 import { DashboardInfo } from '@/types/request';
 import { IconType } from 'react-icons';
 import { AiOutlineFileDone } from 'react-icons/ai';
 import { BiErrorAlt } from 'react-icons/bi';
 import { IoIosPaper } from 'react-icons/io';
 import { IoWarningOutline } from 'react-icons/io5';
+
+export const tabs: TabConfig[] = [
+  { name: 'Visão Geral', path: '/', excludeRoles: [] },
+  {
+    name: 'Parametrizações',
+    path: '/parametrization',
+    excludeRoles: [Role.USER],
+  },
+  {
+    name: 'Iniciativas',
+    path: '/initiatives',
+    excludeRoles: [Role.USER],
+  },
+  {
+    name: 'Atividades',
+    path: '/activities',
+    excludeRoles: [Role.USER],
+  },
+];
 
 interface CardConfig {
   title: string;

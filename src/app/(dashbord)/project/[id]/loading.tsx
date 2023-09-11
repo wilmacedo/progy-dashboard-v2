@@ -1,10 +1,9 @@
 import { ContentNavbar } from '@/components/content-navbar';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { tabs } from '@/config/dashboard-routes';
+import { cards, charts, pieCharts, tabs } from '@/config/project';
 import { BarChart3, ChevronsUpDown, PieChart } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
-import { cards, charts, pieCharts } from '../../dashboard/config';
 
 export default function Loading() {
   return (

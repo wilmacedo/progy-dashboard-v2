@@ -18,6 +18,13 @@ interface RouteConfig {
 export function isCurrentRoute(route: RouteConfig, pathname: string) {
   if (!route.relativePaths) return route.basePath === pathname;
 
+  for (const path of route.relativePaths) {
+    if (path.includes(':') && typeof path === 'string') {
+      const [relative] = path.split(':');
+      if (pathname.includes(relative)) return true;
+    }
+  }
+
   return route.relativePaths.includes(pathname);
 }
 
@@ -60,8 +67,8 @@ export default function sidebarRoutes(roleId: number) {
   const users: RouteConfig[] = [
     {
       basePath: '/',
-      relativePaths: ['/', '/dashboard'],
-      name: 'Dashboard',
+      relativePaths: ['/', '/project/:id'],
+      name: 'Projeto',
       Icon: BsReverseLayoutTextWindowReverse,
     },
   ];
@@ -69,7 +76,7 @@ export default function sidebarRoutes(roleId: number) {
   const internals: RouteConfig[] = [
     {
       basePath: '/',
-      relativePaths: ['/', '/dashboard'],
+      relativePaths: ['/', '/project/:id'],
       name: 'Planejamentos',
       Icon: IoIosList,
     },

@@ -3,17 +3,25 @@ import PieChart from '@/components/Chart/Pie';
 import { ContentNavbar } from '@/components/content-navbar';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { tabs } from '@/config/dashboard-routes';
+import { cards, charts, pieCharts, tabs } from '@/config/project';
 import { getServerAuth } from '@/contexts/auth/get-server-auth';
 import { api } from '@/services/api';
 import { ChartRelation, DashboardInfo, Planning } from '@/types/request';
 import { addDays } from 'date-fns';
 import { BarChart3, PieChart as PieChartIcon } from 'lucide-react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
-import { cards, charts, pieCharts } from '../../dashboard/config';
 import { ProjectSwitcher } from './project-switcher';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Visão geral – Projeto – Progy',
+    template: '%s – Projeto – Progy',
+  },
+};
+
 interface PageProps {
   params: {
     id: number;

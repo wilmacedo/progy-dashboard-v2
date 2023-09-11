@@ -19,5 +19,5 @@ export default function middleware({ cookies, url }: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard', '/settings/:path*', '/module'],
+  matcher: ['/', '/project', '/settings/:path*', '/module'],
 };
