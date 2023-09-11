@@ -135,6 +135,33 @@ export default function Sidebar({ children }: SidebarProps) {
               ))}
               {sideIndex === splittedRoutes.length - 1 && (
                 <li
+                  onClick={toggleTheme}
+                  className={ct(
+                    'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
+                    'hover:bg-foreground/10',
+                  )}
+                >
+                  <span
+                    className={ct(
+                      'text-foreground/80 text-2xl',
+                      'group-data-[current=true]:text-primary',
+                    )}
+                  >
+                    <Palette />
+                  </span>
+                  <span
+                    className={ct(
+                      'flex-1 text-foreground/80 text-sm truncate',
+                      'group-data-[current=true]:text-primary',
+                      'group-data-[expanded=true]:hidden',
+                    )}
+                  >
+                    Alterar tema
+                  </span>
+                </li>
+              )}
+              {sideIndex === splittedRoutes.length - 1 && (
+                <li
                   onClick={handleLogout}
                   className={ct(
                     'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
@@ -162,17 +189,6 @@ export default function Sidebar({ children }: SidebarProps) {
                   <span className="text-foreground/80 text-2xl">
                     <FiLogOut />
                   </span>
-                </li>
-              )}
-              {sideIndex === splittedRoutes.length - 1 && (
-                <li
-                  onClick={toggleTheme}
-                  className={ct(
-                    'm-2 p-2.5 flex flex-row items-center justify-between gap-3 rounded-md cursor-pointer duration-200',
-                    'hover:bg-foreground/10',
-                  )}
-                >
-                  <Palette className="text-foreground/80" />
                 </li>
               )}
             </ul>
@@ -234,15 +250,6 @@ export default function Sidebar({ children }: SidebarProps) {
             <Button
               variant="ghost"
               className="w-full justify-start text-base h-9 px-2 font-normal hover:bg-muted-foreground/10"
-              onClick={signOut}
-            >
-              <FiLogOut size={18} />
-              <p className="ml-2">Sair</p>
-            </Button>
-
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-base h-9 px-2 font-normal hover:bg-muted-foreground/10"
               onClick={() => {
                 handleExpandMobile();
                 toggleTheme();
@@ -250,6 +257,15 @@ export default function Sidebar({ children }: SidebarProps) {
             >
               <Palette size={18} />
               <p className="ml-2">Alterar tema</p>
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-base h-9 px-2 font-normal hover:bg-muted-foreground/10"
+              onClick={signOut}
+            >
+              <FiLogOut size={18} />
+              <p className="ml-2">Sair</p>
             </Button>
           </nav>
         </div>

@@ -14,7 +14,7 @@ export function DashboardSkeleton() {
         <div className="w-full flex flex-col sm:w-auto sm:flex-row items-center gap-2">
           <DatePickerWithRange className="w-full sm:w-auto" />
           <Button disabled className="w-full sm:w-auto">
-            Download
+            Relatório
           </Button>
         </div>
       </div>

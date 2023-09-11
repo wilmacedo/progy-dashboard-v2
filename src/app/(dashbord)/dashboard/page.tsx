@@ -76,7 +76,9 @@ export default async function Dashboard(props: DashboardProps) {
               to: addDays(new Date(2022, 0, 20), 20),
             }}
           />
-          <Button className="w-full sm:w-auto">Download</Button>
+          <Button disabled className="w-full sm:w-auto">
+            Relatório
+          </Button>
         </div>
       </div>
       <div>
