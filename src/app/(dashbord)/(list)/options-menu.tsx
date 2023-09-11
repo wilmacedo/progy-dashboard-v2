@@ -17,11 +17,13 @@ export function OptionsMenu({ planning }: OptionsMenuProps) {
   const { toast } = useToast();
 
   const handleCopy = () => {
+    if (typeof planning.id === 'undefined') return;
+
     const url = `${window.location.origin}/dashboard?id=${planning.id}`;
 
     navigator.clipboard.writeText(url);
     toast({
-      description: 'Link copiado para a área de transferência',
+      title: 'Link copiado para a área de transferência',
     });
   };
 

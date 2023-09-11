@@ -8,7 +8,7 @@ import { BookTemplate, ServerOff } from 'lucide-react';
 import Link from 'next/link';
 import { IoRocketOutline } from 'react-icons/io5';
 import { TbAlertCircle } from 'react-icons/tb';
-import { OptionsMenu } from './OptionsMenu';
+import { OptionsMenu } from './options-menu';
 
 async function getPlannings() {
   const { data } = await api<Planning[]>({

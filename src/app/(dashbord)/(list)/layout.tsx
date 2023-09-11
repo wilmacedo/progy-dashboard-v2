@@ -1,6 +1,5 @@
 import { ct } from '@/utils/style';
-import { ReactNode, Suspense } from 'react';
-import { CardSkeleton } from './CardSkeleton';
+import { ReactNode } from 'react';
 
 interface ListLayoutProps {
   children: ReactNode;
@@ -22,13 +21,7 @@ export default async function ListLayout({ children }: ListLayoutProps) {
           'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5',
         )}
       >
-        <Suspense
-          fallback={new Array(5).fill(0).map((_, index) => (
-            <CardSkeleton key={index} />
-          ))}
-        >
-          {children}
-        </Suspense>
+        {children}
       </div>
     </div>
   );
