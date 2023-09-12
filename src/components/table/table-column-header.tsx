@@ -1,5 +1,5 @@
 import { Column } from '@tanstack/react-table';
-import { ArrowDown, ArrowDownUp, ArrowUp, EyeOff } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '../ui/button';
 import {
@@ -36,11 +36,11 @@ export function TableColumnHeader<Data, Value>({
           >
             <span>{title}</span>
             {column.getIsSorted() === 'desc' ? (
-              <ArrowDown className="ml-2 h-4 w-4" />
+              <ArrowDown className="ml-2 h-3 w-3" />
             ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUp className="ml-2 h-4 w-4" />
+              <ArrowUp className="ml-2 h-3 w-3" />
             ) : (
-              <ArrowDownUp className="ml-2 h-4 w-4" />
+              <ChevronsUpDown className="ml-2 h-3 w-3" />
             )}
           </Button>
         </DropdownMenuTrigger>

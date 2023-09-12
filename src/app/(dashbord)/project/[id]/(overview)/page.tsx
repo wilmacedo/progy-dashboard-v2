@@ -3,17 +3,17 @@ import PieChart from '@/components/Chart/Pie';
 import { ContentNavbar } from '@/components/content-navbar';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { cards, charts, pieCharts, tabs } from '@/config/project';
-import { getServerAuth } from '@/contexts/auth/get-server-auth';
+import { cards, charts, generateTabs, pieCharts } from '@/config/project';
 import { api } from '@/services/api';
-import { ChartRelation, DashboardInfo, Planning } from '@/types/request';
+import { ChartRelation, DashboardInfo } from '@/types/request';
 import { addDays } from 'date-fns';
 import { BarChart3, PieChart as PieChartIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
-import { ProjectSwitcher } from './project-switcher';
+import { getPlannings } from '../get-planning';
+import { ProjectSwitcher } from '../project-switcher';
 
 export const metadata: Metadata = {
   title: {
@@ -26,25 +26,6 @@ interface PageProps {
   params: {
     id: number;
   };
-}
-
-async function getPlannings() {
-  try {
-    const { data, status } = await api<Planning[]>('/plannings/');
-    if (status === 404) {
-      notFound();
-    }
-
-    if (status !== 200) {
-      // TODO: Redirect error page
-      notFound();
-    }
-
-    return data;
-  } catch (error) {
-    // TODO: Redirect error page
-    notFound();
-  }
 }
 
 async function getDashboardInfo(id: number) {
@@ -72,11 +53,6 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const auth = getServerAuth();
-  if (!auth) {
-    notFound();
-  }
-
   const plannings = await getPlannings();
   const planning = plannings.find(
     planning => planning.id === Number(params.id),
@@ -86,12 +62,6 @@ export default async function Page({ params }: PageProps) {
   }
 
   const dashboardInfo = await getDashboardInfo(planning.id);
-
-  function generateTabs() {
-    const basePath = `/project/${planning?.id}`;
-
-    return tabs.map(tab => ({ ...tab, path: basePath + tab.path }));
-  }
 
   return (
     <div className="space-y-4">
@@ -112,7 +82,7 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
 
-      <ContentNavbar tabs={generateTabs()} />
+      <ContentNavbar tabs={generateTabs(planning.id)} />
 
       <div className="space-y-4">
         <div className="grid grid-flow-row gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">

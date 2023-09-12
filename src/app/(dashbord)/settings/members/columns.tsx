@@ -19,15 +19,13 @@ export const columns: ColumnDef<Member>[] = [
     accessorKey: 'name',
     header: ({ column }) => <TableColumnHeader column={column} title="Nome" />,
     cell: ({ row }) => (
-      <span className="max-w-[500px] truncate">{row.getValue('name')}</span>
+      <p className="max-w-[500px] truncate">{row.getValue('name')}</p>
     ),
   },
   {
     accessorKey: 'email',
     header: ({ column }) => <TableColumnHeader column={column} title="Email" />,
-    cell: ({ row }) => (
-      <span className="truncate">{row.getValue('email')}</span>
-    ),
+    cell: ({ row }) => <p className="truncate">{row.getValue('email')}</p>,
   },
   {
     accessorKey: 'role',

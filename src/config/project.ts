@@ -27,6 +27,12 @@ export const tabs: TabConfig[] = [
   },
 ];
 
+export function generateTabs(planningId: number) {
+  const basePath = `/project/${planningId}`;
+
+  return tabs.map(tab => ({ ...tab, path: basePath + tab.path }));
+}
+
 interface CardConfig {
   title: string;
   Icon: IconType;

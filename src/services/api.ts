@@ -7,6 +7,16 @@ interface Response<T> {
   status: number;
 }
 
+interface RequestParams extends RequestInit {
+  cache?:
+    | 'default'
+    | 'force-cache'
+    | 'no-cache'
+    | 'no-store'
+    | 'only-if-cached'
+    | 'reload';
+}
+
 function getToken() {
   const token = cookies().get(AUTH_DATA_KEY);
   if (!token) {
@@ -23,7 +33,7 @@ function getToken() {
   }
 }
 
-async function getHeaders(params?: RequestInit): Promise<HeadersInit> {
+async function getHeaders(params?: RequestParams): Promise<HeadersInit> {
   let headers = {};
   if (params) {
     headers = { ...params.headers };

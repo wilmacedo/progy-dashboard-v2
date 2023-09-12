@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/popover';
 import { Planning } from '@/types/request';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -27,10 +27,17 @@ interface ProjectSwitcherProps {
 export function ProjectSwitcher({ active, list }: ProjectSwitcherProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   function handleClick(planning: Planning) {
     setOpen(false);
-    router.push('/project/' + planning.id);
+
+    const paths = pathname.split('/');
+    const tab = paths[3];
+
+    router.push(
+      `/project/${planning.id}/${typeof tab !== 'undefined' ? tab : '/'}`,
+    );
   }
 
   return (

@@ -30,7 +30,7 @@ export function TablePagination<Data>({ table }: TablePaginationProps<Data>) {
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">Ir para a primeira página</span>
             <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -39,7 +39,7 @@ export function TablePagination<Data>({ table }: TablePaginationProps<Data>) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">Ir para a página anterior</span>
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -48,7 +48,7 @@ export function TablePagination<Data>({ table }: TablePaginationProps<Data>) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">Ir para a próxima página</span>
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
@@ -57,7 +57,7 @@ export function TablePagination<Data>({ table }: TablePaginationProps<Data>) {
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to last page</span>
+            <span className="sr-only">Ir para última página</span>
             <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>

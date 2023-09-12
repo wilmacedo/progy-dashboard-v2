@@ -10,6 +10,44 @@ export interface Planning {
   created_at: string;
 }
 
+export interface State {
+  id: number;
+  name: string;
+}
+
+export interface Initiative {
+  id: number;
+  name: string;
+  code: string;
+  responsible: string;
+  unit_id: number;
+  unit?: {
+    id: number;
+    name: string;
+  };
+  perspective_id: number;
+  perspective?: {
+    id: number;
+    name: string;
+  };
+  stage_id: number;
+  stage?: {
+    id: number;
+    name: string;
+  };
+  font_id: number;
+  font?: {
+    id: number;
+    name: string;
+  };
+  goal_id: number;
+  goal?: {
+    id: number;
+    name: string;
+  };
+  comments: string;
+}
+
 export interface ChartRelation {
   percentage: number;
   value: number;
