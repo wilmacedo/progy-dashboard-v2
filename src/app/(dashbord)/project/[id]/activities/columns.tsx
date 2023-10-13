@@ -4,6 +4,9 @@ import { TableColumnHeader } from '@/components/table/table-column-header';
 import { ColumnDef } from '@tanstack/react-table';
 import { z } from 'zod';
 
+// Atividades concluídas (%)
+// Valor executado se houver valor (R$) reduce
+
 const activitySchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -69,6 +72,27 @@ export const columns: ColumnDef<Activity>[] = [
         {capitalize(row.getValue('responsible'))}
       </span>
     ),
+  },
+  {
+    accessorKey: 'value',
+    header: ({ column }) => <TableColumnHeader column={column} title="Valor" />,
+    cell: ({ row }) => {
+      const value = row.getValue('value');
+      if (!value || isNaN(Number(value))) {
+        return (
+          <span className="text-muted-foreground opacity-50 text-sm">N/A</span>
+        );
+      }
+
+      return (
+        <span className="text-xs">
+          {Number(value).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
+        </span>
+      );
+    },
   },
   {
     accessorKey: 'state',
