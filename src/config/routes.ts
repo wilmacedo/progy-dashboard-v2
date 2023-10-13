@@ -2,7 +2,7 @@ import roles, { Role } from '@/constants/roles';
 import { LucideIcon, PackagePlus } from 'lucide-react';
 import { BsReverseLayoutTextWindowReverse } from 'react-icons/bs';
 import { IoIosList } from 'react-icons/io';
-import { IoCreateOutline, IoSettingsOutline } from 'react-icons/io5';
+import { IoSettingsOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 import { STORAGE_PATH } from './index';
 import { allPaths } from './tabs';
@@ -49,12 +49,12 @@ export function getAllRoutes() {
 
 export default function sidebarRoutes(roleId: number) {
   const defaults: RouteConfig[] = [
-    {
-      basePath: '/management',
-      name: 'Gerenciamento',
-      relativePaths: ['/management', '/edition', '/entities'],
-      Icon: IoCreateOutline,
-    },
+    // {
+    //   basePath: '/management',
+    //   name: 'Gerenciamento',
+    //   relativePaths: ['/management', '/edition', '/entities'],
+    //   Icon: IoCreateOutline,
+    // },
     {
       basePath: '/settings',
       relativePaths: allPaths(),
