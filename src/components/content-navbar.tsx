@@ -19,10 +19,10 @@ interface ContentNavbar {
 
 export function ContentNavbar({ tabs, disabled }: ContentNavbar) {
   const pathname = usePathname();
-  const { role_id } = useAuth();
+  const { role: userRole } = useAuth();
 
   function getTabs() {
-    const role = roleAlias.find(alias => alias.current === role_id)?.current;
+    const role = roleAlias.find(alias => alias.current === userRole)?.current;
 
     return tabs.filter(tab => !tab.excludeRoles?.includes(role ?? Role.USER));
   }

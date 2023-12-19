@@ -1,8 +1,8 @@
 export enum Role {
-  USER = 1,
-  MANAGER = 2,
-  SUBADMINISTRATOR = 3,
-  ADMINISTRATOR = 4,
+  USER = 'user',
+  MANAGER = 'manager',
+  SUBADMINISTRATOR = 'subadmin',
+  ADMINISTRATOR = 'admin',
 }
 
 const high = [Role.ADMINISTRATOR, Role.SUBADMINISTRATOR, Role.MANAGER];

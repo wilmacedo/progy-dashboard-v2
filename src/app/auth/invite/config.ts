@@ -43,7 +43,7 @@ export const fields: InviteField[] = [
   {
     label: 'Cargo',
     type: 'text',
-    field: 'role_id',
+    field: 'role',
     disabled: true,
     id: true,
   },

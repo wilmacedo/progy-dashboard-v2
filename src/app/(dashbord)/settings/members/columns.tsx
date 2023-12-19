@@ -32,7 +32,7 @@ export const columns: ColumnDef<Member>[] = [
     header: ({ column }) => <TableColumnHeader column={column} title="Cargo" />,
     cell: ({ row }) => {
       const index = roleAlias.findIndex(
-        role => role.legacy === row.getValue('role'),
+        role => role.current === row.getValue('role'),
       );
 
       return (

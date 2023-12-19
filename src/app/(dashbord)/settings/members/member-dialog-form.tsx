@@ -31,7 +31,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { toast } from '@/components/ui/use-toast';
-import { Institution, Role } from '@/types/request';
+import { roleAlias } from '@/constants/roles';
+import { Institution } from '@/types/request';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CheckIcon, ChevronsUpDown, Send } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -42,7 +43,7 @@ import { memberInviteAction } from './member-invite-action';
 const memberFormSchema = z.object({
   email: z.string().email(),
   institutionId: z.number().nonnegative(),
-  roleId: z.number().nonnegative(),
+  role: z.string(),
 });
 
 export type MemberFormValues = z.infer<typeof memberFormSchema>;
@@ -50,12 +51,11 @@ export type MemberFormValues = z.infer<typeof memberFormSchema>;
 interface MemberDialogFormProps {
   lists: {
     institutions: Institution[];
-    roles: Role[];
   };
 }
 
 export function MemberDialogForm({
-  lists: { institutions, roles },
+  lists: { institutions },
 }: MemberDialogFormProps) {
   const form = useForm<MemberFormValues>({
     resolver: zodResolver(memberFormSchema),
@@ -178,7 +178,7 @@ export function MemberDialogForm({
               />
               <FormField
                 control={form.control}
-                name="roleId"
+                name="role"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Cargo</FormLabel>
@@ -195,8 +195,10 @@ export function MemberDialogForm({
                           >
                             <span className="truncate">
                               {field.value
-                                ? roles.find(role => role.id === field.value)
-                                    ?.name
+                                ? roleAlias.find(
+                                    role =>
+                                      role.current.toString() === field.value,
+                                  )?.name
                                 : 'Selecione um cargo'}
                             </span>
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -208,18 +210,18 @@ export function MemberDialogForm({
                           <CommandInput placeholder="Procurar cargo..." />
                           <CommandEmpty>Nenhum cargo encontrado.</CommandEmpty>
                           <CommandGroup>
-                            {roles.map(role => (
+                            {roleAlias.map(role => (
                               <CommandItem
                                 value={role.name}
-                                key={role.id}
+                                key={role.current}
                                 onSelect={() =>
-                                  form.setValue('roleId', role.id)
+                                  form.setValue('role', role.current)
                                 }
                               >
                                 <CheckIcon
                                   className={twMerge(
                                     'mr-2 h-4 w-4',
-                                    role.id === field.value
+                                    role.current === field.value
                                       ? 'opacity-100'
                                       : 'opacity-0',
                                   )}

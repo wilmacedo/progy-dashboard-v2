@@ -1,5 +1,5 @@
 import { api } from '@/services/api/server';
-import { Institution, Role } from '@/types/request';
+import { Institution } from '@/types/request';
 import { validateBase64 } from '@/utils';
 import InvitePage from './Invite';
 
@@ -10,7 +10,7 @@ interface InviteProps {
 export interface InviteData {
   email: string;
   institution_id: number;
-  role_id: number;
+  role: string;
   expiration?: number;
   token: string;
 }
@@ -29,17 +29,11 @@ async function getInsitutionName(id: number) {
   return data.name;
 }
 
-async function getRoleName(id: number) {
+async function getRoleName(role: string) {
   const empty = 'N/A';
-  if (id === 0 || typeof id === 'undefined') return empty;
+  if (role.length === 0 || typeof role === 'undefined') return empty;
 
-  const { data, error } = await api<Role>({
-    method: 'GET',
-    route: `/roles/${id}`,
-  });
-  if (error || !data) return empty;
-
-  return data.name;
+  return empty;
 }
 
 function getTokenData({ searchParams }: InviteProps) {
@@ -68,11 +62,11 @@ export default async function Invite(props: InviteProps) {
   const data = getTokenData(props);
 
   const institutionName = await getInsitutionName(data.institution_id);
-  const roleName = await getRoleName(data.role_id);
+  const roleName = await getRoleName(data.role);
 
   const names = {
     institution_id: institutionName,
-    role_id: roleName,
+    role: roleName,
   };
 
   return (

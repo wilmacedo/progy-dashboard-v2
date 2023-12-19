@@ -37,13 +37,13 @@ function getExpandedValue(): boolean {
 export default function Sidebar({ children }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { role_id, signOut, user } = useAuth();
+  const { role, signOut, user } = useAuth();
   const { toggleTheme } = useTheme();
 
   const [expanded, setExpanded] = useState(getExpandedValue());
   const [expandedMobile, setExpandedMobile] = useState(false);
 
-  const routes = sidebarRoutes(role_id);
+  const routes = sidebarRoutes(role);
   const splittedRoutes = [
     routes.filter(route => !route.bottom),
     routes.filter(route => route.bottom),

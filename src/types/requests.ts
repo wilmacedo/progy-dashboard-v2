@@ -1,12 +1,11 @@
 export interface User {
-  email: string;
   id: number;
+  email: string;
   name: string;
-  role: string;
 }
 
 export interface AuthenticateUser {
-  role_id: number;
+  role: string;
   token: string;
   user: User;
 }

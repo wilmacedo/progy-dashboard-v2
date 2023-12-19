@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Institution, Role } from '@/types/request';
+import { Institution } from '@/types/request';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -32,7 +32,6 @@ interface MemberTableProps<Data, Value> {
   data: Data[];
   lists: {
     institutions: Institution[];
-    roles: Role[];
   };
 }
 

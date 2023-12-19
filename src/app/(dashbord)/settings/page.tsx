@@ -5,12 +5,16 @@ import { ServerOff } from 'lucide-react';
 import { ProfileForm } from './profile-form';
 
 async function getUser(): Promise<User | null> {
-  const { data, status } = await api<User>('/users/me');
-  if (status !== 200) {
+  try {
+    const { data, status } = await api<User>('/users/me');
+    if (status !== 200) {
+      return null;
+    }
+
+    return data;
+  } catch (error) {
     return null;
   }
-
-  return data;
 }
 
 export default async function Page() {

@@ -47,7 +47,7 @@ export function getAllRoutes() {
   return paths;
 }
 
-export default function sidebarRoutes(roleId: number) {
+export default function sidebarRoutes(role: string) {
   const defaults: RouteConfig[] = [
     // {
     //   basePath: '/management',
@@ -89,9 +89,11 @@ export default function sidebarRoutes(roleId: number) {
   ];
 
   const routes = [];
-  roles.high.includes(roleId)
-    ? routes.push(...internals)
-    : routes.push(...users);
+  let include = false;
+  roles.high.forEach(r => {
+    if (r.toString() === role) include = true;
+  });
+  include ? routes.push(...internals) : routes.push(...users);
   routes.push(...defaults);
 
   return routes;

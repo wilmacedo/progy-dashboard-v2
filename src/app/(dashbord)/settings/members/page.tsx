@@ -1,13 +1,17 @@
 import { Separator } from '@/components/ui/separator';
 import { api } from '@/services/api';
-import { Institution, Role } from '@/types/request';
+import { Institution } from '@/types/request';
 import { User } from '@/types/requests';
 import { columns } from './columns';
 import { MemberTable } from './member-table';
 
+interface Member extends User {
+  role: string;
+}
+
 async function getMembers() {
   try {
-    const { data, status } = await api<User[]>('/users');
+    const { data, status } = await api<Member[]>('/users');
     if (status !== 200) {
       return [];
     }
@@ -20,20 +24,7 @@ async function getMembers() {
 
 async function getInstitutions() {
   try {
-    const { data, status } = await api<Institution[]>('/institution');
-    if (status !== 200) {
-      return [];
-    }
-
-    return data;
-  } catch (error) {
-    return [];
-  }
-}
-
-async function getRoles() {
-  try {
-    const { data, status } = await api<Role[]>('/roles');
+    const { data, status } = await api<Institution[]>('/institutions');
     if (status !== 200) {
       return [];
     }
@@ -45,10 +36,9 @@ async function getRoles() {
 }
 
 export default async function Page() {
-  const [users, institutions, roles] = await Promise.all([
+  const [users, institutions] = await Promise.all([
     getMembers(),
     getInstitutions(),
-    getRoles(),
   ]);
 
   return (
@@ -61,11 +51,7 @@ export default async function Page() {
       </div>
       <Separator />
 
-      <MemberTable
-        columns={columns}
-        data={users}
-        lists={{ institutions, roles }}
-      />
+      <MemberTable columns={columns} data={users} lists={{ institutions }} />
     </div>
   );
 }

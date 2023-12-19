@@ -24,10 +24,9 @@ interface AuthProviderProps {
 }
 
 const mockedUser: AuthenticateUser = {
-  role_id: -1,
+  role: 'unknown',
   token: '1',
   user: {
-    role: 'user',
     email: 'desconhecido@progy.com.br',
     id: -1,
     name: 'Desconhecido',
@@ -40,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (authenticateData.role_id !== -1) return;
+    if (authenticateData.role !== 'unknown') return;
 
     const cookie = getCookie(AUTH_DATA_KEY);
     if (!cookie) return;

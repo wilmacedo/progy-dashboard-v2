@@ -21,7 +21,7 @@ interface ResultData extends InviteData {
 interface InviteProps {
   data: InviteData;
   names: {
-    role_id: string;
+    role: string;
     institution_id: string;
   };
 }
@@ -37,10 +37,10 @@ export default function InvitePage({ data, names }: InviteProps) {
 
     if (!data) return ErrorType.MISSING_DATA;
 
-    const { email, institution_id: institutionId, role_id: roleId } = data;
+    const { email, institution_id: institutionId, role } = data;
     if (!email || email.length === 0) return ErrorType.MISSING_DATA;
     if (!institutionId || isNaN(institutionId)) return ErrorType.MISSING_DATA;
-    if (!roleId || isNaN(roleId)) return ErrorType.MISSING_DATA;
+    if (!role || role.length === 0) return ErrorType.MISSING_DATA;
 
     return -1;
   };
@@ -174,7 +174,7 @@ export default function InvitePage({ data, names }: InviteProps) {
                     type="text"
                     disabled
                     readOnly
-                    value={names.role_id}
+                    value={names.role}
                   />
                 </div>
               </div>
