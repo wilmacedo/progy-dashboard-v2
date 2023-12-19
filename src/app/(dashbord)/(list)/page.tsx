@@ -21,7 +21,7 @@ async function getPlannings() {
 
 async function getMetrics(id: number) {
   const { data } = await api<DashboardInfo>({
-    route: `/plannings/${id}/dashboard`,
+    route: `/plannings/${id}/metrics`,
     method: 'GET',
   });
 
@@ -93,7 +93,7 @@ export default async function List() {
                 {planning.name}
               </span>
               <span className="mt-0.5 max-w-[8rem] block text-xs truncate text-muted-foreground">
-                {planning.institution.name}
+                {planning.institutions.name}
               </span>
             </div>
 
