@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 
 export async function getPlannings() {
   try {
-    const { data, status } = await api<Planning[]>('/plannings/');
+    const { data, status } = await api<Planning[]>('/plannings');
     if (status === 404) {
       notFound();
     }

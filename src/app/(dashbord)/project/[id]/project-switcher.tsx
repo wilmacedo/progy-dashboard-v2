@@ -52,7 +52,7 @@ export function ProjectSwitcher({ active, list }: ProjectSwitcherProps) {
           <div className="w-80 md:w-96">
             <h3 className="font-semibold truncate">{active.name}</h3>
             <p className="text-xs w-72 truncate text-muted-foreground">
-              {active.institution.name}
+              {active.institutions.name}
             </p>
           </div>
           <ChevronsUpDown className="ml-4 h-4 w-4 shrink-0 opacity-50" />
@@ -70,7 +70,6 @@ export function ProjectSwitcher({ active, list }: ProjectSwitcherProps) {
                 className="hover:bg-accent"
                 onSelect={() => {
                   handleClick(planning);
-                  // TODO: Change active project
                 }}
               >
                 <CheckIcon

@@ -15,12 +15,12 @@ const activitySchema = z.object({
   date_end: z.string(),
   value: z.string().nullable(),
   state_id: z.number(),
-  state: z.object({
+  states: z.object({
     id: z.number(),
     name: z.string(),
   }),
   initiative_id: z.string(),
-  initiative: z.object({
+  initiatives: z.object({
     id: z.number(),
     name: z.string(),
   }),
@@ -42,13 +42,13 @@ function capitalize(text: string) {
 
 export const columns: ColumnDef<Activity>[] = [
   {
-    accessorKey: 'initiative',
+    accessorKey: 'initiatives',
     header: ({ column }) => (
       <TableColumnHeader column={column} title="Iniciativa" />
     ),
     cell: ({ row }) => (
       <p className="max-w-[300px] truncate">
-        {(row.getValue('initiative') as any).name}
+        {(row.getValue('initiatives') as any).name}
       </p>
     ),
     filterFn: (row, id, value) => {
@@ -95,7 +95,7 @@ export const columns: ColumnDef<Activity>[] = [
     },
   },
   {
-    accessorKey: 'state',
+    accessorKey: 'states',
     header: ({ column }) => (
       <TableColumnHeader column={column} title="Estado" />
     ),
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Activity>[] = [
       return (
         <div className="w-fit px-1.5 py-1 text-xs bg-muted-foreground/10 text-muted-foreground rounded-lg">
           <span className="truncate">
-            {capitalize((row.getValue('state') as any).name)}
+            {capitalize((row.getValue('states') as any).name)}
           </span>
         </div>
       );

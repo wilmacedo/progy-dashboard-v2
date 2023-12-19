@@ -16,7 +16,7 @@ interface PageProps {
 
 async function getActivities(planningId: number) {
   const filters = {
-    populate: 'state,initiative',
+    populate: 'states,initiatives',
   };
   const params = new URLSearchParams(filters);
 

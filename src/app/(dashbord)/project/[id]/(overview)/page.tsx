@@ -31,7 +31,7 @@ interface PageProps {
 async function getDashboardInfo(id: number) {
   try {
     const { data, status } = await api<DashboardInfo>(
-      `/plannings/${id}/dashboard`,
+      `/plannings/${id}/metrics`,
     );
     if (status === 404) {
       notFound();
