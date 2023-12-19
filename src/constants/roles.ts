@@ -33,13 +33,11 @@ export const roleAlias = [
   },
 ];
 
-export const getRoleByName = (name: string) => {
-  const role = roleAlias.find(item => item.legacy === name);
-  if (!role) {
-    return Role.USER;
-  }
+export function getRoleEnum(): [string, ...string[]] {
+  const roleList = Object.values(Role).map(String);
+  roleList.shift();
 
-  return role.current;
-};
+  return ['user', ...roleList];
+}
 
 export default roles;
