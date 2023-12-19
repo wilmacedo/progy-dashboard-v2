@@ -1,107 +1,116 @@
 'use client';
 
-import Button from '@/components/Button';
-import Input from '@/components/Input';
 import Spinner from '@/components/Spinner';
 import { Logo } from '@/components/logo';
-import { toast } from '@/components/ui/use-toast';
-import { redirectUrl } from '@/config/auth';
-import { api } from '@/services/api/client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { getRoleEnum, roleAlias } from '@/constants/roles';
+import { Institution } from '@/types/request';
 import { ct } from '@/utils/style';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { ErrorType, errorMessages } from './config';
 import { InviteData } from './page';
 
-interface ResultData extends InviteData {
-  name: string;
-  password: string;
-}
-
 interface InviteProps {
   data: InviteData;
-  names: {
-    role: string;
-    institution_id: string;
-  };
+  institution: Institution;
 }
 
-export default function InvitePage({ data, names }: InviteProps) {
-  const router = useRouter();
+const inviteFormSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(3),
+  password: z.string().min(6),
+  institution_id: z.number(),
+  role: z.enum(getRoleEnum()),
+});
 
-  const hasError = () => {
-    const expiration = data.expiration || 0;
-    if (expiration < new Date().getTime()) {
-      return ErrorType.EXPIRED;
+type InviteFormValues = z.infer<typeof inviteFormSchema>;
+
+export default function InvitePage({ data, institution }: InviteProps) {
+  const form = useForm<InviteFormValues>({
+    resolver: zodResolver(inviteFormSchema),
+    defaultValues: {
+      email: data.email,
+      institution_id: data.institution_id,
+      role: data.role,
+    },
+  });
+
+  function getRoleName() {
+    const targetRole = roleAlias.find(role => role.current === data.role);
+    if (!targetRole) {
+      return 'N/A';
     }
 
+    return targetRole.name;
+  }
+
+  const hasError = () => {
     if (!data) return ErrorType.MISSING_DATA;
 
-    const { email, institution_id: institutionId, role } = data;
-    if (!email || email.length === 0) return ErrorType.MISSING_DATA;
-    if (!institutionId || isNaN(institutionId)) return ErrorType.MISSING_DATA;
-    if (!role || role.length === 0) return ErrorType.MISSING_DATA;
+    // const expiration = data.expiration || 0;
+    // if (expiration < new Date().getTime()) {
+    //   return ErrorType.EXPIRED;
+    // }
+
+    const dataSchema = z.object({
+      email: z.string().email(),
+      institution_id: z.number(),
+      role: z.enum(getRoleEnum()),
+    });
+
+    const parsedData = dataSchema.safeParse(data);
+    if (!parsedData.success) {
+      console.log(parsedData.error);
+      return ErrorType.MISSING_DATA;
+    }
 
     return -1;
   };
 
-  const [result, setResult] = useState<ResultData>(data as ResultData);
   const [loading, setLoading] = useState(false);
 
-  const handleInputValue = (
-    event: ChangeEvent<HTMLInputElement>,
-    field: string,
-  ) => {
-    const { value } = event.target;
-    if (typeof value === 'undefined') return;
+  async function handleSubmit(data: InviteFormValues) {
+    console.log({ data });
+  }
 
-    setResult(prev => ({ ...prev, [field]: value }));
-  };
+  // const handleSubmit = async () => {
+  //   if (loading) return;
 
-  const validateForm = () => {
-    const { name, password } = result;
+  //   setLoading(true);
 
-    if (!name || name.length === 0) return false;
-    if (!password || password.length < 6) return false;
+  //   const { code } = await api({
+  //     method: 'POST',
+  //     route: '/email/invite/create',
+  //     body: {
+  //       // TODO: Add create body
+  //     },
+  //   });
 
-    return true;
-  };
+  //   if (code) {
+  //     let message;
+  //     switch (code) {
+  //       case 'E1000':
+  //         message = 'Uma ou mais informações estão faltando.';
+  //         break;
+  //       case 'E3001':
+  //         message = 'O token do convite está inválido';
+  //         break;
+  //       default:
+  //         message = 'Houve um erro em processar sua solicitação.';
+  //     }
 
-  const handleSubmit = async () => {
-    if (loading) return;
+  //     toast({ variant: 'destructive', title: message });
 
-    setLoading(true);
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    const response: ResultData = JSON.parse(JSON.stringify(result));
-    delete response.expiration;
-
-    const { code } = await api({
-      method: 'POST',
-      route: '/email/invite/create',
-      body: response,
-    });
-
-    if (code) {
-      let message;
-      switch (code) {
-        case 'E1000':
-          message = 'Uma ou mais informações estão faltando.';
-          break;
-        case 'E3001':
-          message = 'O token do convite está inválido';
-          break;
-        default:
-          message = 'Houve um erro em processar sua solicitação.';
-      }
-
-      toast({ variant: 'destructive', title: message });
-
-      setLoading(false);
-      return;
-    }
-
-    router.push(redirectUrl);
-  };
+  //   router.push(redirectUrl);
+  // };
 
   return (
     <div className="min-h-[100vh] flex justify-center bg-accent">
@@ -121,7 +130,10 @@ export default function InvitePage({ data, names }: InviteProps) {
           </span>
         </div>
 
-        <div className="w-[25rem] p-7 flex flex-col bg-[#fff] rounded-lg shadow-md">
+        <form
+          className="w-[25rem] p-7 flex flex-col bg-[#fff] rounded-lg shadow-md"
+          onSubmit={form.handleSubmit(handleSubmit)}
+        >
           {hasError() > -1 ? (
             <div className="flex flex-col gap-2 text-center">
               <h1 className="text-2xl font-medium">
@@ -135,15 +147,21 @@ export default function InvitePage({ data, names }: InviteProps) {
             <div>
               <div className="mb-6 flex flex-col gap-1">
                 <span className="text-sm">E-mail</span>
-                <Input type="email" disabled value={data.email} readOnly />
+                <Input
+                  type="email"
+                  disabled
+                  readOnly
+                  {...form.register('email')}
+                />
               </div>
 
               <div className="mb-6 flex flex-col gap-1">
-                <span className="text-sm">Nome</span>
+                <span className="text-sm">Name</span>
                 <Input
                   type="text"
                   placeholder="Digite seu nome"
-                  onChange={event => handleInputValue(event, 'name')}
+                  minLength={3}
+                  {...form.register('name')}
                 />
               </div>
 
@@ -152,7 +170,8 @@ export default function InvitePage({ data, names }: InviteProps) {
                 <Input
                   type="password"
                   placeholder="Digite sua senha"
-                  onChange={event => handleInputValue(event, 'password')}
+                  minLength={6}
+                  {...form.register('password')}
                 />
               </div>
 
@@ -164,7 +183,7 @@ export default function InvitePage({ data, names }: InviteProps) {
                     type="text"
                     disabled
                     readOnly
-                    value={names.institution_id}
+                    value={institution.name}
                   />
                 </div>
                 <div>
@@ -174,16 +193,15 @@ export default function InvitePage({ data, names }: InviteProps) {
                     type="text"
                     disabled
                     readOnly
-                    value={names.role}
+                    value={getRoleName()}
                   />
                 </div>
               </div>
 
               <Button
+                type="submit"
                 className="w-full"
-                disabled={!validateForm()}
-                onClick={handleSubmit}
-                loading={loading}
+                disabled={!form.formState.isValid}
               >
                 <Spinner
                   className={ct('hidden', 'group-data-[loading=true]:block')}
@@ -194,7 +212,7 @@ export default function InvitePage({ data, names }: InviteProps) {
               </Button>
             </div>
           )}
-        </div>
+        </form>
 
         {hasError() === -1 && (
           <div className="mb-4 max-w-[25rem] text-center">

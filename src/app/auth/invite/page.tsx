@@ -1,3 +1,4 @@
+import { Role } from '@/constants/roles';
 import { api } from '@/services/api/server';
 import { Institution } from '@/types/request';
 import { validateBase64 } from '@/utils';
@@ -10,30 +11,23 @@ interface InviteProps {
 export interface InviteData {
   email: string;
   institution_id: number;
-  role: string;
+  role: Role;
   expiration?: number;
   token: string;
 }
 
-async function getInsitutionName(id: number) {
+async function getInstitution(id: number) {
   const empty = 'N/A';
   if (id === 0 || typeof id === 'undefined') return empty;
 
   const { data, error } = await api<Institution>({
     method: 'GET',
-    route: `/institution/${id}`,
+    route: `/institutions/${id}`,
   });
 
   if (error || !data) return empty;
 
-  return data.name;
-}
-
-async function getRoleName(role: string) {
-  const empty = 'N/A';
-  if (role.length === 0 || typeof role === 'undefined') return empty;
-
-  return empty;
+  return data;
 }
 
 function getTokenData({ searchParams }: InviteProps) {
@@ -53,7 +47,6 @@ function getTokenData({ searchParams }: InviteProps) {
 
     return data;
   } catch (error) {
-    console.warn(error);
     return result;
   }
 }
@@ -61,17 +54,18 @@ function getTokenData({ searchParams }: InviteProps) {
 export default async function Invite(props: InviteProps) {
   const data = getTokenData(props);
 
-  const institutionName = await getInsitutionName(data.institution_id);
-  const roleName = await getRoleName(data.role);
-
-  const names = {
-    institution_id: institutionName,
-    role: roleName,
-  };
+  let institution = await getInstitution(data.institution_id);
+  if (typeof institution === 'string') {
+    institution = {
+      id: -1,
+      name: 'N/A',
+      code: 'N/A',
+    };
+  }
 
   return (
     <div>
-      <InvitePage data={data} names={names} />
+      <InvitePage data={data} institution={institution} />
     </div>
   );
 }
