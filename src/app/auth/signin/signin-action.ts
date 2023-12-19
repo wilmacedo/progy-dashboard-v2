@@ -10,7 +10,7 @@ export async function signInAction(
 ): Promise<ActionResponse<AuthenticateUser>> {
   try {
     const { data: response, status } = await api<AuthenticateUser>(
-      '/users/login',
+      '/users/authenticate',
       {
         method: 'POST',
         body: JSON.stringify(data),

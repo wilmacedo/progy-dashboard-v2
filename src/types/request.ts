@@ -2,7 +2,7 @@ export interface Planning {
   id: number;
   name: string;
   institution_id: number;
-  institution: {
+  institutions: {
     name: string;
   };
   initiatives?: number;

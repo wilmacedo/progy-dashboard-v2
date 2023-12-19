@@ -1,5 +1,8 @@
+'use client';
+
 import { Column } from '@tanstack/react-table';
 import { Check, PlusCircle } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ComponentType } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Badge } from '../ui/badge';
@@ -33,6 +36,12 @@ export function TableFacetedFilter<Data, Value>({
 }: TableFacetedFilter<Data, Value>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
+  const router = useRouter();
+  const params = useSearchParams();
+
+  function updateRoute(id: string, value: string) {
+    console.log(params.toString());
+  }
 
   return (
     <Popover>
@@ -70,7 +79,9 @@ export function TableFacetedFilter<Data, Value>({
                         key={option.value}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {option.label}
+                        <span className="max-w-[8rem] truncate">
+                          {option.label}
+                        </span>
                       </Badge>
                     ))
                 )}
@@ -91,6 +102,8 @@ export function TableFacetedFilter<Data, Value>({
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
+                      updateRoute(column?.id ?? '', option.value);
+
                       if (isSelected) {
                         selectedValues.delete(option.value);
                       } else {
