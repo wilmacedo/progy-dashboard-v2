@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
-import { roleAlias } from '@/constants/roles';
+import { getRoleEnum } from '@/constants/roles';
 import { User } from '@/types/requests';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -21,7 +21,7 @@ import { profileAction } from './profile-action';
 const profileFormSchema = z.object({
   name: z.string().min(3).max(50),
   email: z.string().email(),
-  role: z.string(),
+  role: z.enum(getRoleEnum()),
 });
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -53,11 +53,9 @@ const configs: Config[] = [
 ];
 
 export function ProfileForm({ user }: ProfileFormProps) {
-  const role =
-    roleAlias.find(role => role.legacy === user.role)?.name ?? user.role;
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: { ...user, role },
+    defaultValues: { ...user },
   });
 
   async function handleSubmit(data: ProfileFormValues) {

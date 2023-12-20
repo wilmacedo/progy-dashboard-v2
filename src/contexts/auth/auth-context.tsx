@@ -1,6 +1,7 @@
 'use client';
 
 import { AUTH_DATA_KEY, redirectUrl } from '@/config/auth';
+import { Role } from '@/constants/roles';
 import { AuthenticateUser } from '@/types/requests';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
@@ -30,6 +31,7 @@ const mockedUser: AuthenticateUser = {
     email: 'desconhecido@progy.com.br',
     id: -1,
     name: 'Desconhecido',
+    role: Role.USER,
   },
 };
 

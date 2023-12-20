@@ -5,13 +5,9 @@ import { User } from '@/types/requests';
 import { columns } from './columns';
 import { MemberTable } from './member-table';
 
-interface Member extends User {
-  role: string;
-}
-
-async function getMembers() {
+async function getUsers() {
   try {
-    const { data, status } = await api<Member[]>('/users');
+    const { data, status } = await api<User[]>('/users');
     if (status !== 200) {
       return [];
     }
@@ -37,7 +33,7 @@ async function getInstitutions() {
 
 export default async function Page() {
   const [users, institutions] = await Promise.all([
-    getMembers(),
+    getUsers(),
     getInstitutions(),
   ]);
 
