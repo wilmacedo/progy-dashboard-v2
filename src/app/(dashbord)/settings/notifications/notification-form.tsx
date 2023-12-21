@@ -15,8 +15,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const notificationFormSchema = z.object({
-  initiative: z.boolean().default(false).optional(),
-  activity: z.boolean().default(false).optional(),
+  activity: z.boolean().default(true).optional(),
 });
 
 type NotificationFormValues = z.infer<typeof notificationFormSchema>;
@@ -26,7 +25,6 @@ export function NotificationForm() {
     resolver: zodResolver(notificationFormSchema),
     defaultValues: {
       activity: true,
-      initiative: true,
     },
   });
 
@@ -34,34 +32,6 @@ export function NotificationForm() {
     <Form {...form}>
       <form className="space-y-8 max-w-3xl">
         <div className="space-y-4">
-          <Card>
-            <CardContent className="p-6">
-              <FormField
-                control={form.control}
-                name="initiative"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">
-                        Emails de iniciativas
-                      </FormLabel>
-                      <FormDescription className="text-xs text-muted-foreground">
-                        Receba emails sobre as atualizações e avisos das
-                        iniciativas
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        disabled
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
           <Card>
             <CardContent className="p-6">
               <FormField
