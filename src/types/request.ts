@@ -89,3 +89,8 @@ export interface Role {
   id: number;
   name: string;
 }
+
+export interface Notification {
+  userId: number;
+  activity: boolean;
+}
