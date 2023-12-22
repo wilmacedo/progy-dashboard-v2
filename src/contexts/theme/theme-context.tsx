@@ -24,8 +24,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
     ['light', 'dark'].forEach(theme => {
       if (currentTheme == theme) {
+        const expires = new Date();
+        expires.setFullYear(expires.getFullYear() + 20);
+
         const newTheme = theme === 'light' ? 'dark' : 'light';
-        setCookie(THEME_DATA_KEY, newTheme);
+        setCookie(THEME_DATA_KEY, newTheme, { expires });
 
         html.classList.remove(theme);
         html.classList.add(newTheme);

@@ -156,7 +156,7 @@ export default function InvitePage({ data, institution }: InviteProps) {
               </div>
 
               <div className="mb-6 flex flex-col gap-1">
-                <span className="text-sm">Name</span>
+                <span className="text-sm">Nome</span>
                 <Input
                   type="text"
                   placeholder="Digite seu nome"

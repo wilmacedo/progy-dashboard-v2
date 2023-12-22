@@ -42,7 +42,7 @@ export function SigninForm() {
     setLoading(true);
 
     const { data: response, error } = await signInAction(data);
-    if (error) {
+    if (error || !response) {
       toast({
         variant: 'destructive',
         title: 'Oops! Houve um erro ao tentar entrar.',
@@ -53,7 +53,7 @@ export function SigninForm() {
       return;
     }
 
-    updateAuthenticateData(response!);
+    updateAuthenticateData(response, data.remember);
     router.push('/');
   }
 

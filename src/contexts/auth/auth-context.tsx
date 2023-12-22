@@ -3,6 +3,7 @@
 import { AUTH_DATA_KEY, redirectUrl } from '@/config/auth';
 import { Role } from '@/constants/roles';
 import { AuthenticateUser } from '@/types/requests';
+import { CookieSerializeOptions } from 'cookie';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import {
@@ -15,7 +16,7 @@ import {
 
 interface AuthContextData extends AuthenticateUser {
   signOut: () => void;
-  updateAuthenticateData: (data: AuthenticateUser) => void;
+  updateAuthenticateData: (data: AuthenticateUser, remember: boolean) => void;
 }
 
 const AuthContext = createContext({} as AuthContextData);
@@ -54,9 +55,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [authenticateData]);
 
-  function updateAuthenticateData(data: AuthenticateUser) {
+  function updateAuthenticateData(data: AuthenticateUser, remember: boolean) {
+    let options: CookieSerializeOptions | undefined = undefined;
+    if (remember) {
+      const currentDate = new Date();
+      currentDate.setDate(new Date().getDate() + 30);
+
+      options = {
+        expires: currentDate,
+      };
+    }
+
     setAuthenticateData(data);
-    setCookie(AUTH_DATA_KEY, JSON.stringify(data));
+    setCookie(AUTH_DATA_KEY, JSON.stringify(data), options);
   }
 
   function signOut() {

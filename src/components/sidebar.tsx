@@ -51,7 +51,12 @@ export default function Sidebar({ children }: SidebarProps) {
 
   const handleExpand = () => {
     setExpanded(prev => {
-      setCookie('@progy/sidebar', JSON.stringify({ expanded: !prev }));
+      const expires = new Date();
+      expires.setFullYear(expires.getFullYear() + 20);
+
+      setCookie('@progy/sidebar', JSON.stringify({ expanded: !prev }), {
+        expires,
+      });
 
       return !prev;
     });
