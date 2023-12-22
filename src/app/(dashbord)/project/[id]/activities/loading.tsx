@@ -15,12 +15,7 @@ import {
 } from '@/components/ui/table';
 import { tabs } from '@/config/project';
 import { Column, Table as TableType } from '@tanstack/react-table';
-import {
-  ChevronsUpDown,
-  PlusCircle,
-  Send,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { ChevronsUpDown, PlusCircle, SlidersHorizontal } from 'lucide-react';
 
 export default function Loading() {
   const mockedColumn = {
@@ -97,15 +92,6 @@ export default function Loading() {
         >
           <SlidersHorizontal className="mr-2 h-4 w-4" />
           Visualizar
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-2 hidden h-8 lg:flex"
-          disabled
-        >
-          <Send className="mr-2 h-4 w-4" />
-          Convidar
         </Button>
       </div>
 

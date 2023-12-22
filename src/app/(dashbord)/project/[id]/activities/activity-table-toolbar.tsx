@@ -56,16 +56,16 @@ export function ActivityTableToolbar<Data>({
             <X className="ml-2 h-4 w-4" />
           </Button>
         )}
-        {table.getColumn('initiative') && (
+        {table.getColumn('initiatives') && (
           <TableFacetedFilter
-            column={table.getColumn('initiative')}
+            column={table.getColumn('initiatives')}
             title="Iniciativa"
             options={mappedInitiatives()}
           />
         )}
-        {table.getColumn('state') && (
+        {table.getColumn('states') && (
           <TableFacetedFilter
-            column={table.getColumn('state')}
+            column={table.getColumn('states')}
             title="Estado"
             options={mappedStates()}
           />

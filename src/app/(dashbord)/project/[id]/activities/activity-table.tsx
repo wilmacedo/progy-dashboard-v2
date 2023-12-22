@@ -121,7 +121,7 @@ export function ActivityTable<Data, Value>({
                   className="h-16 text-center"
                 >
                   <span className="text-muted-foreground">
-                    Nenhum membro encontrado
+                    Nenhuma atividade encontrada
                   </span>
                 </TableCell>
               </TableRow>

@@ -1,6 +1,7 @@
 'use client';
 
 import { TableColumnHeader } from '@/components/table/table-column-header';
+import { capitalize } from '@/utils/capitalize';
 import { ColumnDef } from '@tanstack/react-table';
 import { z } from 'zod';
 
@@ -31,15 +32,6 @@ const activitySchema = z.object({
 
 export type Activity = z.infer<typeof activitySchema>;
 
-function capitalize(text: string) {
-  const [first, ...rest] = text.split(' ');
-  if (!first) return '';
-
-  return (
-    first[0].toUpperCase() + first.slice(1).toLowerCase() + ' ' + rest.join(' ')
-  );
-}
-
 export const columns: ColumnDef<Activity>[] = [
   {
     accessorKey: 'initiatives',
@@ -47,8 +39,8 @@ export const columns: ColumnDef<Activity>[] = [
       <TableColumnHeader column={column} title="Iniciativa" />
     ),
     cell: ({ row }) => (
-      <p className="max-w-[300px] truncate">
-        {(row.getValue('initiatives') as any).name}
+      <p className="max-w-[300px] truncat">
+        {capitalize((row.getValue('initiatives') as any).name)}
       </p>
     ),
     filterFn: (row, id, value) => {
@@ -59,7 +51,9 @@ export const columns: ColumnDef<Activity>[] = [
     accessorKey: 'name',
     header: ({ column }) => <TableColumnHeader column={column} title="Nome" />,
     cell: ({ row }) => (
-      <p className="max-w-[300px] truncate">{row.getValue('name')}</p>
+      <p className="max-w-[300px] truncate">
+        {capitalize(row.getValue('name'))}
+      </p>
     ),
   },
   {
@@ -109,7 +103,6 @@ export const columns: ColumnDef<Activity>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      console.log(row.getValue(id), value);
       return value.includes(String((row.getValue(id) as any).id));
     },
   },
