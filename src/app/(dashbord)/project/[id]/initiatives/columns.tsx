@@ -30,7 +30,7 @@ export type Initiative = z.infer<typeof initiativeSchema>;
 export const columns: ColumnDef<Initiative>[] = [
   {
     accessorKey: 'name',
-    header: ({ column }) => <TableColumnHeader column={column} title="Name" />,
+    header: ({ column }) => <TableColumnHeader column={column} title="Nome" />,
     cell: ({ row }) => (
       <p className="max-w-[300px] truncate">
         {capitalize(row.getValue('name'))}

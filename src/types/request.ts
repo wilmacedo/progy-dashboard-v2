@@ -20,6 +20,11 @@ export interface Stage {
   name: string;
 }
 
+export interface Perspective {
+  id: number;
+  name: string;
+}
+
 export interface Initiative {
   id: number;
   name: string;

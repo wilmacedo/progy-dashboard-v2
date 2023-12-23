@@ -12,7 +12,7 @@ export const tabs: TabConfig[] = [
   { name: 'Visão Geral', path: '/', excludeRoles: [] },
   {
     name: 'Parametrizações',
-    path: '/parametrization',
+    path: '/parametrizations',
     excludeRoles: [Role.USER],
   },
   {
