@@ -39,7 +39,7 @@ export const columns: ColumnDef<Activity>[] = [
       <TableColumnHeader column={column} title="Iniciativa" />
     ),
     cell: ({ row }) => (
-      <p className="max-w-[300px] truncat">
+      <p className="max-w-[300px] truncate">
         {capitalize((row.getValue('initiatives') as any).name)}
       </p>
     ),

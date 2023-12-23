@@ -21,27 +21,27 @@ export interface Initiative {
   code: string;
   responsible: string;
   unit_id: number;
-  unit?: {
+  units?: {
     id: number;
     name: string;
   };
   perspective_id: number;
-  perspective?: {
+  perspectives?: {
     id: number;
     name: string;
   };
   stage_id: number;
-  stage?: {
+  stages?: {
     id: number;
     name: string;
   };
   font_id: number;
-  font?: {
+  fonts?: {
     id: number;
     name: string;
   };
   goal_id: number;
-  goal?: {
+  goals?: {
     id: number;
     name: string;
   };
