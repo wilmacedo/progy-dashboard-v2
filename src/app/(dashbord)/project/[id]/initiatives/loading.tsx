@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/table';
 import { tabs } from '@/config/project';
 import { Column, Table as TableType } from '@tanstack/react-table';
-import { ChevronsUpDown, SlidersHorizontal } from 'lucide-react';
+import { ChevronsUpDown, PlusCircle, SlidersHorizontal } from 'lucide-react';
 
 export default function Loading() {
   const mockedColumn = {
@@ -65,6 +65,15 @@ export default function Loading() {
             disabled
             className="h-8 w-[150px] lg:w-[250px]"
           />
+          <Button
+            disabled
+            variant="outline"
+            size="sm"
+            className="h-8 border-dashed border-border hover:bg-border disabled:opacity-50"
+          >
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Estágio
+          </Button>
         </div>
         <Button
           variant="outline"
