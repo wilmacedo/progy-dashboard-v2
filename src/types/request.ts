@@ -15,6 +15,11 @@ export interface State {
   name: string;
 }
 
+export interface Stage {
+  id: number;
+  name: string;
+}
+
 export interface Initiative {
   id: number;
   name: string;

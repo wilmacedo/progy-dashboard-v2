@@ -1,7 +1,7 @@
 import { ContentNavbar } from '@/components/content-navbar';
 import { generateTabs } from '@/config/project';
 import { api } from '@/services/api';
-import { Initiative } from '@/types/request';
+import { Initiative, Stage } from '@/types/request';
 import { notFound } from 'next/navigation';
 import { getPlannings } from '../get-planning';
 import { ProjectSwitcher } from '../project-switcher';
@@ -34,6 +34,21 @@ async function getInitiatives(planningId: number) {
   }
 }
 
+async function getStages(planningId: number) {
+  try {
+    const { data, status } = await api<Stage[]>(
+      `/plannings/${planningId}/stages`,
+    );
+    if (status !== 200) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    return [];
+  }
+}
+
 export default async function Page({ params }: PageProps) {
   if (isNaN(params.id)) {
     notFound();
@@ -47,7 +62,10 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const initiatives = await getInitiatives(planning.id);
+  const [initiatives, stages] = await Promise.all([
+    getInitiatives(planning.id),
+    getStages(planning.id),
+  ]);
 
   return (
     <div className="space-y-4">
@@ -57,7 +75,11 @@ export default async function Page({ params }: PageProps) {
 
       <ContentNavbar tabs={generateTabs(planning.id)} />
 
-      <InitiativeTable columns={columns} data={initiatives as any} />
+      <InitiativeTable
+        columns={columns}
+        data={initiatives as any}
+        stages={stages}
+      />
     </div>
   );
 }

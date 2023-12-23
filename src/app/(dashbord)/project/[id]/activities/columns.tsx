@@ -1,6 +1,7 @@
 'use client';
 
 import { TableColumnHeader } from '@/components/table/table-column-header';
+import { TableRowActions } from '@/components/table/table-row-actions';
 import { capitalize } from '@/utils/capitalize';
 import { ColumnDef } from '@tanstack/react-table';
 import { z } from 'zod';
@@ -105,5 +106,9 @@ export const columns: ColumnDef<Activity>[] = [
     filterFn: (row, id, value) => {
       return value.includes(String((row.getValue(id) as any).id));
     },
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <TableRowActions section="activities" row={row} />,
   },
 ];

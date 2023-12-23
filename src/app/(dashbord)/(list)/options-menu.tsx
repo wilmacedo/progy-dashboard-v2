@@ -31,9 +31,7 @@ export function OptionsMenu({ planning }: OptionsMenuProps) {
     <Options>
       <DropdownMenuLabel>Mais opções</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem onClick={handleCopy}>
-        Copiar link de acesso
-      </DropdownMenuItem>
+      <DropdownMenuItem onClick={handleCopy}>Compartilhar</DropdownMenuItem>
     </Options>
   );
 }

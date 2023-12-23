@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Stage } from '@/types/request';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -29,11 +30,13 @@ import { InitiativeTableToolbar } from './initiative-table-toolbar';
 interface InitiativeTableProps<Data, Value> {
   columns: ColumnDef<Data, Value>[];
   data: Data[];
+  stages: Stage[];
 }
 
 export function InitiativeTable<Data, Value>({
   columns,
   data,
+  stages,
 }: InitiativeTableProps<Data, Value>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -69,7 +72,7 @@ export function InitiativeTable<Data, Value>({
 
   return (
     <div className="space-y-4">
-      <InitiativeTableToolbar table={table} />
+      <InitiativeTableToolbar table={table} stages={stages} />
       <div className="rounded-lg border border-border">
         <Table>
           <TableHeader>

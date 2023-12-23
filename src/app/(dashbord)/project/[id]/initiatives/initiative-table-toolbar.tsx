@@ -1,17 +1,28 @@
+import { TableFacetedFilter } from '@/components/table/table-faceted-filter';
 import { DataTableViewOptions } from '@/components/table/table-view-options';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Stage } from '@/types/request';
 import { Table } from '@tanstack/react-table';
 import { X } from 'lucide-react';
 
 interface InitiativeTableToolbarProps<Data> {
   table: Table<Data>;
+  stages: Stage[];
 }
 
 export function InitiativeTableToolbar<Data>({
   table,
+  stages,
 }: InitiativeTableToolbarProps<Data>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+
+  function mappedStages() {
+    return stages.map(stage => ({
+      label: stage.name,
+      value: String(stage.id),
+    }));
+  }
 
   return (
     <div className="flex items-center justify-between">
@@ -33,6 +44,13 @@ export function InitiativeTableToolbar<Data>({
             Limpar
             <X className="ml-2 h-4 w-4" />
           </Button>
+        )}
+        {table.getColumn('stages') && (
+          <TableFacetedFilter
+            column={table.getColumn('stages')}
+            title="Estágio"
+            options={mappedStages()}
+          />
         )}
       </div>
       <DataTableViewOptions table={table} />
