@@ -1,5 +1,6 @@
 'use client';
 
+import { keyTranslation } from '@/config/table';
 import { Table } from '@tanstack/react-table';
 import { SlidersHorizontal } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -48,7 +49,7 @@ export function DataTableViewOptions<Data>({
                 checked={column.getIsVisible()}
                 onCheckedChange={value => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {keyTranslation[column.id] || column.id}
               </DropdownMenuCheckboxItem>
             );
           })}
