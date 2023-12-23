@@ -9,10 +9,10 @@ interface PageProps {
   };
 }
 
-async function getPerspectives(planningId: number) {
+async function getStages(planningId: number) {
   try {
     const { data, status } = await api<Perspective[]>(
-      `/plannings/${planningId}/perspectives`,
+      `/plannings/${planningId}/stages`,
     );
     if (status !== 200) {
       return [];
@@ -25,10 +25,8 @@ async function getPerspectives(planningId: number) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const perspectives = await getPerspectives(params.id);
-  const emptyText = 'Nenhuma perspectiva encontrada';
+  const stages = await getStages(params.id);
+  const emptyText = 'Nenhum estágio encontrado';
 
-  return (
-    <ParamTable columns={columns} data={perspectives} emptyText={emptyText} />
-  );
+  return <ParamTable columns={columns} data={stages} emptyText={emptyText} />;
 }

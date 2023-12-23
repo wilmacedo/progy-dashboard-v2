@@ -25,7 +25,7 @@ const initiativeSchema = z.object({
   }),
 });
 
-export type Initiative = z.infer<typeof initiativeSchema>;
+type Initiative = z.infer<typeof initiativeSchema>;
 
 export const columns: ColumnDef<Initiative>[] = [
   {

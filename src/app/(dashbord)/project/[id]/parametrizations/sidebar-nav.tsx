@@ -16,11 +16,10 @@ export function SidebarNav({ planningId, links }: SidebarNavProps) {
   const baseUrl = `/project/${planningId}/parametrizations/`;
 
   function isCurrentRoute(href: string) {
-    if (links[0].href === href) {
-      return true;
-    }
+    let path = pathname.split('parametrizations/')[1];
+    if (path === undefined) path = '';
 
-    return pathname.includes(href);
+    return path === href;
   }
 
   return (

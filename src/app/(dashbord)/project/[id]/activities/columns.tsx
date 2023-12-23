@@ -31,7 +31,7 @@ const activitySchema = z.object({
   comments: z.string().nullable(),
 });
 
-export type Activity = z.infer<typeof activitySchema>;
+type Activity = z.infer<typeof activitySchema>;
 
 export const columns: ColumnDef<Activity>[] = [
   {

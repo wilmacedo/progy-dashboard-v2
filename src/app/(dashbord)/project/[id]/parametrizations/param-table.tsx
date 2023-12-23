@@ -25,15 +25,17 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
-interface PerspectiveTableProps<Data, Value> {
+interface ParamTableProps<Data, Value> {
   columns: ColumnDef<Data, Value>[];
   data: Data[];
+  emptyText: string;
 }
 
-export function PerspectiveTable<Data, Value>({
+export function ParamTable<Data, Value>({
   columns,
   data,
-}: PerspectiveTableProps<Data, Value>) {
+  emptyText,
+}: ParamTableProps<Data, Value>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -109,9 +111,7 @@ export function PerspectiveTable<Data, Value>({
                   colSpan={columns.length}
                   className="h-16 text-center"
                 >
-                  <span className="text-muted-foreground">
-                    Nenhuma perspectiva encontrada
-                  </span>
+                  <span className="text-muted-foreground">{emptyText}</span>
                 </TableCell>
               </TableRow>
             )}

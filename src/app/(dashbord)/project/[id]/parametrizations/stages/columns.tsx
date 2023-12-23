@@ -2,11 +2,11 @@
 
 import { TableColumnHeader } from '@/components/table/table-column-header';
 import { TableRowActions } from '@/components/table/table-row-actions';
-import { Perspective } from '@/types/request';
+import { Stage } from '@/types/request';
 import { capitalize } from '@/utils/capitalize';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const columns: ColumnDef<Perspective>[] = [
+export const columns: ColumnDef<Stage>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => <TableColumnHeader column={column} title="Nome" />,
