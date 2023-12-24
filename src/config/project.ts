@@ -1,5 +1,4 @@
 import { PieChartType } from '@/components/Chart';
-import { TabConfig } from '@/components/content-navbar';
 import { Role } from '@/constants/roles';
 import { DashboardInfo } from '@/types/request';
 import { IconType } from 'react-icons';
@@ -8,29 +7,44 @@ import { BiErrorAlt } from 'react-icons/bi';
 import { IoIosPaper } from 'react-icons/io';
 import { IoWarningOutline } from 'react-icons/io5';
 
+export interface TabConfig {
+  name: string;
+  paths: string[];
+  basePath?: string;
+  excludeRoles: Role[];
+}
+
 export const tabs: TabConfig[] = [
-  { name: 'Visão Geral', path: '/', excludeRoles: [] },
+  { name: 'Visão Geral', paths: ['/'], excludeRoles: [] },
   {
     name: 'Parametrizações',
-    path: '/parametrizations',
-    excludeRoles: [Role.USER],
+    paths: [
+      '/parametrizations',
+      '/parametrizations/stages',
+      '/parametrizations/units',
+      '/parametrizations/fonts',
+      '/parametrizations/goals',
+      '/parametrizations/states',
+      '/parametrizations/mapps',
+    ],
+    excludeRoles: [Role.USER, Role.MANAGER],
   },
   {
     name: 'Iniciativas',
-    path: '/initiatives',
+    paths: ['/initiatives'],
     excludeRoles: [Role.USER],
   },
   {
     name: 'Atividades',
-    path: '/activities',
-    excludeRoles: [Role.USER],
+    paths: ['/activities'],
+    excludeRoles: [],
   },
 ];
 
 export function generateTabs(planningId: number) {
   const basePath = `/project/${planningId}`;
 
-  return tabs.map(tab => ({ ...tab, path: basePath + tab.path }));
+  return tabs.map(tab => ({ ...tab, basePath }));
 }
 
 interface CardConfig {
