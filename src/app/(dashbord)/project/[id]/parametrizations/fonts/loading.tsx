@@ -36,7 +36,13 @@ export default function Loading() {
     getCanNextPage: () => false,
   } as TableType<string>;
 
-  const fields = ['Nome'];
+  const fields = [
+    'Nome',
+    'Código MAPP',
+    'Data',
+    'Valor',
+    'Valor de Contra-Partida',
+  ];
 
   return (
     <div className="space-y-4">

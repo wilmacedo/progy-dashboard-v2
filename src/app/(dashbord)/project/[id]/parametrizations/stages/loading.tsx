@@ -36,23 +36,29 @@ export default function Loading() {
     getCanNextPage: () => false,
   } as TableType<string>;
 
+  const fields = ['Nome'];
+
   return (
     <div className="space-y-4">
       <div className="rounded-lg border border-border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
-                <TableColumnHeader column={mockedColumn} title="Nome" />
-              </TableHead>
+              {fields.map((field, index) => (
+                <TableHead key={index}>
+                  <TableColumnHeader column={mockedColumn} title={field} />
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
             {new Array(5).fill(0).map((_, index) => (
               <TableRow key={index}>
-                <TableCell>
-                  <div className="h-[1.5rem] w-full bg-border rounded-md animate-pulse" />
-                </TableCell>
+                {new Array(fields.length).fill(0).map((_, i) => (
+                  <TableCell key={i}>
+                    <div className="h-[1.5rem] w-full bg-border rounded-md animate-pulse" />
+                  </TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>

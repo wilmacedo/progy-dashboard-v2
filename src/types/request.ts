@@ -30,6 +30,15 @@ export interface Unit {
   name: string;
 }
 
+export interface Font {
+  id: number;
+  name: string;
+  code: string;
+  date: string;
+  value: number;
+  other_value: number | null;
+}
+
 export interface Initiative {
   id: number;
   name: string;
@@ -42,16 +51,29 @@ export interface Initiative {
   stage_id: number;
   stages?: Stage;
   font_id: number;
-  fonts?: {
-    id: number;
-    name: string;
-  };
+  fonts?: Font;
   goal_id: number;
   goals?: {
     id: number;
     name: string;
   };
   comments: string;
+}
+
+export interface Activity {
+  id: number;
+  name: string;
+  responsible: string;
+  date_start: string;
+  date_end: string;
+  value: string | null;
+  state_id: number;
+  states?: State;
+  initiative_id: number;
+  initiatives?: Initiative;
+  planning_id: number;
+  file: string | null;
+  comments: string | null;
 }
 
 export interface ChartRelation {

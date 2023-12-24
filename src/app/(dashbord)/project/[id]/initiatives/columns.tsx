@@ -42,9 +42,7 @@ export const columns: ColumnDef<Initiative>[] = [
     header: ({ column }) => (
       <TableColumnHeader column={column} title="Código" />
     ),
-    cell: ({ row }) => (
-      <p className="truncate">{capitalize(row.getValue('code'))}</p>
-    ),
+    cell: ({ row }) => <p className="truncate">{row.getValue('code')}</p>,
   },
   {
     accessorKey: 'responsible',

@@ -1,12 +1,12 @@
 import { ContentNavbar } from '@/components/content-navbar';
 import { generateTabs } from '@/config/project';
 import { api } from '@/services/api';
-import { Initiative, State } from '@/types/request';
+import { Activity, Initiative, State } from '@/types/request';
 import { notFound } from 'next/navigation';
 import { getPlannings } from '../get-planning';
 import { ProjectSwitcher } from '../project-switcher';
 import { ActivityTable } from './activity-table';
-import { Activity, columns } from './columns';
+import { columns } from './columns';
 
 interface PageProps {
   params: {

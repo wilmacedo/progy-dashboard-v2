@@ -2,36 +2,12 @@
 
 import { TableColumnHeader } from '@/components/table/table-column-header';
 import { TableRowActions } from '@/components/table/table-row-actions';
+import { Activity } from '@/types/request';
 import { capitalize } from '@/utils/capitalize';
 import { ColumnDef } from '@tanstack/react-table';
-import { z } from 'zod';
 
 // Atividades concluídas (%)
 // Valor executado se houver valor (R$) reduce
-
-const activitySchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  responsible: z.string(),
-  date_start: z.string(),
-  date_end: z.string(),
-  value: z.string().nullable(),
-  state_id: z.number(),
-  states: z.object({
-    id: z.number(),
-    name: z.string(),
-  }),
-  initiative_id: z.string(),
-  initiatives: z.object({
-    id: z.number(),
-    name: z.string(),
-  }),
-  planning_id: z.number(),
-  file: z.string().nullable(),
-  comments: z.string().nullable(),
-});
-
-type Activity = z.infer<typeof activitySchema>;
 
 export const columns: ColumnDef<Activity>[] = [
   {

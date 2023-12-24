@@ -20,6 +20,7 @@ export function TableRowActions<Data>({
   row,
 }: TableRowActionsProps<Data>) {
   const data = (row as any).original;
+  // TODO: Check if planning id is undefined and catch
   const url = '/project/' + data.planning_id + '/' + section + '/' + data.id;
 
   return (
