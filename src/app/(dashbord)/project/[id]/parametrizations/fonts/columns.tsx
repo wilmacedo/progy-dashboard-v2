@@ -5,6 +5,8 @@ import { TableRowActions } from '@/components/table/table-row-actions';
 import { Stage } from '@/types/request';
 import { capitalize } from '@/utils/capitalize';
 import { ColumnDef } from '@tanstack/react-table';
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 export const columns: ColumnDef<Stage>[] = [
   {
@@ -22,6 +24,16 @@ export const columns: ColumnDef<Stage>[] = [
       <TableColumnHeader column={column} title="Código MAPP" />
     ),
     cell: ({ row }) => <p className="truncate">{row.getValue('code')}</p>,
+  },
+  {
+    accessorKey: 'date',
+    header: ({ column }) => <TableColumnHeader column={column} title="Data" />,
+    cell: ({ row }) => {
+      const date = parseISO(row.getValue('date'));
+      const formattedDate = format(date, 'dd MMM, yyyy', { locale: ptBR });
+
+      return <p>{capitalize(formattedDate, true)}</p>;
+    },
   },
   {
     accessorKey: 'value',
