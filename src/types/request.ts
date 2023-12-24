@@ -44,6 +44,11 @@ export interface Font {
   other_value: number | null;
 }
 
+export interface Mapp {
+  id: number;
+  name: string;
+}
+
 export interface Initiative {
   id: number;
   name: string;
