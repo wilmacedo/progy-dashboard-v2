@@ -18,6 +18,6 @@ export const columns: ColumnDef<Perspective>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <TableRowActions section="initiatives" row={row} />,
+    cell: ({ row }) => <TableRowActions section="perspectives" row={row} />,
   },
 ];

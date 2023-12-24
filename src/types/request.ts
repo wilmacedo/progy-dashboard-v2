@@ -25,26 +25,22 @@ export interface Perspective {
   name: string;
 }
 
+export interface Unit {
+  id: number;
+  name: string;
+}
+
 export interface Initiative {
   id: number;
   name: string;
   code: string;
   responsible: string;
   unit_id: number;
-  units?: {
-    id: number;
-    name: string;
-  };
+  units?: Unit;
   perspective_id: number;
-  perspectives?: {
-    id: number;
-    name: string;
-  };
+  perspectives?: Perspective;
   stage_id: number;
-  stages?: {
-    id: number;
-    name: string;
-  };
+  stages?: Stage;
   font_id: number;
   fonts?: {
     id: number;

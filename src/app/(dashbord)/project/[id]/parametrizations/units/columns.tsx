@@ -18,6 +18,6 @@ export const columns: ColumnDef<Stage>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <TableRowActions section="stages" row={row} />,
+    cell: ({ row }) => <TableRowActions section="units" row={row} />,
   },
 ];
