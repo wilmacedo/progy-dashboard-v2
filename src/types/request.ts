@@ -30,6 +30,11 @@ export interface Unit {
   name: string;
 }
 
+export interface Goal {
+  id: number;
+  name: string;
+}
+
 export interface Font {
   id: number;
   name: string;
@@ -53,10 +58,7 @@ export interface Initiative {
   font_id: number;
   fonts?: Font;
   goal_id: number;
-  goals?: {
-    id: number;
-    name: string;
-  };
+  goals?: Goal;
   comments: string;
 }
 
