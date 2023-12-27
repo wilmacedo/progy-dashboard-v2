@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { tabs } from '@/config/project';
+import { projectTabs } from '@/config/project-config';
 import { Column, Table as TableType } from '@tanstack/react-table';
 import { ChevronsUpDown, PlusCircle, SlidersHorizontal } from 'lucide-react';
 
@@ -56,7 +56,7 @@ export default function Loading() {
         </Button>
       </div>
 
-      <ContentNavbar tabs={tabs} />
+      <ContentNavbar tabs={projectTabs} />
 
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">

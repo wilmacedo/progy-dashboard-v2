@@ -1,5 +1,5 @@
 import { ContentNavbar } from '@/components/content-navbar';
-import { generateTabs } from '@/config/project';
+import { generateProjectTabs } from '@/config/project-config';
 import { api } from '@/services/api';
 import { Initiative, Stage } from '@/types/request';
 import { notFound } from 'next/navigation';
@@ -73,7 +73,7 @@ export default async function Page({ params }: PageProps) {
         <ProjectSwitcher active={planning} list={plannings} />
       </div>
 
-      <ContentNavbar tabs={generateTabs(planning.id)} />
+      <ContentNavbar tabs={generateProjectTabs(planning.id)} />
 
       <InitiativeTable
         columns={columns}

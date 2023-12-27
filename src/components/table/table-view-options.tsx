@@ -1,6 +1,6 @@
 'use client';
 
-import { keyTranslation } from '@/config/table';
+import { keyTranslation } from '@/config/table-key-translations';
 import { Table } from '@tanstack/react-table';
 import { SlidersHorizontal } from 'lucide-react';
 import { Button } from '../ui/button';

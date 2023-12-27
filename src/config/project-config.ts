@@ -8,7 +8,31 @@ import { BiErrorAlt } from 'react-icons/bi';
 import { IoIosPaper } from 'react-icons/io';
 import { IoWarningOutline } from 'react-icons/io5';
 
-export const tabs: TabConfig[] = [
+interface CardConfig {
+  title: string;
+  Icon: IconType;
+  bgColor: string;
+  textColor: string;
+  key: keyof DashboardInfo;
+  redirect?: string;
+}
+
+interface ChartConfig {
+  title: string;
+  description: string;
+  key: keyof DashboardInfo;
+  route: string;
+}
+
+interface PieChartConfig {
+  title: string;
+  description: string[];
+  labels: string[];
+  key: keyof DashboardInfo;
+  type: PieChartType;
+}
+
+export const projectTabs: TabConfig[] = [
   { name: 'Visão Geral', paths: ['/'], excludeRoles: [] },
   {
     name: 'Parametrizações',
@@ -34,36 +58,6 @@ export const tabs: TabConfig[] = [
     excludeRoles: [],
   },
 ];
-
-export function generateTabs(planningId: number) {
-  const basePath = `/project/${planningId}`;
-
-  return tabs.map(tab => ({ ...tab, basePath }));
-}
-
-interface CardConfig {
-  title: string;
-  Icon: IconType;
-  bgColor: string;
-  textColor: string;
-  key: keyof DashboardInfo;
-  redirect?: string;
-}
-
-interface ChartConfig {
-  title: string;
-  description: string;
-  key: keyof DashboardInfo;
-  route: string;
-}
-
-interface PieChartConfig {
-  title: string;
-  description: string[];
-  labels: string[];
-  key: keyof DashboardInfo;
-  type: PieChartType;
-}
 
 export const cards: CardConfig[] = [
   {
@@ -122,3 +116,9 @@ export const pieCharts: PieChartConfig[] = [
     type: PieChartType.CURRENCY,
   },
 ];
+
+export function generateProjectTabs(planningId: number) {
+  const basePath = `/project/${planningId}`;
+
+  return projectTabs.map(tab => ({ ...tab, basePath }));
+}

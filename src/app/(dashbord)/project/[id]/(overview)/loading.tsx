@@ -1,7 +1,7 @@
 import { ContentNavbar } from '@/components/content-navbar';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { cards, charts, pieCharts, tabs } from '@/config/project';
+import { cards, charts, pieCharts, projectTabs } from '@/config/project-config';
 import { BarChart3, ChevronsUpDown, PieChart } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 
@@ -28,7 +28,7 @@ export default function Loading() {
         </div>
       </div>
 
-      <ContentNavbar tabs={tabs} />
+      <ContentNavbar tabs={projectTabs} />
 
       <div className="space-y-4">
         <div className="grid grid-flow-row gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">

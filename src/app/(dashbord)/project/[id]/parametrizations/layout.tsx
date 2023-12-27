@@ -1,6 +1,6 @@
 import { ContentNavbar } from '@/components/content-navbar';
-import { links } from '@/config/parametrization-routes';
-import { generateTabs } from '@/config/project';
+import { links } from '@/config/parametrization-config';
+import { generateProjectTabs } from '@/config/project-config';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { getPlannings } from '../get-planning';
@@ -33,7 +33,7 @@ export default async function Layout({ params, children }: PageProps) {
         <ProjectSwitcher active={planning} list={plannings} />
       </div>
 
-      <ContentNavbar tabs={generateTabs(planning.id)} />
+      <ContentNavbar tabs={generateProjectTabs(planning.id)} />
 
       <div className="grid grid-cols-1 md:grid-cols-[15rem_1fr] items-start gap-8">
         <SidebarNav planningId={planning.id} links={links} />

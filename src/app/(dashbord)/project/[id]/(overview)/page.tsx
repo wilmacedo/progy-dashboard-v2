@@ -3,7 +3,12 @@ import PieChart from '@/components/Chart/Pie';
 import { ContentNavbar } from '@/components/content-navbar';
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { cards, charts, generateTabs, pieCharts } from '@/config/project';
+import {
+  cards,
+  charts,
+  generateProjectTabs,
+  pieCharts,
+} from '@/config/project-config';
 import { api } from '@/services/api';
 import { ChartRelation, DashboardInfo } from '@/types/request';
 import { addDays } from 'date-fns';
@@ -82,7 +87,7 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
 
-      <ContentNavbar tabs={generateTabs(planning.id)} />
+      <ContentNavbar tabs={generateProjectTabs(planning.id)} />
 
       <div className="space-y-4">
         <div className="grid grid-flow-row gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
