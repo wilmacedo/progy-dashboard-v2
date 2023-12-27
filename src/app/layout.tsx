@@ -17,6 +17,9 @@ export const metadata = {
   },
   description:
     'O Progy é uma solução em software de gerenciamento de planejamento. Transforme suas visões em realidade e impulsione seu negócio com estratégias eficientes e resultados concretos. Descubra como podemos otimizar seu planejamento e alcançar seus objetivos.',
+};
+
+export const viewport = {
   themeColor: '#ffffff',
 };
 
