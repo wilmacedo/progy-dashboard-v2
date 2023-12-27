@@ -1,5 +1,5 @@
 import { Role } from '@/constants/roles';
-import { TabConfig } from './project';
+import { TabConfig } from '@/types/config';
 
 export function allPaths() {
   return tabs.map(tab => tab.paths);
