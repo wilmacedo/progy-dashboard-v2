@@ -1,18 +1,12 @@
 import { PieChartType } from '@/components/Chart';
 import { Role } from '@/constants/roles';
+import { TabConfig } from '@/types/config';
 import { DashboardInfo } from '@/types/request';
 import { IconType } from 'react-icons';
 import { AiOutlineFileDone } from 'react-icons/ai';
 import { BiErrorAlt } from 'react-icons/bi';
 import { IoIosPaper } from 'react-icons/io';
 import { IoWarningOutline } from 'react-icons/io5';
-
-export interface TabConfig {
-  name: string;
-  paths: string[];
-  basePath?: string;
-  excludeRoles: Role[];
-}
 
 export const tabs: TabConfig[] = [
   { name: 'Visão Geral', paths: ['/'], excludeRoles: [] },
@@ -127,14 +121,4 @@ export const pieCharts: PieChartConfig[] = [
     key: 'costIndicator',
     type: PieChartType.CURRENCY,
   },
-  // {
-  //   title: 'Índice IDP',
-  //   description: [
-  //     'Índice de desempenho de planejamento',
-  //     'Considera ano vigente da data de término',
-  //   ],
-  //   labels: ['Atividades concluídas', 'Ativdades pendentes'],
-  //   key: 'idp',
-  //   type: PieChartType.VALUE,
-  // },
 ];

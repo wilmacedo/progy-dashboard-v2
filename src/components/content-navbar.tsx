@@ -1,8 +1,8 @@
 'use client';
 
-import { TabConfig } from '@/config/project';
 import { Role, roleAlias } from '@/constants/roles';
 import { useAuth } from '@/contexts/auth/auth-context';
+import { TabConfig } from '@/types/config';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -25,7 +25,7 @@ export function ContentNavbar({ tabs, disabled }: ContentNavbar) {
   function getCurrentTab(pathname: string) {
     const index = tabs.findIndex(tab => {
       for (const path of tab.paths) {
-        if (tab.basePath + path === pathname) {
+        if ((tab.basePath || '') + path === pathname) {
           return true;
         }
       }
@@ -41,7 +41,7 @@ export function ContentNavbar({ tabs, disabled }: ContentNavbar) {
     <nav className="mb-4 font-medium text-center text-muted-foreground border-b border-border overflow-x-auto overflow-y-hidden">
       <ul className="flex -mb-px">
         {getTabs().map((tab, index) => (
-          <Link href={tab.basePath! + tab.paths[0]} key={index}>
+          <Link href={(tab.basePath || '') + tab.paths[0]} key={index}>
             <li
               key={index}
               data-current={getCurrentTab(pathname) === index}

@@ -5,7 +5,7 @@ import { IoIosList } from 'react-icons/io';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 import { STORAGE_PATH } from './index';
-import { allPaths } from './tabs';
+import { settingsPaths } from './settings-config';
 
 interface RouteConfig {
   basePath: string;
@@ -57,7 +57,7 @@ export default function sidebarRoutes(role: string) {
     // },
     {
       basePath: '/settings',
-      relativePaths: allPaths(),
+      relativePaths: settingsPaths(),
       name: 'Configurações',
       Icon: IoSettingsOutline,
       bottom: true,

@@ -1,11 +1,7 @@
 import { Role } from '@/constants/roles';
-import { TabConfig } from './project';
+import { TabConfig } from '@/types/config';
 
-export function allPaths() {
-  return tabs.map(tab => tab.paths);
-}
-
-export const tabs: TabConfig[] = [
+export const settingsTabs: TabConfig[] = [
   {
     name: 'Perfil',
     paths: ['/settings'],
@@ -14,7 +10,7 @@ export const tabs: TabConfig[] = [
   {
     name: 'Membros',
     paths: ['/settings/members'],
-    excludeRoles: [Role.USER],
+    excludeRoles: [Role.USER, Role.MANAGER],
   },
   {
     name: 'Notificações',
@@ -22,3 +18,7 @@ export const tabs: TabConfig[] = [
     excludeRoles: [],
   },
 ];
+
+export function settingsPaths() {
+  return settingsTabs.map(tab => tab.paths[0]);
+}
