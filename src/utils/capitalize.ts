@@ -1,4 +1,6 @@
-export function capitalize(text: string, date = false) {
+export function capitalize(text: string | undefined, date = false) {
+  if (text === undefined) return '';
+
   const words = text.split(' ');
 
   const result: string[] = [];

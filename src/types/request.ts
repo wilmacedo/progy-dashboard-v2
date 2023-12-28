@@ -81,6 +81,8 @@ export interface Activity {
   planning_id: number;
   file: string | null;
   comments: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface ChartRelation {
