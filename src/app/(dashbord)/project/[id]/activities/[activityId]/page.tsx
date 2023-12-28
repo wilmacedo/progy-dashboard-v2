@@ -1,7 +1,7 @@
 import { ContentNavbar } from '@/components/content-navbar';
 import { generateProjectTabs } from '@/config/project-config';
 import { api } from '@/services/api';
-import { Activity } from '@/types/request';
+import { Activity, Initiative, State } from '@/types/request';
 import { notFound } from 'next/navigation';
 import { getPlannings } from '../../get-planning';
 import { ProjectSwitcher } from '../../project-switcher';
@@ -16,7 +16,7 @@ interface PageProps {
 
 async function getActivity(planningId: number, id: number) {
   const filters = {
-    populate: 'states,initiatives',
+    populate: 'initiatives',
   };
   const params = new URLSearchParams(filters);
 
@@ -31,6 +31,36 @@ async function getActivity(planningId: number, id: number) {
     return data;
   } catch (error) {
     return null;
+  }
+}
+
+async function getStates(planningId: number) {
+  try {
+    const { data, status } = await api<State[]>(
+      `/plannings/${planningId}/states`,
+    );
+    if (status !== 200) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    return [];
+  }
+}
+
+async function getInitiatives(planningId: number) {
+  try {
+    const { data, status } = await api<Initiative[]>(
+      `/plannings/${planningId}/initiatives`,
+    );
+    if (status !== 200) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    return [];
   }
 }
 
@@ -49,7 +79,11 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const activity = await getActivity(planningId, activityId);
+  const [activity, states, initiatives] = await Promise.all([
+    getActivity(planningId, activityId),
+    getStates(planningId),
+    getInitiatives(planningId),
+  ]);
   if (activity === null) {
     notFound();
   }
@@ -62,7 +96,12 @@ export default async function Page({ params }: PageProps) {
 
       <ContentNavbar tabs={generateProjectTabs(planning.id)} />
 
-      <ActivityForm planning={planning} activity={activity} />
+      <ActivityForm
+        planning={planning}
+        activity={activity}
+        states={states}
+        initiatives={initiatives}
+      />
     </div>
   );
 }

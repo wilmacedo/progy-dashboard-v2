@@ -2,7 +2,7 @@
 
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
-import { Activity, Planning } from '@/types/request';
+import { Activity, Initiative, Planning, State } from '@/types/request';
 import { capitalize } from '@/utils/capitalize';
 import { getTimeSince } from '@/utils/get-time-since';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,9 +13,13 @@ import Link from 'next/link';
 import { FocusEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DropdownSelector } from './dropdown-selector';
 
 const activitySchema = z.object({
   name: z.string(),
+  state_id: z.number().positive(),
+  initiative_id: z.number().positive(),
+  value: z.string().nullable(),
 });
 
 type ActivityValues = z.infer<typeof activitySchema>;
@@ -23,18 +27,29 @@ type ActivityValues = z.infer<typeof activitySchema>;
 interface ActivityFormProps {
   planning: Planning;
   activity: Activity;
+  states: State[];
+  initiatives: Initiative[];
 }
 
 interface EditableField {
   [key: string]: boolean;
 }
 
-export function ActivityForm({ planning, activity }: ActivityFormProps) {
+export function ActivityForm({
+  planning,
+  activity,
+  states,
+  initiatives,
+}: ActivityFormProps) {
   const [editableField, setEditableField] = useState<EditableField>({});
+
   const form = useForm<ActivityValues>({
     resolver: zodResolver(activitySchema),
     defaultValues: {
       name: activity.name,
+      state_id: activity.state_id,
+      initiative_id: activity.initiative_id,
+      value: activity.value,
     },
   });
 
@@ -96,6 +111,13 @@ export function ActivityForm({ planning, activity }: ActivityFormProps) {
     console.log(data);
   }
 
+  function handleSelect(field: keyof ActivityValues, id: number) {
+    form.setValue(field, id, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }
+
   return (
     <form className="space-y-8" onSubmit={form.handleSubmit(handleSubmit)}>
       <div className="flex items-center justify-between">
@@ -111,8 +133,7 @@ export function ActivityForm({ planning, activity }: ActivityFormProps) {
           </Link>
           <ChevronRight className="h-4 w-4" />
           <span className="max-w-[10rem] truncate capitalize text-sm">
-            {activity.name[0].toUpperCase() +
-              activity.name.slice(1, -1).toLowerCase()}
+            {capitalize(activity.name)}
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -120,7 +141,7 @@ export function ActivityForm({ planning, activity }: ActivityFormProps) {
             <Paperclip className="mr-2 w-4 h-4" />
             Anexar
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" disabled={!!!activity.file}>
             <Download className="mr-2 w-4 h-4" />
             Baixar
           </Button>
@@ -176,11 +197,22 @@ export function ActivityForm({ planning, activity }: ActivityFormProps) {
             <span className="text-muted-foreground text-sm min-w-[7rem]">
               Estado
             </span>
-            <button className="w-fit px-1.5 py-1 text-sm bg-muted-foreground/10 text-muted-foreground rounded-lg hover:brightness-125">
-              <span className="truncate">
-                {capitalize(activity.states?.name)}
-              </span>
-            </button>
+            <DropdownSelector
+              placeholder="Encontrar estado"
+              emptyText="Nenhum estado encontrado."
+              selectedId={form.watch('state_id')}
+              list={states}
+              onSelect={id => handleSelect('state_id', id)}
+            >
+              <button className="truncate w-fit px-1.5 py-1 text-sm bg-muted-foreground/10 text-muted-foreground rounded-lg hover:brightness-125">
+                <span>
+                  {capitalize(
+                    states.find(state => state.id === form.watch('state_id'))
+                      ?.name,
+                  )}
+                </span>
+              </button>
+            </DropdownSelector>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-sm min-w-[7rem]">
@@ -198,13 +230,28 @@ export function ActivityForm({ planning, activity }: ActivityFormProps) {
             <span className="text-muted-foreground text-sm min-w-[7rem]">
               Iniciativa
             </span>
-            <Button
-              size="sm"
-              className="block px-1.5 py-1 truncate font-normal"
-              variant="ghost"
+            <DropdownSelector
+              placeholder="Encontrar iniciativa"
+              emptyText="Nenhuma iniciativa encontrada"
+              selectedId={form.watch('initiative_id')}
+              list={initiatives.map(initiative => ({
+                id: initiative.id,
+                name: initiative.name,
+              }))}
+              onSelect={id => handleSelect('initiative_id', id)}
             >
-              {capitalize(activity.initiatives?.name)}
-            </Button>
+              <Button
+                size="sm"
+                className="block px-1.5 py-1 truncate font-normal"
+                variant="ghost"
+              >
+                {capitalize(
+                  initiatives.find(
+                    initiative => initiative.id === form.watch('initiative_id'),
+                  )?.name,
+                )}
+              </Button>
+            </DropdownSelector>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-sm min-w-[7rem]">
