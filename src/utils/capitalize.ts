@@ -6,6 +6,8 @@ export function capitalize(text: string | undefined, date = false) {
   const result: string[] = [];
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
+    if (word.length === 0) continue;
+
     if (word.length > 3 || (i === 0 && word.length <= 3) || date) {
       result.push(word[0].toUpperCase() + word.slice(1).toLowerCase());
       continue;

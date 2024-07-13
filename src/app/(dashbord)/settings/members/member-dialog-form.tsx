@@ -125,7 +125,7 @@ export function MemberDialogForm({
                             variant="outline"
                             role="combobox"
                             className={twMerge(
-                              'w-72 justify-between font-normal',
+                              'w-full max-w-[28.875rem] justify-between font-normal',
                               !field.value && 'text-muted-foreground',
                             )}
                           >
@@ -141,7 +141,7 @@ export function MemberDialogForm({
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-72 p-0">
+                      <PopoverContent className="w-full max-w-[28.875rem] p-0">
                         <Command>
                           <CommandInput placeholder="Procurar instituição..." />
                           <CommandEmpty>
@@ -189,7 +189,7 @@ export function MemberDialogForm({
                             variant="outline"
                             role="combobox"
                             className={twMerge(
-                              'w-72 justify-between font-normal',
+                              'w-full max-w-[28.875rem] justify-between font-normal',
                               !field.value && 'text-muted-foreground',
                             )}
                           >
@@ -205,7 +205,7 @@ export function MemberDialogForm({
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-72 p-0">
+                      <PopoverContent className="w-full max-w-[28.875rem] p-0">
                         <Command>
                           <CommandInput placeholder="Procurar cargo..." />
                           <CommandEmpty>Nenhum cargo encontrado.</CommandEmpty>
