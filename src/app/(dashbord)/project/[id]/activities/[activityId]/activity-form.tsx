@@ -3,6 +3,7 @@
 import { DatePickerWithRange } from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
 import { Activity, Initiative, Planning, State } from '@/types/request';
+import { User } from '@/types/requests';
 import { capitalize } from '@/utils/capitalize';
 import { getTimeSince } from '@/utils/get-time-since';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,6 +21,10 @@ const activitySchema = z.object({
   state_id: z.number().positive(),
   initiative_id: z.number().positive(),
   value: z.string().nullable(),
+  responsible: z.string().or(z.number()),
+  comments: z.string().nullable(),
+  date_start: z.string(),
+  date_end: z.string(),
 });
 
 type ActivityValues = z.infer<typeof activitySchema>;
@@ -29,17 +34,24 @@ interface ActivityFormProps {
   activity: Activity;
   states: State[];
   initiatives: Initiative[];
+  users: User[];
 }
 
 interface EditableField {
   [key: string]: boolean;
 }
 
+type ItemValues = Partial<{
+  id: number;
+  name: string;
+}>;
+
 export function ActivityForm({
   planning,
   activity,
   states,
   initiatives,
+  users,
 }: ActivityFormProps) {
   const [editableField, setEditableField] = useState<EditableField>({});
 
@@ -50,6 +62,10 @@ export function ActivityForm({
       state_id: activity.state_id,
       initiative_id: activity.initiative_id,
       value: activity.value,
+      responsible: activity.responsible,
+      comments: activity.comments,
+      date_start: activity.date_start,
+      date_end: activity.date_end,
     },
   });
 
@@ -116,6 +132,50 @@ export function ActivityForm({
       shouldDirty: true,
       shouldValidate: true,
     });
+  }
+
+  function findItemName(list: ItemValues[], id: number) {
+    const item = list.find(item => item.id === id);
+    if (!item) {
+      return 'N/A';
+    }
+
+    return item.name;
+  }
+
+  function findUserId(name: string | number) {
+    if (typeof name === 'number') {
+      return 0;
+    }
+
+    const user = users.find(
+      user => user.name.toLowerCase() === name.toLowerCase(),
+    );
+    if (!user) {
+      return 0;
+    }
+
+    return user.id;
+  }
+
+  function findUserName(id: string | number) {
+    if (typeof id === 'string') {
+      return activity.responsible;
+    }
+
+    const user = users.find(user => user.id === id);
+    if (!user) {
+      return activity.responsible;
+    }
+
+    return user.name;
+  }
+
+  function hasEmptyComments() {
+    const comments = form.watch('comments');
+    if (comments === null || comments === undefined) return true;
+
+    return comments.length === 0;
   }
 
   return (
@@ -206,10 +266,7 @@ export function ActivityForm({
             >
               <button className="truncate w-fit px-1.5 py-1 text-sm bg-muted-foreground/10 text-muted-foreground rounded-lg hover:brightness-125">
                 <span>
-                  {capitalize(
-                    states.find(state => state.id === form.watch('state_id'))
-                      ?.name,
-                  )}
+                  {capitalize(findItemName(states, form.watch('state_id')))}
                 </span>
               </button>
             </DropdownSelector>
@@ -218,13 +275,24 @@ export function ActivityForm({
             <span className="text-muted-foreground text-sm min-w-[7rem]">
               Responsável
             </span>
-            <Button
-              size="sm"
-              className="block px-1.5 py-1 truncate font-normal"
-              variant="ghost"
+            <DropdownSelector
+              placeholder="Encontrar usuário"
+              emptyText="Nenhum usuário encontrado"
+              selectedId={findUserId(form.watch('responsible'))}
+              list={users.map(user => ({
+                id: user.id,
+                name: user.name,
+              }))}
+              onSelect={id => handleSelect('responsible', id)}
             >
-              {capitalize(activity.responsible)}
-            </Button>
+              <Button
+                size="sm"
+                className="block px-1.5 py-1 truncate font-normal"
+                variant="ghost"
+              >
+                {capitalize(findUserName(form.watch('responsible')))}
+              </Button>
+            </DropdownSelector>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-sm min-w-[7rem]">
@@ -246,9 +314,7 @@ export function ActivityForm({
                 variant="ghost"
               >
                 {capitalize(
-                  initiatives.find(
-                    initiative => initiative.id === form.watch('initiative_id'),
-                  )?.name,
+                  findItemName(initiatives, form.watch('initiative_id')),
                 )}
               </Button>
             </DropdownSelector>
@@ -276,16 +342,33 @@ export function ActivityForm({
               from: new Date(activity.date_start),
               to: new Date(activity.date_end),
             }}
+            onPick={range => {}}
           />
 
           <h3 className="mt-4 text-xl font-semibold">Comentário</h3>
 
-          <span
-            data-empty={activity.comments !== null}
-            className="data-[empty=false]:text-sm data-[empty=false]:text-muted-foreground"
+          <div
+            data-editable={!!editableField['comments']}
+            className="group relative"
           >
-            {activity.comments || 'Nenhum comentário fixado'}
-          </span>
+            <span
+              data-empty={hasEmptyComments()}
+              className="data-[empty=true]:text-sm data-[empty=true]:text-muted-foreground opacity-0 invisible group-data-[editable=false]:opacity-100 group-data-[editable=false]:visible"
+              onClick={() => handleEditable('comments')}
+            >
+              {form.getValues('comments') || 'Nenhum comentário fixado'}
+            </span>
+            <textarea
+              id="comments"
+              defaultValue={activity.comments || ''}
+              className="absolute top-0 left-0 w-full h-full resize-none group-data-[editable=false]:opacity-0 group-data-[editable=false]:invisible"
+              onKeyDown={event => handleKeyDown(event, 'comments')}
+              onFocus={handleFocus}
+              {...form.register('comments', {
+                onBlur: () => handleEditable('comments'),
+              })}
+            />
+          </div>
         </div>
       </div>
     </form>

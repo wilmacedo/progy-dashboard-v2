@@ -2,6 +2,7 @@ import { ContentNavbar } from '@/components/content-navbar';
 import { generateProjectTabs } from '@/config/project-config';
 import { api } from '@/services/api';
 import { Activity, Initiative, State } from '@/types/request';
+import { User } from '@/types/requests';
 import { notFound } from 'next/navigation';
 import { getPlannings } from '../../get-planning';
 import { ProjectSwitcher } from '../../project-switcher';
@@ -64,6 +65,21 @@ async function getInitiatives(planningId: number) {
   }
 }
 
+async function getUsers(planningId: number) {
+  try {
+    const { data, status } = await api<User[]>(
+      `/plannings/${planningId}/users`,
+    );
+    if (status !== 200) {
+      return [];
+    }
+
+    return data;
+  } catch (error) {
+    return [];
+  }
+}
+
 export default async function Page({ params }: PageProps) {
   const planningId = Number(params.id);
   const activityId = Number(params.activityId);
@@ -79,10 +95,11 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const [activity, states, initiatives] = await Promise.all([
+  const [activity, states, initiatives, users] = await Promise.all([
     getActivity(planningId, activityId),
     getStates(planningId),
     getInitiatives(planningId),
+    getUsers(planningId),
   ]);
   if (activity === null) {
     notFound();
@@ -101,6 +118,7 @@ export default async function Page({ params }: PageProps) {
         activity={activity}
         states={states}
         initiatives={initiatives}
+        users={users}
       />
     </div>
   );

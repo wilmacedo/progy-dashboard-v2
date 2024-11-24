@@ -17,13 +17,20 @@ import { cn } from '@/lib/utils';
 
 interface DatePickerWithRangeProps extends React.ComponentProps<'div'> {
   range?: DateRange;
+  onPick?: (date: DateRange | undefined) => void;
 }
 
 export function DatePickerWithRange({
   className,
   range,
+  onPick,
 }: DatePickerWithRangeProps) {
   const [date, setDate] = React.useState<DateRange | undefined>(range);
+
+  function handlePick(range: DateRange | undefined) {
+    setDate(range);
+    onPick && onPick(range);
+  }
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -58,7 +65,7 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={handlePick}
             numberOfMonths={2}
           />
         </PopoverContent>

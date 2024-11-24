@@ -112,7 +112,7 @@ export function SigninForm() {
           />
 
           <Button variant="link" className="px-0 text-xs" asChild>
-            <Link href={'/forgot'}>Esqueceu sua senha?</Link>
+            <Link href={'/auth/forgot'}>Esqueceu sua senha?</Link>
           </Button>
         </div>
 
